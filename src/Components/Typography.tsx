@@ -6,6 +6,16 @@ export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
   weight?: "normal" | "medium" | "semibold" | "bold";
+  color?:
+    | "default"
+    | "muted"
+    | "subtle"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "error"
+    | string;
   children: React.ReactNode;
 }
 
@@ -16,6 +26,7 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
       as: Component = "h1",
       size = "lg",
       weight = "semibold",
+      color = "default",
       children,
       ...props
     },
@@ -39,15 +50,34 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
       bold: "font-bold",
     };
 
+    const predefinedColors = {
+      default: "text-[#1E2A47]",
+      muted: "text-slate-600",
+      subtle: "text-slate-500",
+      primary: "text-blue-600",
+      secondary: "text-purple-600",
+      success: "text-green-600",
+      warning: "text-amber-600",
+      error: "text-red-600",
+    };
+
+    const isPredefinedColor = color in predefinedColors;
+    const colorClass = isPredefinedColor ? predefinedColors[color as keyof typeof predefinedColors] : "";
+
     return (
       <Component
         ref={ref}
         className={cn(
-          "text-slate-900",
+          "font-heading",
           sizes[size],
           weights[weight],
+          colorClass,
           className
         )}
+        style={{
+          ...(isPredefinedColor ? {} : { color }),
+          ...props.style,
+        }}
         {...props}
       >
         {children}
@@ -63,7 +93,16 @@ export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   as?: "p" | "span" | "div";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   weight?: "normal" | "medium" | "semibold" | "bold";
-  color?: "default" | "muted" | "subtle";
+  color?:
+    | "default"
+    | "muted"
+    | "subtle"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "error"
+    | string;
   children: React.ReactNode;
 }
 
@@ -95,16 +134,34 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       bold: "font-bold",
     };
 
-    const colors = {
-      default: "text-slate-900",
+    const predefinedColors = {
+      default: "text-[#1E2A47]",
       muted: "text-slate-600",
       subtle: "text-slate-500",
+      primary: "text-blue-600",
+      secondary: "text-purple-600",
+      success: "text-green-600",
+      warning: "text-amber-600",
+      error: "text-red-600",
     };
+
+    const isPredefinedColor = color in predefinedColors;
+    const colorClass = isPredefinedColor ? predefinedColors[color as keyof typeof predefinedColors] : "";
 
     return (
       <Component
         ref={ref}
-        className={cn(sizes[size], weights[weight], colors[color], className)}
+        className={cn(
+          "font-body",
+          sizes[size],
+          weights[weight],
+          colorClass,
+          className
+        )}
+        style={{
+          ...(isPredefinedColor ? {} : { color }),
+          ...props.style,
+        }}
         {...props}
       >
         {children}
@@ -117,18 +174,43 @@ Text.displayName = "Text";
 
 // Code Component
 export interface CodeProps extends React.HTMLAttributes<HTMLElement> {
+  color?:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "error"
+    | string;
   children: React.ReactNode;
 }
 
 const Code = React.forwardRef<HTMLElement, CodeProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ className, color = "default", children, ...props }, ref) => {
+    const predefinedColors = {
+      default: "text-[#1E2A47] bg-slate-100",
+      primary: "text-blue-900 bg-blue-100",
+      secondary: "text-purple-900 bg-purple-100",
+      success: "text-green-900 bg-green-100",
+      warning: "text-amber-900 bg-amber-100",
+      error: "text-red-900 bg-red-100",
+    };
+
+    const isPredefinedColor = color in predefinedColors;
+    const colorClass = isPredefinedColor ? predefinedColors[color as keyof typeof predefinedColors] : "";
+
     return (
       <code
         ref={ref}
         className={cn(
-          "relative rounded bg-slate-100 px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold text-slate-900",
+          "relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
+          colorClass,
           className
         )}
+        style={{
+          ...(isPredefinedColor ? {} : { color, backgroundColor: `${color}20` }),
+          ...props.style,
+        }}
         {...props}
       >
         {children}
