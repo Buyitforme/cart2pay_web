@@ -6,6 +6,7 @@ import StoreMarquee from "./StoreMarquee";
 import Cart2payEssentials from "./Cart2payEssentials";
 import Footer from "../../Components/Footer";
 import { ReactNode } from "react";
+import Testimonials from "./Testimonials";
 
 const variants = {
   hidden: { opacity: 0, y: 100 },
@@ -17,7 +18,7 @@ interface AnimatedSectionProps {
 const LandingPageMain = () => {
   return (
     <>
-      <div className="px-8 md:px-20">
+      <div className="px-5 md:px-20">
         <AnimatedSection>
           <Nav />
         </AnimatedSection>
@@ -31,6 +32,10 @@ const LandingPageMain = () => {
       <AnimatedSection>
         <Cart2payEssentials />
       </AnimatedSection>
+      <AnimatedSection>
+        <Testimonials />
+      </AnimatedSection>
+
       <AnimatedSection>
         <Footer />
       </AnimatedSection>
