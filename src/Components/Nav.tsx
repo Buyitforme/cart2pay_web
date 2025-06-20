@@ -49,7 +49,7 @@ const Nav = () => {
           <Link to="/about" className="hover:underline">
             <Text
               size="md"
-              weight="medium"
+              weight="semibold"
               color="default"
               className="cursor-pointer"
             >
@@ -126,7 +126,7 @@ const Nav = () => {
                 Contact Us
               </Text>
             </Link>
-          
+
             <Link to="/signin" className="hover:underline">
               <Text
                 size="md"
@@ -137,7 +137,7 @@ const Nav = () => {
                 Login
               </Text>
             </Link>
-            
+
             <Button variant="primary">Signup</Button>
           </div>
         )}
