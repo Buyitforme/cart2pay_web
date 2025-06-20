@@ -124,7 +124,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       sm: "text-sm",
       md: "text-base",
       lg: "text-lg",
-      xl: "text-xl",
+      xl: "text-2xl",
     };
 
     const weights = {
