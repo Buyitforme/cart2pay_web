@@ -6,7 +6,8 @@ import StoreMarquee from "./StoreMarquee";
 import Cart2payEssentials from "./Cart2payEssentials";
 import Footer from "../../Components/Footer";
 import { ReactNode } from "react";
-import Testimonials from "./Testimonials";
+import Faq from "./FAQ";
+import ThirstTraps from "./ThirstTraps";
 
 const variants = {
   hidden: { opacity: 0, y: 100 },
@@ -33,7 +34,8 @@ const LandingPageMain = () => {
         <Cart2payEssentials />
       </AnimatedSection>
       <AnimatedSection>
-        <Testimonials />
+        <ThirstTraps />
+        <Faq />
       </AnimatedSection>
 
       <AnimatedSection>

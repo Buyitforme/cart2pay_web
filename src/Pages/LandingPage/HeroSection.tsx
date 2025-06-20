@@ -37,8 +37,8 @@ function HeroSection() {
             className="w-full pt-3"
           >
             Experience seamless international shopping from anywhere in the
-            world. We help you access global products with local payment options
-            and fast, reliable delivery.
+            world. We help you access global products with local payment options.
+          
           </Text>
           <div className="flex md:flex-row gap-4 pt-6 items-center md:items-start">
             <Button variant="primary" className="w-full md:w-auto">
