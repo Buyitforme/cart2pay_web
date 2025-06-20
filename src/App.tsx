@@ -1,6 +1,3 @@
-import logo from "./Cart2Pay.png";
-import { Button } from "./Components/Button";
-import { Heading, Text } from "./Components/Typography";
 import Router from "./Navigation/Router";
 
 function App() {

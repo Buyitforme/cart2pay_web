@@ -51,10 +51,10 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
     };
 
     const predefinedColors = {
-      default: "text-[#1E2A47]",
+      default: "text-accent",
       muted: "text-slate-600",
       subtle: "text-slate-500",
-      primary: "text-blue-600",
+      primary: "text-primary",
       secondary: "text-purple-600",
       success: "text-green-600",
       warning: "text-amber-600",
@@ -135,10 +135,10 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
     };
 
     const predefinedColors = {
-      default: "text-[#1E2A47]",
+      default: "text-accent",
       muted: "text-slate-600",
       subtle: "text-slate-500",
-      primary: "text-blue-600",
+      primary: "text-primary",
       secondary: "text-purple-600",
       success: "text-green-600",
       warning: "text-amber-600",
@@ -188,8 +188,8 @@ export interface CodeProps extends React.HTMLAttributes<HTMLElement> {
 const Code = React.forwardRef<HTMLElement, CodeProps>(
   ({ className, color = "default", children, ...props }, ref) => {
     const predefinedColors = {
-      default: "text-[#1E2A47] bg-slate-100",
-      primary: "text-blue-900 bg-blue-100",
+      default: "text-accent bg-slate-100",
+      primary: "text-primary",
       secondary: "text-purple-900 bg-purple-100",
       success: "text-green-900 bg-green-100",
       warning: "text-amber-900 bg-amber-100",
