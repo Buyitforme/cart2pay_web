@@ -42,13 +42,13 @@ function HeroSection() {
           </Text>
           <div className="flex md:flex-row gap-4 pt-6 items-center md:items-start">
             <Button variant="primary" className="w-full md:w-auto">
-              Get Started
+              Create account
             </Button>
             <Button
               variant="outline"
               className="border border-primary text-primary bg-transparent hover:bg-primary hover:text-white transition w-full md:w-auto"
             >
-              Shop
+              Discover Favorite stores
             </Button>
           </div>
         </div>
