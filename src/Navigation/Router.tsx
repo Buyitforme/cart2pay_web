@@ -6,6 +6,8 @@ import {
 import LandingPageMain from "../Pages/LandingPage/LandingPageMain";
 import AboutUs from "../Pages/AboutMain/AboutUs";
 import HowItWorks from "../Pages/Howitworks";
+import Login from "../Pages/Login";
+import Signup from "../Pages/Signup";
 
 const routes: RouteObject[] = [
   {
@@ -30,11 +32,11 @@ const routes: RouteObject[] = [
   },
   {
     path: "/signin",
-    element: "Signin",
+    element: <Login />,
   },
   {
     path: "/signup",
-    element: "Signup",
+    element: <Signup />,
   },
   {
     path: "*",

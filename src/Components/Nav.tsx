@@ -57,6 +57,18 @@ const Nav = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center space-x-10">
+          <Link to="/">
+            <Text
+              size="lg"
+              weight="semibold"
+              color="default"
+              className={`cursor-pointer duration-300 ease-in-out ${
+                isActive("/") ? "text-primary font-bold" : "hover:text-primary"
+              }`}
+            >
+              Home
+            </Text>
+          </Link>
           <Link to="/about">
             <Text
               size="lg"
@@ -119,8 +131,9 @@ const Nav = () => {
               Login
             </Text>
           </Link>
-
-          <Button variant="primary">Create account</Button>
+          <Link to="/signup">
+            <Button variant="primary">Create account</Button>
+          </Link>
         </div>
 
         {/* Mobile Menu */}

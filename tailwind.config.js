@@ -28,9 +28,10 @@ module.exports = {
         input: "B0BEC5",
         card: "B0BEC5",
         sub_primary: "#8FAC6A",
+        white: "#FAFAFA",
+        muted_white: "#DCDCDC	",
       },
     },
   },
   plugins: [],
 };
-

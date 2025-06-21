@@ -75,16 +75,20 @@ const Footer: React.FC = () => {
         {/* Right Section (Newsletter Card) */}
         <div>
           {" "}
-          <div className="rounded-xl p-6 md:p-8 bg-gradient-to-br from-[#1E2A47] to-[#8fac6a] text-white shadow-xl flex flex-col justify-between h-full">
+          <div className="rounded-xl p-6 md:p-8 bg-gradient-to-br from-[#1E2A47] to-[#8fac6a] text-muted_white shadow-xl flex flex-col justify-between h-full">
             <div>
               <Text
                 size="xl"
                 weight="medium"
-                className="mb-6 text-white font-bold"
+                className="mb-6 text-muted_white font-bold"
               >
                 Stay in Touch
               </Text>
-              <Text size="md" weight="medium" className="mb-6 text-white/80">
+              <Text
+                size="md"
+                weight="medium"
+                className="mb-6 text-muted_white/80"
+              >
                 Subscribe to get updates on the latest store integrations,
                 discounts, and seamless global shopping tips — right to your
                 inbox.
@@ -110,13 +114,25 @@ const Footer: React.FC = () => {
           </div>
           {/* Social Icons */}
           <div className="mt-8 flex justify-end space-x-4">
-            <a href="#facebook" aria-label="Facebook" className="hover:text-gray-300">
+            <a
+              href="#facebook"
+              aria-label="Facebook"
+              className="hover:text-gray-300"
+            >
               <Facebook size={20} />
             </a>
-            <a href="#twitter" aria-label="Twitter" className="hover:text-gray-300">
+            <a
+              href="#twitter"
+              aria-label="Twitter"
+              className="hover:text-gray-300"
+            >
               <Twitter size={20} />
             </a>
-            <a href="#instagram" aria-label="Instagram" className="hover:text-gray-300">
+            <a
+              href="#instagram"
+              aria-label="Instagram"
+              className="hover:text-gray-300"
+            >
               <Instagram size={20} />
             </a>
           </div>

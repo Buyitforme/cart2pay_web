@@ -6,7 +6,6 @@ const routeNames = {
   dashboard: "/dashboard",
   signIn: "/signin",
   signUp: "/signup",
-
   notFound: "*",
 };
 

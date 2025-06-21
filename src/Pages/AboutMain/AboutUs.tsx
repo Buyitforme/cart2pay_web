@@ -49,7 +49,7 @@ const AboutUs: React.FC = () => {
             alt="Hero"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-center px-4">
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end justify-center text-center px-4 pb-16">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -58,23 +58,10 @@ const AboutUs: React.FC = () => {
               <Heading
                 size="3xl"
                 weight="bold"
-                className="text-white mb-4 drop-shadow text-5xl"
+                className="text-muted_white drop-shadow text-5xl"
               >
                 About Us
               </Heading>
-
-              {/* <Text
-                size="md"
-                color=""
-                className="text-center max-w-7xl mx-auto leading-7 tracking-wide text-white"
-              >
-                At Cart2Pay, we believe that no one should be limited by borders
-                or banking restrictions when shopping online. Our platform
-                empowers individuals to shop from international stores even
-                without a foreign card by offering a seamless, secure way to
-                pay in local currency while we handle the rest.
-               
-              </Text> */}
             </motion.div>
           </div>
         </section>
@@ -100,12 +87,12 @@ const AboutUs: React.FC = () => {
               color="subtle"
               className="text-center max-w-2xl mx-auto leading-7 tracking-wide"
             >
-            
               At Cart2Pay, we believe that no one should be limited by borders
-              or banking restrictions when shopping online from international stores. Our platform
-              empowers individuals to shop from international stores even
-              without a foreign card by offering a seamless, secure way to pay
-              in local currency while we handle the rest.
+              or banking restrictions when shopping online from international
+              stores. Our platform empowers individuals to shop from
+              international stores even without a foreign card by offering a
+              seamless, secure way to pay in local currency while we handle the
+              rest.
             </Text>
           </motion.div>
         </section>
@@ -123,9 +110,7 @@ const AboutUs: React.FC = () => {
 
             {/* Right - FAQ */}
             <div className="flex-1 w-full">
-              <Heading size="xl" weight="bold" className="mb-6 text-white">
-                Learn More About Us
-              </Heading>
+            
               <div className="space-y-4">
                 {faqItems.map((item, idx) => {
                   const isOpen = openIndex === idx;
@@ -140,7 +125,7 @@ const AboutUs: React.FC = () => {
                         <Text
                           size="lg"
                           weight="normal"
-                          className="text-white text-xl md:text-2xl"
+                          className="text-muted_white text-xl md:text-2xl"
                         >
                           {item.title}
                         </Text>
@@ -178,7 +163,7 @@ const AboutUs: React.FC = () => {
                           >
                             <Text
                               size="sm"
-                              className="text-blue-100 leading-6 tracking-wide pr-3"
+                              className="text-muted_white leading-6 tracking-wide pr-3"
                             >
                               {item.content}
                             </Text>
@@ -210,7 +195,11 @@ const AboutUs: React.FC = () => {
                 >
                   Join the Cart2Pay Experience
                 </Heading>
-                <Text size="md" color="subtle" className="leading-6 tracking-wide">
+                <Text
+                  size="md"
+                  color="subtle"
+                  className="leading-6 tracking-wide"
+                >
                   Cart abandonment is no longer part of the story with Cart2Pay.
                   We’ve reimagined how users interact with their carts — turning
                   hesitation into confident checkouts. Our intelligent system
