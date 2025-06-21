@@ -20,10 +20,10 @@ interface AnimatedSectionProps {
 const LandingPageMain = () => {
   return (
     <>
+      <AnimatedSection>
+        <Nav />
+      </AnimatedSection>
       <div className="px-5 md:px-20">
-        <AnimatedSection>
-          <Nav />
-        </AnimatedSection>
         <AnimatedSection>
           <HeroSection />
         </AnimatedSection>

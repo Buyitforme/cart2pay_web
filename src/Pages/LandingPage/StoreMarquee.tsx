@@ -1,6 +1,6 @@
 import React from "react";
 import { Heading, Text } from "../../Components/Typography";
-import zaraLogo from "../../Assets/svg_images/zara.svg";
+import zaraLogo from "../../Assets/svg_images/zara2.svg";
 import asosLogo from "../../Assets/svg_images/asos.svg";
 import sheinLogo from "../../Assets/svg_images/shein.svg";
 import primarkLogo from "../../Assets/svg_images/primark.svg";

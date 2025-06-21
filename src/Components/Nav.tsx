@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { Heading, Text } from "./Typography";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "./Button";
-
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="w-full ">
-      <div className="max-w-7xl mx-auto flex items-center justify-between  py-3">
+    <nav className="w-full">
+      <div className="px-6 md:px-0 max-w-7xl mx-auto flex items-center justify-between py-3">
         {/* Logo */}
         <div className="flex-shrink-0 h-auto">
           <Link to="/" className="flex">
@@ -29,7 +31,6 @@ const Nav = () => {
             >
               PAY
             </Heading>
-            {/* <ImageRenderer src={logo} alt='logo'/> */}
           </Link>
         </div>
 
@@ -61,27 +62,41 @@ const Nav = () => {
               size="lg"
               weight="semibold"
               color="default"
-              className="cursor-pointer hover:text-primary duration-300 ease-in-out"
+              className={`cursor-pointer duration-300 ease-in-out ${
+                isActive("/about")
+                  ? "text-primary font-bold"
+                  : "hover:text-primary"
+              }`}
             >
               About
             </Text>
           </Link>
+
           <Link to="/how-it-works">
             <Text
               size="lg"
               weight="medium"
               color="default"
-              className="cursor-pointer hover:text-primary duration-300 ease-in-out"
+              className={`cursor-pointer duration-300 ease-in-out ${
+                isActive("/how-it-works")
+                  ? "text-primary font-bold"
+                  : "hover:text-primary"
+              }`}
             >
               How It Works
             </Text>
           </Link>
+
           <Link to="/contact-us">
             <Text
               size="lg"
               weight="medium"
               color="default"
-              className="cursor-pointer hover:text-primary duration-300 ease-in-out"
+              className={`cursor-pointer duration-300 ease-in-out ${
+                isActive("/contact-us")
+                  ? "text-primary font-bold"
+                  : "hover:text-primary"
+              }`}
             >
               Contact Us
             </Text>
@@ -95,21 +110,24 @@ const Nav = () => {
               size="lg"
               weight="medium"
               color="default"
-              className="cursor-pointer hover:text-primary duration-300 ease-in-out"
+              className={`cursor-pointer duration-300 ease-in-out ${
+                isActive("/signin")
+                  ? "text-primary font-bold"
+                  : "hover:text-primary"
+              }`}
             >
               Login
             </Text>
           </Link>
 
-          <Button variant="primary">Signup</Button>
+          <Button variant="primary">Create account</Button>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden fixed inset-0 bg-white z-50 px-6 py-4 flex flex-col">
-            {/* Top row: Logo on the left, Close button on the right */}
+            {/* Top Row */}
             <div className="flex justify-between items-center mb-6">
-              {/* Logo */}
               <Link to="/" className="flex items-center">
                 <Heading
                   size="xl"
@@ -129,7 +147,7 @@ const Nav = () => {
                 </Heading>
               </Link>
 
-              {/* Close button */}
+              {/* Close Button */}
               <button
                 className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center"
                 onClick={() => setIsOpen(false)}
@@ -151,33 +169,56 @@ const Nav = () => {
               </button>
             </div>
 
-            {/* Navigation Links (aligned to left) */}
+            {/* Mobile Links */}
             <div className="flex flex-col items-start space-y-4 mb-6">
               <Link to="/about">
-                <Text className="text-lg font-medium hover:text-primary duration-300">
+                <Text
+                  className={`text-lg font-medium duration-300 ${
+                    isActive("/about")
+                      ? "text-primary font-bold"
+                      : "hover:text-primary"
+                  }`}
+                >
                   About
                 </Text>
               </Link>
               <Link to="/how-it-works">
-                <Text className="text-lg font-medium hover:text-primary duration-300">
+                <Text
+                  className={`text-lg font-medium duration-300 ${
+                    isActive("/how-it-works")
+                      ? "text-primary font-bold"
+                      : "hover:text-primary"
+                  }`}
+                >
                   How It Works
                 </Text>
               </Link>
               <Link to="/contact-us">
-                <Text className="text-lg font-medium hover:text-primary duration-300">
+                <Text
+                  className={`text-lg font-medium duration-300 ${
+                    isActive("/contact-us")
+                      ? "text-primary font-bold"
+                      : "hover:text-primary"
+                  }`}
+                >
                   Contact Us
                 </Text>
               </Link>
               <Link to="/signin">
-                <Text className="text-lg font-medium hover:text-primary duration-300">
+                <Text
+                  className={`text-lg font-medium duration-300 ${
+                    isActive("/signin")
+                      ? "text-primary font-bold"
+                      : "hover:text-primary"
+                  }`}
+                >
                   Login
                 </Text>
               </Link>
             </div>
 
-            {/* Signup button full width */}
             <Button variant="primary" className="w-full">
-              Signup
+              Create account
             </Button>
           </div>
         )}

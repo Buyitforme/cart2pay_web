@@ -4,6 +4,8 @@ import {
   RouteObject,
 } from "react-router-dom";
 import LandingPageMain from "../Pages/LandingPage/LandingPageMain";
+import AboutUs from "../Pages/AboutMain/AboutUs";
+import HowItWorks from "../Pages/Howitworks";
 
 const routes: RouteObject[] = [
   {
@@ -12,7 +14,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/about",
-    element: "About us",
+    element: <AboutUs />,
   },
   {
     path: "/contact-us",
@@ -20,7 +22,7 @@ const routes: RouteObject[] = [
   },
   {
     path: "/how-it-works",
-    element: "How t works",
+    element: <HowItWorks />,
   },
   {
     path: "/dashboard",
