@@ -23,10 +23,11 @@ module.exports = {
       },
       colors: {
         accent: "#1E2A47",
-        primary: "#8fac6a",
+        primary: "#708238",
         background: "#F5F7FA",
         input: "B0BEC5",
         card: "B0BEC5",
+        sub_primary: "#8FAC6A",
       },
     },
   },

@@ -46,9 +46,9 @@ function HeroSection() {
             </Button>
             <Button
               variant="outline"
-              className="border border-primary text-primary bg-transparent hover:bg-primary hover:text-white transition w-full md:w-auto"
+               className="w-full md:w-auto"
             >
-              Discover Favorite stores
+              Explore stores
             </Button>
           </div>
         </div>
