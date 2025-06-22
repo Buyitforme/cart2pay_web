@@ -3,10 +3,6 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
   theme: {
     extend: {
-      animation: {
-        shimmer: "shimmer 1.5s infinite",
-        scroll: "scroll 5s linear infinite",
-      },
       keyframes: {
         shimmer: {
           "0%": { transform: "translateX(-100%)" },
@@ -16,6 +12,15 @@ module.exports = {
           "0%": { transform: "translateX(0%)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        zoom: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.2)" },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 1.5s infinite",
+        scroll: "scroll 5s linear infinite",
+        zoom: "zoom 1.5s ease-in-out infinite", // ✅ Move this out of keyframes
       },
       fontFamily: {
         heading: ["Montserrat", "ui-sans-serif", "system-ui"],
@@ -29,7 +34,8 @@ module.exports = {
         card: "B0BEC5",
         sub_primary: "#8FAC6A",
         white: "#FAFAFA",
-        muted_white: "#DCDCDC	",
+        muted_white: "#DCDCDC",
+        error_red: "#c81828",
       },
     },
   },

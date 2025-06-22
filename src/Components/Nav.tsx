@@ -10,7 +10,7 @@ const Nav = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="w-full">
+    <nav className="w-full ">
       <div className="px-6 md:px-0 max-w-7xl mx-auto flex items-center justify-between py-3">
         {/* Logo */}
         <div className="flex-shrink-0 h-auto">
@@ -99,6 +99,21 @@ const Nav = () => {
             </Text>
           </Link>
 
+          <Link to="/stories">
+            <Text
+              size="lg"
+              weight="medium"
+              color="default"
+              className={`cursor-pointer duration-300 ease-in-out ${
+                isActive("/stories")
+                  ? "text-primary font-bold"
+                  : "hover:text-primary"
+              }`}
+            >
+              Stories
+            </Text>
+          </Link>
+
           <Link to="/contact-us">
             <Text
               size="lg"
@@ -184,6 +199,17 @@ const Nav = () => {
 
             {/* Mobile Links */}
             <div className="flex flex-col items-start space-y-4 mb-6">
+              <Link to="/">
+                <Text
+                  className={`text-lg font-medium duration-300 ${
+                    isActive("/")
+                      ? "text-primary font-bold"
+                      : "hover:text-primary"
+                  }`}
+                >
+                  Home
+                </Text>
+              </Link>
               <Link to="/about">
                 <Text
                   className={`text-lg font-medium duration-300 ${
@@ -204,6 +230,20 @@ const Nav = () => {
                   }`}
                 >
                   How It Works
+                </Text>
+              </Link>
+              <Link to="/stories">
+                <Text
+                  size="lg"
+                  weight="medium"
+                  color="default"
+                  className={`cursor-pointer duration-300 ease-in-out ${
+                    isActive("/stories")
+                      ? "text-primary font-bold"
+                      : "hover:text-primary"
+                  }`}
+                >
+                  Stories
                 </Text>
               </Link>
               <Link to="/contact-us">

@@ -4,9 +4,26 @@ import { Button } from "./Button";
 import { Input } from "./Inputfield";
 import { Heading, Text } from "./Typography";
 import { Facebook, Twitter, Instagram } from "lucide-react";
-
+import { Field, Form, Formik } from "formik";
+import * as Yup from "yup";
 
 const Footer: React.FC = () => {
+  const initialValues = {
+    email: "",
+  };
+
+  const validationSchema = Yup.object({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+  });
+
+  const handleSubmit = async (
+    values: typeof initialValues,
+    { resetForm }: any
+  ) => {
+    await new Promise((res) => setTimeout(res, 1000));
+    console.log("Subscribed:", values.email);
+    resetForm();
+  };
   return (
     <footer className="w-full bg-[#F9FAFB] pt-16 pb-32 px-6 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -38,6 +55,15 @@ const Footer: React.FC = () => {
           </Text>
 
           <div className="flex space-x-4 text-sm text-gray-600">
+            <Link to="/">
+              <Text
+                size="md"
+                weight="semibold"
+                className="hover:text-[#8fac6a]"
+              >
+                Home
+              </Text>
+            </Link>
             <Link to="/about">
               <Text
                 size="md"
@@ -95,22 +121,41 @@ const Footer: React.FC = () => {
               </Text>
             </div>
 
-            {/* Input with embedded button */}
-            <form className="space-y-6">
-              <div className="relative w-full">
-                <Input
-                  placeholder="Enter your email"
-                  className="pr-32 bg-white text-black focus:ring-white"
-                  type="email"
-                />
-                <Button
-                  variant="secondary"
-                  className="absolute top-1 right-1 h-8 px-4  "
-                >
-                  Get in Touch
-                </Button>
-              </div>
-            </form>
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={handleSubmit}
+            >
+              {({ isSubmitting, errors, touched }) => (
+                <Form className="space-y-6">
+                  <div className="relative w-full">
+                    <Field name="email">
+                      {({ field }: any) => (
+                        <Input
+                          {...field}
+                          id="footer-email"
+                          type="email"
+                          placeholder="Enter your email"
+                          className="pr-32 bg-white text-black focus:ring-white"
+                          error={
+                            touched.email && errors.email ? errors.email : ""
+                          }
+                        />
+                      )}
+                    </Field>
+
+                    <Button
+                      type="submit"
+                      variant="secondary"
+                      className="absolute top-1 right-1 h-8 px-4"
+                      loading={isSubmitting}
+                    >
+                      Get in Touch
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </div>
           {/* Social Icons */}
           <div className="mt-8 flex justify-end space-x-4">
@@ -141,7 +186,5 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-
 
 export default Footer;

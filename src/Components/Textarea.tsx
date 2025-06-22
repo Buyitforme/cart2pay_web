@@ -1,21 +1,26 @@
 import React from "react";
+import { useField } from "formik";
 import { cn } from "../lib/utils";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
-  error?: string;
+  name: string;
   helperText?: string;
 }
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, label, error, helperText, id, ...props }, ref) => {
+  ({ className, label, helperText, id, ...props }, ref) => {
+    const [field, meta] = useField(props.name ?? "");
+    const hasError = meta.touched && meta.error;
     const textareaId =
       id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
 
     const baseStyles =
-      "flex min-h-[80px] w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
-    const errorStyles = error ? "border-red-500 focus:ring-red-500" : "";
+      "flex min-h-[80px] w-full rounded-md border bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#1E2A47] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+    const errorStyles = hasError
+      ? "border-red-500 focus:ring-red-500"
+      : "border-slate-300";
 
     return (
       <div className="space-y-2">
@@ -28,13 +33,14 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           </label>
         )}
         <textarea
-          className={cn(baseStyles, errorStyles, className)}
-          ref={ref}
           id={textareaId}
+          {...field}
           {...props}
+          ref={ref}
+          className={cn(baseStyles, errorStyles, className)}
         />
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        {helperText && !error && (
+        {hasError && <p className="text-sm text-red-600">{meta.error}</p>}
+        {helperText && !hasError && (
           <p className="text-sm text-slate-500">{helperText}</p>
         )}
       </div>
@@ -43,5 +49,4 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
 );
 
 Textarea.displayName = "Textarea";
-
 export { Textarea };

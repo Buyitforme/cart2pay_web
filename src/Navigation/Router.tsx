@@ -8,35 +8,47 @@ import AboutUs from "../Pages/AboutMain/AboutUs";
 import HowItWorks from "../Pages/Howitworks";
 import Login from "../Pages/Login";
 import Signup from "../Pages/Signup";
+import ContactUs from '../Pages/ContactUs';
+import Stories from "../Pages/Stories";
+import routeNames from "./RouteNames";
+import ShareYourStory from "../Pages/LandingPage/ShareYourStory";
 
 const routes: RouteObject[] = [
   {
-    path: "/",
+    path: routeNames.landing,
     element: <LandingPageMain />,
   },
   {
-    path: "/about",
+    path: routeNames.about,
     element: <AboutUs />,
   },
   {
-    path: "/contact-us",
-    element: "contact us",
+    path: routeNames.contactUs,
+    element: <ContactUs />,
   },
   {
-    path: "/how-it-works",
+    path: routeNames.howItWorks,
     element: <HowItWorks />,
   },
   {
-    path: "/dashboard",
+    path: routeNames.stories,
+    element: <Stories />,
+  },
+  {
+    path: routeNames.dashboard,
     element: "Dashboard",
   },
   {
-    path: "/signin",
+    path: routeNames.signIn,
     element: <Login />,
   },
   {
-    path: "/signup",
+    path: routeNames.signUp,
     element: <Signup />,
+  },
+  {
+    path: routeNames.share_story,
+    element: <ShareYourStory />,
   },
   {
     path: "*",

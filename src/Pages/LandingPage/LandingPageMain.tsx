@@ -39,7 +39,6 @@ const LandingPageMain = () => {
         <ThirstTraps />
         <Faq />
       </AnimatedSection>
-
       <AnimatedSection>
         <Footer />
       </AnimatedSection>

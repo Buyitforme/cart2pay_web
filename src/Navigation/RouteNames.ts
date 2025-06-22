@@ -6,6 +6,8 @@ const routeNames = {
   dashboard: "/dashboard",
   signIn: "/signin",
   signUp: "/signup",
+  stories: "/stories",
+  share_story: "/share-your-story",
   notFound: "*",
 };
 
