@@ -28,7 +28,7 @@ const StoreMarquee = () => {
           size="lg"
           weight="medium"
           color="default"
-          className="w-full pt-3 max-w-2xl mx-auto mb-10"
+          className="w-full px-3 pt-3 max-w-2xl mx-auto mb-10"
         >
           Discover the latest trends and timeless essentials from the brands you
           love all in one place. Shop global fashion and lifestyle stores while

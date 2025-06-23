@@ -7,12 +7,13 @@ import { Button } from "../Components/Button";
 import { User } from "lucide-react";
 import AuthLayout from "../Components/AuthLayout";
 import { Input } from "../Components/Inputfield";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as { from?: string } | null;
-const from = (location.state as { from?: string })?.from || "/";
+const from = (location.state as { from?: string })?.from || "/dashboard";
   const initialValues = {
     email: "",
     password: "",
@@ -27,6 +28,7 @@ const from = (location.state as { from?: string })?.from || "/";
     await new Promise((res) => setTimeout(res, 2000));
     localStorage.setItem("userEmail", values.email); // store email
     navigate(from); // redirect to intended page
+
   };
 
   return (

@@ -10,6 +10,7 @@ import AuthLayout from "../../Components/AuthLayout";
 import Nav from "../../Components/Nav";
 import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
+import MainLayout from "../../Components/MainLayout";
 
 
 
@@ -49,8 +50,7 @@ useEffect(() => {
 
   return (
     <>
-      <Nav />
-      <Toaster position="top-center" reverseOrder={false} />
+      {/* <MainLayout> */}
 
       <div className="min-h-screen px-4 py-16 bg-[#F5F7FA] flex items-start justify-center">
         <div className="w-full max-w-2xl bg-white p-8 rounded-xl shadow-lg space-y-6">
@@ -99,6 +99,7 @@ useEffect(() => {
           </Formik>
         </div>
       </div>
+      {/* </MainLayout> */}
     </>
   );
 };

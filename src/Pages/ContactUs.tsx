@@ -1,12 +1,11 @@
-import React from "react";
-import { Button } from "../Components/Button";
-import { Mail, Phone, MapPin } from "lucide-react";
-import { Input } from "../Components/Inputfield";
-import { Textarea } from "../Components/Textarea";
+
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import Nav from "../Components/Nav";
-import { Heading,Text} from "../Components/Typography";
+import { Input } from "../Components/Inputfield";
+import { Textarea } from "../Components/Textarea";
+import { Button } from "../Components/Button";
+import { Heading, Text } from "../Components/Typography";
+import MainLayout from "../Components/MainLayout";
 
 const ContactUs = () => {
   const initialValues = {
@@ -21,86 +20,30 @@ const ContactUs = () => {
     message: Yup.string().required("Message cannot be empty"),
   });
 
-  const handleSubmit = (values: typeof initialValues, { resetForm }: any) => {
-    console.log("Form submitted:", values);
+  const handleSubmit = async (
+    values: typeof initialValues,
+    { resetForm }: any
+  ) => {
+    await new Promise((res) => setTimeout(res, 1500));
+    console.log("Submitted:", values);
     resetForm();
   };
 
   return (
     <>
-      <Nav />
-      <div className="min-h-screen bg-[#DCDCDC] flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 gap-10 bg-white/70 backdrop-blur-sm shadow-lg rounded-xl overflow-hidden">
-          {/* Contact Info */}
-          <div className="bg-[#1E2A47] text-white p-8 flex flex-col justify-center space-y-6">
-            <Heading
-              size="xl"
-              weight="bold"
-              color="default"
-              className="text-2xl text-muted_white"
-            >
-              Say Hello
-            </Heading>
-            <Text
-              size="sm"
-              weight="medium"
-              color="subtle"
-              className="text-muted_white"
-            >
-              Reach out to us through any of the channels below.
-            </Text>
-            <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <MapPin className="mt-1 text-[#708238]" />
-                <Text
-                  size="sm"
-                  weight="medium"
-                  color="subtle"
-                  className="text-muted_white"
-                >
-                  123 Green Road, Lagos, Nigeria
-                </Text>
-              </div>
-              <div className="flex items-start gap-3">
-                <Mail className="mt-1 text-[#708238]" />
-                <Text
-                  size="sm"
-                  weight="medium"
-                  color="subtle"
-                  className="text-muted_white"
-                >
-                  hello@cart2pay.com
-                </Text>
-              </div>
-              <div className="flex items-start gap-3">
-                <Phone className="mt-1 text-[#708238]" />
-               
-                <Text
-                  size="sm"
-                  weight="medium"
-                  color="subtle"
-                  className="text-muted_white"
-                >
-                  +234 800 000 0000
-                </Text>
-              </div>
+      {/* <MainLayout> */}
+        <div className="min-h-screen bg-background px-6 py-16 flex items-start justify-center">
+          <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-8 space-y-6">
+            <div className="text-center space-y-2">
+              <Heading size="2xl" weight="bold" className="text-accent">
+                We’re Happy to Help You!
+              </Heading>
+              <Text size="md" color="subtle">
+                Need a quick response? Enter your question below,  we’ll get
+                back to you shortly.
+              </Text>
             </div>
-          </div>
 
-          {/* Contact Form */}
-          <div className="p-8 bg-white space-y-6 flex flex-col justify-center">
-            <Heading
-              size="xl"
-              weight="bold"
-              color="default"
-              className="text-2xl"
-            >
-              We're happy to help you!
-            </Heading>
-            <Text size="sm" weight="medium" color="subtle">
-              Need a quick answer? Enter your question below for instant
-              responses
-            </Text>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -125,7 +68,6 @@ const ContactUs = () => {
                     label="Message"
                     placeholder="Type your message..."
                     rows={4}
-                    className="resize-none"
                   />
                   <Button
                     type="submit"
@@ -135,12 +77,30 @@ const ContactUs = () => {
                   >
                     Send Message
                   </Button>
+
+                  <Text size="sm" color="subtle" className="text-center">
+                    Prefer to call or email? Reach us at{" "}
+                    <a
+                      href="tel:+2348000000000"
+                      className="text-primary font-medium"
+                    >
+                      +234 800 000 0000
+                    </a>{" "}
+                    or{" "}
+                    <a
+                      href="mailto:hello@yourcompany.com"
+                      className="text-primary font-medium"
+                    >
+                      hello@yourcompany.com
+                    </a>
+                    .
+                  </Text>
                 </Form>
               )}
             </Formik>
           </div>
         </div>
-      </div>
+      {/* </MainLayout> */}
     </>
   );
 };

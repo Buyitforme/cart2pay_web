@@ -37,7 +37,7 @@ const TestimonialSection: React.FC = () => {
 
           <div className="flex justify-center md:justify-start gap-4 flex-wrap">
             <Button variant="secondary">Create a free account</Button>
-            <Button variant="outline">Start shopping</Button>
+            <Button variant="outline">Explore stores</Button>
           </div>
         </div>
 
