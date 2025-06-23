@@ -11,6 +11,10 @@ export interface InputProps
   rightIcon?: React.ReactNode;
 }
 
+
+
+// ...
+
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -27,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const [field, meta] = useField(props.name ?? "");
+    const [field, meta] = useField(props.name);
     const hasError = meta.touched && meta.error;
     const baseStyles =
       "flex h-10 w-full rounded-md border bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none";
@@ -65,9 +69,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             id={id || props.name}
             ref={ref}
             {...field}
-            {...props}
             type={type === "password" && showPassword ? "text" : type}
             className={cn(baseStyles, errorStyles, iconPadding, className)}
+            {...props}
           />
           {type === "password" && (
             <button

@@ -1,21 +1,57 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { X, Menu, Bell, Settings,User } from "lucide-react"; // optional icons
+import {
+  X,
+  Menu,
+  Bell,
+  Settings,
+  User,
+  LayoutDashboard,
+  ShoppingBag,
+  CreditCard,
+  User as UserIcon,
+} from "lucide-react";
 import { Heading } from "../../Components/Typography";
 
 const navLinks = [
-  { label: "Dashboard", to: "/dashboard" },
-  { label: "Orders", to: "/dashboard/orders" },
-  { label: "New Order", to: "/dashboard/new-order" },
-  { label: "Payments", to: "/dashboard/payments" },
+  {
+    label: "Home",
+    to: "/dashboard",
+    icon: <LayoutDashboard className="w-5 h-5" />,
+  },
+  {
+    label: "Orders",
+    to: "/dashboard/orders",
+    icon: <ShoppingBag className="w-5 h-5" />,
+  },
+  {
+    label: "Payments",
+    to: "/dashboard/payments",
+    icon: <CreditCard className="w-5 h-5" />,
+  },
+
+  {
+    label: "New Order",
+    to: "/dashboard/new-order",
+    icon: <ShoppingBag className="w-5 h-5" />,
+  },
 ];
 
 const UserHubNav = () => {
   const [open, setOpen] = useState(false);
+  const [animate, setAnimate] = useState(false);
+
+  const handleClose = () => {
+    setAnimate(true);
+    setTimeout(() => {
+      setOpen(false);
+      setAnimate(false);
+    }, 300);
+  };
   return (
     <>
-      <nav className="bg-white border-b border-gray-200 px-4 py-3 md:px-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <nav className="bg-white border-b border-gray-200 py-3 px-4  md:px-16">
+        <div className="  flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-1">
             <Heading size="lg" weight="bold" color="default">
@@ -32,7 +68,7 @@ const UserHubNav = () => {
               <NavLink
                 key={link.to}
                 to={link.to}
-                end // 👈 this ensures only exact matches are considered active
+                end
                 className={({ isActive }) =>
                   `text-sm font-medium ${
                     isActive
@@ -71,17 +107,20 @@ const UserHubNav = () => {
 
       {/* Mobile Side Drawer */}
       {open && (
-        <div className="fixed inset-0 bg-black/30 z-50">
-          <div className="absolute top-0 left-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col space-y-6">
+        <div
+          className="fixed inset-0 bg-black/30 z-50 transition-all duration-300"
+          onClick={handleClose}
+        >
+          <div
+            className={`absolute top-0 left-0 h-full w-64 bg-white shadow-lg p-6 flex flex-col space-y-6 transition-all duration-300 ${
+              animate ? "animate-slide-out" : "animate-slide-in"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-center mb-4">
-              <Link to="/" className="flex items-center space-x-1">
-                <Heading size="lg" weight="bold" color="default">
-                  Cart2
-                </Heading>
-                <Heading size="lg" weight="bold" color="primary">
-                  PAY
-                </Heading>
-              </Link>
+              <Heading size="lg" weight="bold" color="default">
+                Menu
+              </Heading>
               <button onClick={() => setOpen(false)} className="text-gray-500">
                 <X className="w-6 h-6" />
               </button>
@@ -91,18 +130,33 @@ const UserHubNav = () => {
               <NavLink
                 key={link.to}
                 to={link.to}
+                end
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  `text-sm font-medium ${
+                  `flex items-center space-x-2 text-sm font-medium ${
                     isActive
                       ? "text-primary font-bold"
                       : "text-gray-700 hover:text-primary"
                   }`
                 }
               >
-                {link.label}
+                {link.icon}
+                <span>{link.label}</span>
               </NavLink>
             ))}
+
+            <div className="mt-auto pt-24 border-t border-gray-200">
+              <div className="flex flex-col gap-6">
+                <button className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-primary">
+                  <Settings className="w-5 h-5" />
+                  <span>Notifications</span>
+                </button>
+                <button className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-primary">
+                  <User className="w-5 h-5" />
+                  <span>Profile</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

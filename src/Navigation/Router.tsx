@@ -13,8 +13,9 @@ import Stories from "../Pages/Stories";
 import routeNames from "./RouteNames";
 import ShareYourStory from "../Pages/LandingPage/ShareYourStory";
 import UserHubLayout from "../Pages/UserHub/UserHubLayout";
-import DashboardHome from "../Pages/UserHub/UserDashboardMain";
+import DashboardHome from "../Pages/UserHub/Home/UserDashboardMain";
 import MainLayout from "../Components/MainLayout";
+import NewOrder from "../Pages/UserHub/Orders/NewOrder";
 
 const routes: RouteObject[] = [
   {
@@ -36,10 +37,10 @@ const routes: RouteObject[] = [
     element: <UserHubLayout />,
     children: [
       { index: true, element: <DashboardHome /> },
-      { path: "orders", element: <>Orders</> },
+      { path: "orders", element: <NewOrder /> },
       { path: "payments", element: <>Payments</> },
       { path: "profile", element: <>Profile</> },
-      { path: "new-order", element: <>New Order</> },
+      { path: "new-order", element: <NewOrder /> },
     ],
   },
   {
