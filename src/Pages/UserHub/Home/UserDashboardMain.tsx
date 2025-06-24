@@ -4,7 +4,7 @@ import { Button } from "../../../Components/Button";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const userName = "Chioma"; // Replace with dynamic user name from context/state
+  const userName = "Chioma"; 
 
   return (
     <div className="py-6 space-y-6 text-[#1E2A47]">

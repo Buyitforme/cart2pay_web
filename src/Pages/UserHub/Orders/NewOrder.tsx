@@ -1,168 +1,127 @@
 import { useState } from "react";
-import { Form, Formik, useFormik } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
-import { Heading, Text } from "../../../Components/Typography";
-import { Input } from "../../../Components/Inputfield";
-import Select from "../../../Components/Select";
+import CheckoutFormSection from "./CheckoutForm";
+import { Outlet, useNavigate } from 'react-router-dom';
 
-const storeOptions = [
-  { label: "Shein", value: "shein" },
-  { label: "Zara", value: "zara" },
-  { label: "Fashion Nova", value: "fashion-nova" },
-  { label: "Other", value: "other" },
-];
-
-const NewOrder = () => {
-  const [itemLinks, setItemLinks] = useState([""]);
-  const [useSavedAddress, setUseSavedAddress] = useState(true);
-
-  const initialValues = {
-    store: "",
-    itemLinks: [""],
-    address: "",
-    useSavedAddress: true,
-  };
-const validationSchema = Yup.object().shape({
-  store: Yup.string().required("Please select a store"),
-  itemLinks: Yup.array().of(
-    Yup.string().url("Invalid URL").required("Please enter a valid item link")
-  ),
-  useSavedAddress: Yup.boolean(),
-  address: Yup.string().when("useSavedAddress", {
-    is: false,
-    then: (schema) => schema.required("Please enter your delivery address"),
-  }),
-});
-
-
-
-  const addItem = () => {
-    setItemLinks([...itemLinks, ""]);
-  };
-const handlePaste = (
-  e: React.ClipboardEvent<HTMLInputElement>,
-  index: number
-) => {
-  const pastedText = e.clipboardData.getData("text");
-
-  if (pastedText.trim()) {
-    // Set current index value
-
-    // Only add new input if this is the last input and it's not empty
-    if (index === itemLinks.length - 1) {
-    }
-  }
-
-  e.preventDefault(); // prevent the default paste into input
+const initialCheckout = {
+  store: "",
+  itemLink: "",
+  address: "",
+  useSavedAddress: true,
+  fullName: "",
+  phone: "",
+  email: "",
+  state: "",
+  lga: "",
 };
 
-const handleSubmit = ()=>{
+const validationSchema = Yup.object({
+  checkouts: Yup.array().of(
+    Yup.object({
+      store: Yup.string().required("Select a store"),
+      itemLink: Yup.string()
+        .required("Paste a valid cart link")
+        .test(
+          "match-store",
+          "Link doesn't match the selected store",
+          function (value) {
+            const store = this.parent.store;
+            const storeDomains: Record<string, string[]> = {
+              shein: ["shein.com"],
+              zara: ["zara.com"],
+              "fashion-nova": ["fashionnova.com"],
+              other: [],
+            };
+            if (!value || !store || store === "other") return true;
+            return storeDomains[store]?.some((domain) =>
+              value.includes(domain)
+            );
+          }
+        ),
+      useSavedAddress: Yup.boolean(),
+      fullName: Yup.string().when("useSavedAddress", {
+        is: false,
+        then: (schema) => schema.required("Enter full name"),
+      }),
+      phone: Yup.string().when("useSavedAddress", {
+        is: false,
+        then: (schema) => schema.required("Enter phone number"),
+      }),
+      email: Yup.string()
+        .email("Invalid email")
+        .when("useSavedAddress", {
+          is: false,
+          then: (schema) => schema.required("Enter email"),
+        }),
+      state: Yup.string().when("useSavedAddress", {
+        is: false,
+        then: (schema) => schema.required("Select state"),
+      }),
+      lga: Yup.string().when("useSavedAddress", {
+        is: false,
+        then: (schema) => schema.required("Select LGA"),
+      }),
+      address: Yup.string().when("useSavedAddress", {
+        is: false,
+        then: (schema) => schema.required("Enter address"),
+      }),
+    })
+  ),
+});
 
-}
+const NewOrder = () => {
+  const navigate = useNavigate();
+
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ isSubmitting, values, setFieldValue, touched, errors }) => (
-        <Form>
-          {/* Step 1: Store */}
-          <div className="space-y-2">
-            <Heading size="lg" weight="bold">
-             Select Store
-            </Heading>
-            <Select
-              name="store"
-              options={storeOptions}
-              value={values.store}
-              onChange={(e) => setFieldValue("store", e.target.value)}
-              placeholder="Choose a store"
-            />
-            {touched.store && errors.store && (
-              <Text size="sm" className="text-red-500">
-                {errors.store}
-              </Text>
-            )}
-          </div>
-
-          {/* Step 2: Item Links */}
-          <div className="space-y-4">
-            <Heading size="lg" weight="bold">
-             Paste Item Links
-            </Heading>
-            {values.itemLinks.map((link, index) => (
-              <Input
+    <div className="px-0 md:px-20">
+      <Formik
+        initialValues={{ checkouts: [initialCheckout] }}
+        validationSchema={validationSchema}
+        onSubmit={(values) => {
+          console.log("Submitted checkouts:", values);
+        }}
+      >
+        {({ values, setFieldValue }) => (
+          <Form>
+            {values.checkouts.map((_, index) => (
+              <CheckoutFormSection
                 key={index}
-                placeholder={`Item link ${index + 1}`}
-                value={link}
-                onPaste={(e) => handlePaste(e, index)}
-                onChange={(e) => {
-                  const newItemLinks = [...values.itemLinks];
-                  newItemLinks[index] = e.target.value;
-                  setFieldValue("itemLinks", newItemLinks);
-                }}
-                name={`itemLinks[${index}]`}
+                index={index}
+                checkouts={values.checkouts}
+                setFieldValue={setFieldValue}
               />
             ))}
 
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() =>
-                setFieldValue("itemLinks", [...values.itemLinks, ""])
-              }
-            >
-              + Add Item
-            </Button>
-          </div>
+            <div className="pt-4 space-x-4">
+              <Button
+                type="button" // Changed from submit to button
+                variant="primary"
+                onClick={() => navigate("payment")} // This will navigate to /dashboard/new-order/payments
+              >
+                Proceed to Pay
+              </Button>
 
-          {/* Step 3: Delivery Info */}
-          <div className="space-y-3">
-            <Heading size="lg" weight="bold">
-               Delivery Info
-            </Heading>
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={values.useSavedAddress}
-                onChange={() => {
-                  setFieldValue("useSavedAddress", !values.useSavedAddress);
-                  if (!values.useSavedAddress) setFieldValue("address", "");
-                }}
-              />
-              <Text>Use saved address</Text>
-            </label>
-
-            {!values.useSavedAddress && (
-              <Input
-                name="address"
-                label="Delivery Address"
-                placeholder="Enter your delivery address"
-                value={values.address}
-                onChange={(e) => setFieldValue("address", e.target.value)}
-              />
-            )}
-            {!values.useSavedAddress && touched.address && errors.address && (
-              <Text size="sm" className="text-red-500">
-                {errors.address}
-              </Text>
-            )}
-          </div>
-
-          {/* Step 4: Payment CTA */}
-          <div className="pt-4">
-            <Button variant="primary" type="submit" disabled={isSubmitting}>
-             Proceed to Pay
-            </Button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() =>
+                  setFieldValue("checkouts", [
+                    ...values.checkouts,
+                    initialCheckout,
+                  ])
+                }
+              >
+                Add Another Checkout
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 };
 
+
 export default NewOrder;
-
-

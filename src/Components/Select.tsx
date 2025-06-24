@@ -12,6 +12,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   placeholder?: string;
   className?: string;
+  label?:string
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -21,16 +22,20 @@ const Select: React.FC<SelectProps> = ({
   onChange,
   placeholder = "Select an option",
   className = "",
+  label,
   ...rest
 }) => {
   return (
     <div className="w-full">
+      {label && (
+        <label className="text-sm font-medium text-slate-700 ">{label}</label>
+      )}
       <select
         name={name}
         value={value}
         onChange={onChange}
         {...rest}
-        className={`w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm text-sm text-[#1E2A47] bg-white focus:outline-none focus:ring-2 focus:ring-[#708238] transition ${className}`}
+        className={`w-full h-10 px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-sm text-[#1E2A47] bg-white focus:outline-none  focus:ring-accent transition ${className}`}
       >
         <option value="" disabled>
           {placeholder}

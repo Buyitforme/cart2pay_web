@@ -16,6 +16,7 @@ import UserHubLayout from "../Pages/UserHub/UserHubLayout";
 import DashboardHome from "../Pages/UserHub/Home/UserDashboardMain";
 import MainLayout from "../Components/MainLayout";
 import NewOrder from "../Pages/UserHub/Orders/NewOrder";
+import Payment from "../Pages/UserHub/Payment/Payment";
 
 const routes: RouteObject[] = [
   {
@@ -32,15 +33,16 @@ const routes: RouteObject[] = [
   },
   { path: routeNames.signIn, element: <Login /> },
   { path: routeNames.signUp, element: <Signup /> },
+
   {
     path: "/dashboard",
     element: <UserHubLayout />,
     children: [
       { index: true, element: <DashboardHome /> },
-      { path: "orders", element: <NewOrder /> },
-      { path: "payments", element: <>Payments</> },
+      { path: "orders", element: <>Orders</> },
       { path: "profile", element: <>Profile</> },
-      { path: "new-order", element: <NewOrder /> },
+      { path: "new-order", element: <NewOrder /> }, // Main new order page
+      { path: "new-order/payment", element: <Payment /> }, // Separate payments page
     ],
   },
   {
@@ -48,6 +50,7 @@ const routes: RouteObject[] = [
     element: <>Page not found</>,
   },
 ];
+
 
 const router = createBrowserRouter(routes);
 

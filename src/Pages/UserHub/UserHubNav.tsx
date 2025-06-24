@@ -25,15 +25,16 @@ const navLinks = [
     icon: <ShoppingBag className="w-5 h-5" />,
   },
   {
-    label: "Payments",
-    to: "/dashboard/payments",
-    icon: <CreditCard className="w-5 h-5" />,
-  },
-
-  {
     label: "New Order",
     to: "/dashboard/new-order",
     icon: <ShoppingBag className="w-5 h-5" />,
+    children: [
+      {
+        label: "Payment",
+        to: "/dashboard/new-order/payment", // <-- corrected
+        icon: <CreditCard className="w-5 h-5" />,
+      },
+    ],
   },
 ];
 
@@ -48,10 +49,12 @@ const UserHubNav = () => {
       setAnimate(false);
     }, 300);
   };
+  // Updated Navigation Component
+  // Updated Navigation Component
   return (
     <>
-      <nav className="bg-white border-b border-gray-200 py-3 px-4  md:px-16">
-        <div className="  flex items-center justify-between">
+      <nav className="bg-white border-b border-gray-200 py-3 px-4 md:px-16">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-1">
             <Heading size="lg" weight="bold" color="default">
@@ -64,22 +67,30 @@ const UserHubNav = () => {
 
           {/* Center Nav - Desktop only */}
           <div className="hidden md:flex flex-1 justify-center space-x-8">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end
-                className={({ isActive }) =>
-                  `text-sm font-medium ${
-                    isActive
-                      ? "text-primary font-bold"
-                      : "text-gray-600 hover:text-primary"
-                  }`
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
+            {navLinks.map((link) => {
+           
+
+              return (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={!link.children}
+                  className={({ isActive: routerIsActive }) => {
+                    const active = link.children
+                      ? window.location.pathname.startsWith(link.to)
+                      : routerIsActive;
+
+                    return `text-sm font-medium ${
+                      active
+                        ? "text-primary font-bold"
+                        : "text-gray-600 hover:text-primary"
+                    }`;
+                  }}
+                >
+                  {link.label}
+                </NavLink>
+              );
+            })}
           </div>
 
           {/* Right Icons - Desktop only */}
@@ -126,24 +137,51 @@ const UserHubNav = () => {
               </button>
             </div>
 
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `flex items-center space-x-2 text-sm font-medium ${
-                    isActive
-                      ? "text-primary font-bold"
-                      : "text-gray-700 hover:text-primary"
-                  }`
-                }
-              >
-                {link.icon}
-                <span>{link.label}</span>
-              </NavLink>
-            ))}
+            {navLinks.map((link) => {
+              const active = link.children
+                ? window.location.pathname.startsWith(link.to)
+                : window.location.pathname === link.to;
+
+              return (
+                <div key={link.to}>
+                  <NavLink
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className={`flex items-center space-x-2 text-sm font-medium ${
+                      active
+                        ? "text-primary font-bold"
+                        : "text-gray-700 hover:text-primary"
+                    }`}
+                  >
+                    {link.icon}
+                    <span>{link.label}</span>
+                  </NavLink>
+
+                  {/* Render child navigation items if they exist */}
+                  {/* {link.children && (
+                    <div className="ml-6 mt-2 space-y-2">
+                      {link.children.map((child) => (
+                        <NavLink
+                          key={child.to}
+                          to={child.to}
+                          onClick={() => setOpen(false)}
+                          className={({ isActive }) =>
+                            `flex items-center space-x-2 text-xs font-medium ${
+                              isActive
+                                ? "text-primary font-bold"
+                                : "text-gray-600 hover:text-primary"
+                            }`
+                          }
+                        >
+                          {child.icon}
+                          <span>{child.label}</span>
+                        </NavLink>
+                      ))}
+                    </div>
+                  )} */}
+                </div>
+              );
+            })}
 
             <div className="mt-auto pt-24 border-t border-gray-200">
               <div className="flex flex-col gap-6">
