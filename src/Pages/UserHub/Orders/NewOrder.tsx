@@ -73,6 +73,16 @@ const validationSchema = Yup.object({
 
 const NewOrder = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+const handleProceed = () => {
+  setLoading(true);
+
+  setTimeout(() => {
+    setLoading(false);
+    navigate("payment");
+  }, 2000); // 2 seconds
+};
+
 
   return (
     <div className="px-0 md:px-20">
@@ -83,7 +93,7 @@ const NewOrder = () => {
           console.log("Submitted checkouts:", values);
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ values, setFieldValue, isValid }) => (
           <Form>
             {values.checkouts.map((_, index) => (
               <CheckoutFormSection
@@ -96,9 +106,11 @@ const NewOrder = () => {
 
             <div className="pt-4 space-x-4">
               <Button
-                type="button" // Changed from submit to button
+                type="button"
                 variant="primary"
-                onClick={() => navigate("payment")} // This will navigate to /dashboard/new-order/payments
+                disabled={!isValid || loading}
+                onClick={handleProceed}
+                loading={loading}
               >
                 Proceed to Pay
               </Button>

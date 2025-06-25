@@ -5,11 +5,13 @@ import { Button } from "../../../Components/Button";
 import { Copy, Info, InfoIcon } from "lucide-react";
 import Modal from "../../../Components/Modal";
 import Tooltip from "../../../Components/Tooltip";
+import { useNavigate } from "react-router-dom";
 
 
 const Payment = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate()
 
   const accountDetails = {
     name: "Cart2pay Ltd",
@@ -194,7 +196,9 @@ const Payment = () => {
           <div className="pt-4">
             <Button
               variant="primary"
-              onClick={() => setIsModalOpen(false)}
+              onClick={() =>{
+                setIsModalOpen(false) 
+                navigate('/dashboard')}}
               className="w-full"
             >
               Done

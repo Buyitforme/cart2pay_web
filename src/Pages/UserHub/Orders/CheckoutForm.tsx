@@ -53,9 +53,7 @@ const CheckoutFormSection = ({
           name={`checkouts[${index}].itemLink`}
           placeholder="Paste cart link from selected store"
           value={checkout.itemLink}
-          onChange={(e) =>
-            setFieldValue(`checkouts[${index}].itemLink`, e.target.value)
-          }
+       
         />
       </div>
 
@@ -84,26 +82,20 @@ const CheckoutFormSection = ({
               name={`checkouts[${index}].fullName`}
               label="Full Name"
               value={checkout.fullName}
-              onChange={(e) =>
-                setFieldValue(`checkouts[${index}].fullName`, e.target.value)
-              }
+            
             />
             <Input
               name={`checkouts[${index}].phone`}
               label="Phone"
               value={checkout.phone}
-              onChange={(e) =>
-                setFieldValue(`checkouts[${index}].phone`, e.target.value)
-              }
+              type="number"
             />
             <Input
               name={`checkouts[${index}].email`}
               label="Email"
-              value={checkout.email}
-              onChange={(e) =>
-                setFieldValue(`checkouts[${index}].email`, e.target.value)
-              }
+              placeholder="Enter email"
             />
+
             <Select
               name={`checkouts[${index}].state`}
               label="State"
@@ -129,9 +121,6 @@ const CheckoutFormSection = ({
               name={`checkouts[${index}].address`}
               label="Delivery Address"
               value={checkout.address}
-              onChange={(e) =>
-                setFieldValue(`checkouts[${index}].address`, e.target.value)
-              }
             />
           </div>
         )}

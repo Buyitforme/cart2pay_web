@@ -17,6 +17,9 @@ import DashboardHome from "../Pages/UserHub/Home/UserDashboardMain";
 import MainLayout from "../Components/MainLayout";
 import NewOrder from "../Pages/UserHub/Orders/NewOrder";
 import Payment from "../Pages/UserHub/Payment/Payment";
+import Notifications from "../Pages/Notifications";
+import UserProfile from "../Pages/UserProfile";
+import Orders from "../Pages/UserHub/Orders/Orders";
 
 const routes: RouteObject[] = [
   {
@@ -39,10 +42,12 @@ const routes: RouteObject[] = [
     element: <UserHubLayout />,
     children: [
       { index: true, element: <DashboardHome /> },
-      { path: "orders", element: <>Orders</> },
-      { path: "profile", element: <>Profile</> },
-      { path: "new-order", element: <NewOrder /> }, // Main new order page
-      { path: "new-order/payment", element: <Payment /> }, // Separate payments page
+      { path: "orders", element: <Orders /> },
+      { path: "new-order", element: <NewOrder /> },
+      { path: "new-order/payment", element: <Payment /> },
+      { path: "profile", element: <UserProfile /> },
+      { path: "notifications", element: <Notifications /> },
+      { path: "settings", element: <>Settings</> },
     ],
   },
   {

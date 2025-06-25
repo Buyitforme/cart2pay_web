@@ -36,6 +36,7 @@ const navLinks = [
       },
     ],
   },
+
 ];
 
 const UserHubNav = () => {
@@ -49,8 +50,7 @@ const UserHubNav = () => {
       setAnimate(false);
     }, 300);
   };
-  // Updated Navigation Component
-  // Updated Navigation Component
+
   return (
     <>
       <nav className="bg-white border-b border-gray-200 py-3 px-4 md:px-16">
@@ -68,8 +68,6 @@ const UserHubNav = () => {
           {/* Center Nav - Desktop only */}
           <div className="hidden md:flex flex-1 justify-center space-x-8">
             {navLinks.map((link) => {
-           
-
               return (
                 <NavLink
                   key={link.to}
@@ -95,15 +93,27 @@ const UserHubNav = () => {
 
           {/* Right Icons - Desktop only */}
           <div className="hidden md:flex items-center space-x-6">
-            <button className="text-gray-500 hover:text-primary">
+            <NavLink
+              to="/dashboard/notifications"
+              className={({ isActive }) =>
+                `hover:text-primary ${
+                  isActive ? "text-primary" : "text-gray-500"
+                }`
+              }
+            >
               <Bell className="w-5 h-5" />
-            </button>
-            <button className="text-gray-500 hover:text-primary">
-              <Settings className="w-5 h-5" />
-            </button>
-            <button className="text-gray-500 hover:text-primary">
+            </NavLink>
+
+            <NavLink
+              to="/dashboard/profile"
+              className={({ isActive }) =>
+                `hover:text-primary ${
+                  isActive ? "text-primary" : "text-gray-500"
+                }`
+              }
+            >
               <User className="w-5 h-5" />
-            </button>
+            </NavLink>
           </div>
 
           {/* Hamburger Menu - Mobile only */}
@@ -184,15 +194,36 @@ const UserHubNav = () => {
             })}
 
             <div className="mt-auto pt-24 border-t border-gray-200">
-              <div className="flex flex-col gap-6">
-                <button className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-primary">
+              <div className="flex flex-col gap-3">
+                <NavLink
+                  to="/dashboard/notifications"
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-2 text-sm font-medium ${
+                      isActive
+                        ? "text-primary font-bold"
+                        : "text-gray-700 hover:text-primary"
+                    }`
+                  }
+                >
                   <Settings className="w-5 h-5" />
                   <span>Notifications</span>
-                </button>
-                <button className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-primary">
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard/profile"
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-2 text-sm font-medium ${
+                      isActive
+                        ? "text-primary font-bold"
+                        : "text-gray-700 hover:text-primary"
+                    }`
+                  }
+                >
                   <User className="w-5 h-5" />
                   <span>Profile</span>
-                </button>
+                </NavLink>
               </div>
             </div>
           </div>

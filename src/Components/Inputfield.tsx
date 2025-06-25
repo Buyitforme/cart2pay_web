@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useField } from "formik";
 import { cn } from "../lib/utils";
+import { useField, useFormikContext } from "formik";
+
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -31,7 +32,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const [field, meta] = useField(props.name);
+const { name, ...restProps } = props;
+const [field, meta] = useField(name);
+const { setFieldValue, setFieldTouched } = useFormikContext();
+
     const hasError = meta.touched && meta.error;
     const baseStyles =
       "flex h-10 w-full rounded-md border bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none";
@@ -66,13 +70,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
           <input
-            id={id || props.name}
+            id={id || name}
             ref={ref}
-            {...field}
+            name={field.name}
+            value={field.value}
             type={type === "password" && showPassword ? "text" : type}
+            onChange={(e) => {
+              setFieldValue(field.name, e.target.value);
+              setFieldTouched(field.name, true, false);
+            }}
             className={cn(baseStyles, errorStyles, iconPadding, className)}
-            {...props}
+            {...restProps}
           />
+
           {type === "password" && (
             <button
               type="button"
