@@ -3,7 +3,10 @@ import exampleImage from "../../Assets/svg_images/payment_cards.svg";
 import { Text } from "../../Components/Typography";
 import { Button } from "../../Components/Button";
 
-const ThirstTraps = () => {
+  interface Props {
+    onExploreClick?: () => void;
+  }
+const ThirstTraps:React.FC<Props> = ({onExploreClick}) => {
   return (
     <section className="w-full bg-background py-20 px-6 md:px-12">
       <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12">
@@ -29,11 +32,9 @@ const ThirstTraps = () => {
             adding your favorite items to your cart from international stores
             and we handle the checkout.
           </Text>
-          {/* <button className="bg-[#8fac6a] hover:bg-[#7a9a5c] text-white font-semibold px-6 py-3 rounded-md transition duration-300">
-            Okay, let’s go
-          </button> */}
-          <Button variant="primary" className=" ">
-            Okay, let’s go
+         
+          <Button variant="primary" onClick={onExploreClick}>
+            Okay
           </Button>
         </div>
       </div>

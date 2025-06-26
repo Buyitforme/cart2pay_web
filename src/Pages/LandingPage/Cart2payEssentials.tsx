@@ -3,6 +3,7 @@ import exampleImage from "../../Assets/svg_images/payment_cards.svg";
 import { Button } from "../../Components/Button";
 import { Heading, Text } from "../../Components/Typography";
 import { useInView } from "react-intersection-observer";
+import { useNavigate } from "react-router-dom";
 
 const essentials = [
   {
@@ -36,6 +37,7 @@ const essentials = [
 ];
 
 const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
+
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -96,6 +98,8 @@ const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
 };
 
 const Cart2payEssentials = () => {
+      const navigate = useNavigate();
+
   return (
     <section className="w-full bg-white py-20 px-3 md:px-12">
       <div className="max-w-7xl mx-auto">
@@ -129,7 +133,10 @@ const Cart2payEssentials = () => {
           every modern shopper.
         </Text>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-6 md:mx-20">
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-6 md:mx-20"
+          onClick={() => navigate("/signup")}
+        >
           {essentials.map((item, index) => (
             <CardItem key={index} item={item} />
           ))}

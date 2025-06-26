@@ -6,13 +6,20 @@ import sheinLogo from "../../Assets/svg_images/shein.svg";
 import primarkLogo from "../../Assets/svg_images/primark.svg";
 
 const storeLogos = [
-  { name: "Zara", logo: zaraLogo },
-  { name: "ASOS", logo: asosLogo },
-  { name: "Shein", logo: sheinLogo },
-  { name: "Primark", logo: primarkLogo },
+  { name: "Zara", logo: zaraLogo, url: "https://www.zara.com/" },
+  { name: "ASOS", logo: asosLogo, url: "https://www.asos.com/" },
+  { name: "Shein", logo: sheinLogo, url: "https://us.shein.com/" },
+  { name: "Primark", logo: primarkLogo, url: "https://www.primark.com/en-gb" },
 ];
 
 const StoreMarquee = () => {
+    const handleStoreClick = (url: string, storeName: string) => {
+      // Optional: Add analytics tracking here
+      console.log(`Clicking on ${storeName}`);
+
+      // Open in new tab
+      window.open(url, "_blank", "noopener,noreferrer");
+    };
   return (
     <section className="w-full bg-background py-16 overflow-hidden">
       <div className="max-w-7xl mx-auto text-center">
@@ -41,11 +48,20 @@ const StoreMarquee = () => {
             {[...storeLogos, ...storeLogos].map((store, idx) => (
               <div
                 key={idx}
-                className="min-w-fit cursor-pointer opacity-80 hover:opacity-100 transition"
+                className="min-w-fit cursor-pointer opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105"
+                onClick={() => handleStoreClick(store.url, store.name)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleStoreClick(store.url, store.name);
+                  }
+                }}
               >
                 <img
                   src={store.logo}
-                  alt={store.name}
+                  alt={`Visit ${store.name} store`}
                   className="h-12 md:h-16 object-contain"
                 />
               </div>

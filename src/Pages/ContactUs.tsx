@@ -6,6 +6,7 @@ import { Textarea } from "../Components/Textarea";
 import { Button } from "../Components/Button";
 import { Heading, Text } from "../Components/Typography";
 import MainLayout from "../Components/MainLayout";
+import toast from "react-hot-toast";
 
 const ContactUs = () => {
   const initialValues = {
@@ -27,6 +28,7 @@ const ContactUs = () => {
     await new Promise((res) => setTimeout(res, 1500));
     console.log("Submitted:", values);
     resetForm();
+    toast.success("THANK YOU!, Your story has been sent! Redirecting...");
   };
 
   return (
@@ -72,7 +74,7 @@ const ContactUs = () => {
                   <Button
                     type="submit"
                     variant="primary"
-                    className="w-full mt-4"
+                    className=" mt-4"
                     loading={isSubmitting}
                   >
                     Send Message
@@ -88,10 +90,10 @@ const ContactUs = () => {
                     </a>{" "}
                     or{" "}
                     <a
-                      href="mailto:hello@yourcompany.com"
+                      href="mailto:hello@cart2pay.com"
                       className="text-primary font-medium"
                     >
-                      hello@yourcompany.com
+                      hello@cart2pay.com
                     </a>
                     .
                   </Text>

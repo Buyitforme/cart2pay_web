@@ -6,8 +6,9 @@ import Cart2payEssentials from "./Cart2payEssentials";
 import Faq from "./FAQ";
 import ThirstTraps from "./ThirstTraps";
 import TestimonialSection from "./Testimonials";
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import MainLayout from "../../Components/MainLayout";
+import React from "react";
 
 const variants = {
   hidden: { opacity: 0, y: 100 },
@@ -19,16 +20,26 @@ interface AnimatedSectionProps {
 }
 
 const LandingPageMain = () => {
+  // Create ref for the StoreMarquee section
+  const storeMarqueeRef = useRef<HTMLDivElement>(null);
+
+  // Function to scroll to StoreMarquee
+  const scrollToStoreMarquee = () => {
+    storeMarqueeRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
-    // <MainLayout>
     <>
       <div className="px-5 md:px-20">
         <AnimatedSection>
-          <HeroSection />
+          <HeroSection onExploreClick={scrollToStoreMarquee} />
         </AnimatedSection>
       </div>
 
-      <AnimatedSection>
+      <AnimatedSection ref={storeMarqueeRef}>
         <StoreMarquee />
       </AnimatedSection>
 
@@ -37,33 +48,42 @@ const LandingPageMain = () => {
       </AnimatedSection>
 
       <AnimatedSection>
-        <TestimonialSection />
-        <ThirstTraps />
+        <TestimonialSection onExploreClick={scrollToStoreMarquee} />
+        <ThirstTraps onExploreClick={scrollToStoreMarquee} />
         <Faq />
       </AnimatedSection>
     </>
-    // </MainLayout>
   );
 };
 
-const AnimatedSection = ({ children }: AnimatedSectionProps) => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.2 });
+const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionProps>(
+  ({ children }, forwardedRef) => {
+    const controls = useAnimation();
+    const [ref, inView] = useInView({ threshold: 0.2 });
 
-  if (inView) {
-    controls.start("visible");
+    if (inView) {
+      controls.start("visible");
+    }
+
+    return (
+      <motion.div
+        ref={(node) => {
+          // Handle both refs - intersection observer and forwarded ref
+          ref(node);
+          if (typeof forwardedRef === "function") {
+            forwardedRef(node);
+          } else if (forwardedRef) {
+            forwardedRef.current = node;
+          }
+        }}
+        animate={controls}
+        initial="hidden"
+        variants={variants}
+      >
+        {children}
+      </motion.div>
+    );
   }
-
-  return (
-    <motion.div
-      ref={ref}
-      animate={controls}
-      initial="hidden"
-      variants={variants}
-    >
-      {children}
-    </motion.div>
-  );
-};
+);
 
 export default LandingPageMain;

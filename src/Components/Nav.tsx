@@ -105,7 +105,7 @@ return (
             weight="medium"
             color="default"
             className={`cursor-pointer duration-300 ease-in-out ${
-              isActive("/stories")
+              isActive("/stories") || isActive("/share-your-story")
                 ? "text-primary font-bold"
                 : "hover:text-primary"
             }`}

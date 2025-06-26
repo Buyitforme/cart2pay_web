@@ -5,9 +5,14 @@ import happyShopper from "../../Assets/svg_images/happy_shopper.svg";
 import paymentCards from "../../Assets/svg_images/payment_cards.svg";
 import ImageSlider from "../../Components/Slider";
 import { Heading, Text } from "../../Components/Typography";
+import { useNavigate } from "react-router-dom";
 
 const images = [unhappyShopper, paymentCards, happyShopper];
-function HeroSection() {
+  interface HeroSectionProps {
+    onExploreClick?: () => void;
+  }
+const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
+  const navigate = useNavigate()
   return (
     <section className="w-full bg-white pt-6 md:pt-0 ">
       <div className=" flex flex-col md:flex-row items-center gap-2 md:gap-4">
@@ -37,16 +42,17 @@ function HeroSection() {
             className="w-full pt-3"
           >
             Experience seamless international shopping from anywhere in the
-            world. We help you access global products with local payment options.
-          
+            world. We help you access global products with local payment
+            options.
           </Text>
           <div className="flex md:flex-row gap-4 pt-6 items-center md:items-start">
-            <Button variant="primary" className="w-full md:w-auto">
+            <Button variant="primary" className="w-full md:w-auto" onClick={()=>navigate('/signup')}>
               Create account
             </Button>
             <Button
               variant="outline"
-               className="w-full md:w-auto"
+              className="w-full md:w-auto"
+              onClick={onExploreClick}
             >
               Explore stores
             </Button>
@@ -60,6 +66,6 @@ function HeroSection() {
       </div>
     </section>
   );
-}
+};
 
 export default HeroSection;

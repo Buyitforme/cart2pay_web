@@ -16,11 +16,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const textareaId =
       id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
 
-    const baseStyles =
-      "flex min-h-[80px] w-full rounded-md border bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#1E2A47] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
-    const errorStyles = hasError
-      ? "border-red-500 focus:ring-red-500"
-      : "border-slate-300";
+      const baseStyles =
+        "flex  w-full rounded-md border bg-white px-3 py-2 text-base sm:text-sm placeholder:text-slate-500 focus:outline-none";
+      const errorStyles = hasError
+        ? "border-red-500 focus:border-red-500"
+        : "border-slate-300 focus:border-[#1E2A47]";
 
     return (
       <div className="space-y-2">
@@ -38,6 +38,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
           ref={ref}
           className={cn(baseStyles, errorStyles, className)}
+          style={{
+            fontSize: "16px",
+            WebkitAppearance: "none",
+            borderRadius: "6px",
+          }}
         />
         {hasError && <p className="text-sm text-red-600">{meta.error}</p>}
         {helperText && !hasError && (

@@ -2,6 +2,7 @@ import React from "react";
 import { Heading, Text } from "../../Components/Typography";
 import { Button } from "../../Components/Button";
 import AnimatedCounter from "../../Components/AnimatedCounter";
+import { useNavigate } from "react-router-dom";
 
 const testimonials = [
   { name: "Amaka O.", quote: "The checkout was super smooth and fast!" },
@@ -13,8 +14,12 @@ const testimonials = [
     quote: "Super intuitive and efficient. Highly recommend!",
   },
 ];
+   interface TestimonialProps {
+     onExploreClick?: () => void;
+   }
+const TestimonialSection: React.FC<TestimonialProps> = ({ onExploreClick }) => {
+    const navigate = useNavigate();
 
-const TestimonialSection: React.FC = () => {
   return (
     <div className="bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
@@ -32,12 +37,16 @@ const TestimonialSection: React.FC = () => {
 
           <div className="flex justify-center md:justify-start gap-8 mb-8 flex-wrap">
             <AnimatedCounter end={300} label="Wholesalers" />
-            <AnimatedCounter end={700} label="Retailers" />
+            <AnimatedCounter end={700} label="Casual shoppers" />
           </div>
 
           <div className="flex justify-center md:justify-start gap-4 flex-wrap">
-            <Button variant="secondary">Create a free account</Button>
-            <Button variant="outline">Explore stores</Button>
+            <Button variant="secondary" onClick={() => navigate("/signup")}>
+              Create a free account
+            </Button>
+            <Button variant="outline" onClick={onExploreClick}>
+              Explore stores
+            </Button>
           </div>
         </div>
 
