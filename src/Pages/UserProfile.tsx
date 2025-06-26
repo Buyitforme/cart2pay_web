@@ -5,6 +5,8 @@ import { Button } from "../Components/Button";
 import { Input } from "../Components/Inputfield";
 import { Heading,Text } from "../Components/Typography";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Modal from "../Components/Modal";
 
 
 const userData = {
@@ -28,6 +30,10 @@ const ProfileSchema = Yup.object().shape({
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
 
   const handleEditToggle = () => setIsEditing(true);
 
@@ -42,6 +48,14 @@ const UserProfile = () => {
     }, 2000);
   };
 
+   const handleLogout = () => {
+     localStorage.clear();
+setLoading(true)
+     setTimeout(()=>{
+ navigate("/signin");
+     },2000)
+    
+   };
   return (
     <div className="flex justify-center items-center min-h-[80vh] px-4">
       <div className="w-full max-w-2xl shadow-lg bg-white rounded-xl p-8 space-y-6">
@@ -122,6 +136,38 @@ const UserProfile = () => {
             </Form>
           )}
         </Formik>
+        <div className="pt-8 border-t border-gray-200">
+          <Button
+            variant="destructive"
+            onClick={()=>setIsModalOpen(true)}
+            className="w-full"
+          >
+            Logout
+          </Button>
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+            <div className="space-y-6 p-4 md:p-4">
+              <Text size="lg" weight="semibold" className="text-center">
+                Are you sure you want to logout?
+              </Text>
+
+              <div className="flex justify-end gap-4">
+                <Button
+                  variant="secondary"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={handleLogout} 
+                  loading={loading}
+                >
+                  Yes
+                </Button>
+              </div>
+            </div>
+          </Modal>
+        </div>
       </div>
     </div>
   );

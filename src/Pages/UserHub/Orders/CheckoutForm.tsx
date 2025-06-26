@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
 import { Input } from "../../../Components/Inputfield";
@@ -26,6 +26,17 @@ const CheckoutFormSection = ({
     setFieldValue("checkouts", newCheckouts);
     setIsModalOpen(false);
   };
+useEffect(() => {
+  if (
+    checkout.itemLink &&
+    checkout.itemLink !== checkout.itemLink.toLowerCase()
+  ) {
+    setFieldValue(
+      `checkouts[${index}].itemLink`,
+      checkout.itemLink.toLowerCase()
+    );
+  }
+}, [checkout.itemLink, index, setFieldValue]);
 
   return (
     <div className="mb-8 bg-white rounded-xl shadow p-6 space-y-10 text-accent">

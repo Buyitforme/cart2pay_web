@@ -13,9 +13,6 @@ export interface InputProps
 }
 
 
-
-// ...
-
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
@@ -32,13 +29,13 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
 
-const { name, ...restProps } = props;
-const [field, meta] = useField(name);
-const { setFieldValue, setFieldTouched } = useFormikContext();
+    const { name, ...restProps } = props;
+    const [field, meta] = useField(name);
+    const { setFieldValue, setFieldTouched } = useFormikContext();
 
     const hasError = meta.touched && meta.error;
     const baseStyles =
-      "flex h-10 w-full rounded-md border bg-white px-3 py-2 text-sm placeholder:text-slate-500 focus:outline-none";
+      "flex h-10 w-full rounded-md border bg-white px-3 py-2 text-base sm:text-sm placeholder:text-slate-500 focus:outline-none";
     const errorStyles = hasError
       ? "border-red-500 focus:border-red-500"
       : "border-slate-300 focus:border-[#1E2A47]";
@@ -80,6 +77,11 @@ const { setFieldValue, setFieldTouched } = useFormikContext();
               setFieldTouched(field.name, true, false);
             }}
             className={cn(baseStyles, errorStyles, iconPadding, className)}
+            style={{
+              fontSize: "16px", 
+              WebkitAppearance: "none", 
+              borderRadius: "6px", 
+            }}
             {...restProps}
           />
 
@@ -89,7 +91,7 @@ const { setFieldValue, setFieldTouched } = useFormikContext();
               onClick={togglePasswordVisibility}
               className={`absolute ${
                 rightIcon ? "right-8" : "right-3"
-              } top-1/2 -translate-y-1/2 text-slate-500 focus:outline-none`}
+              } top-1/2 -translate-y-1/2 text-slate-500 focus:outline-none hover:text-slate-700 transition-colors`}
               tabIndex={-1}
             >
               {showPassword ? (

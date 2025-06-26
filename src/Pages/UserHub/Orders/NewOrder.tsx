@@ -21,7 +21,7 @@ const validationSchema = Yup.object({
   checkouts: Yup.array().of(
     Yup.object({
       store: Yup.string().required("Select a store"),
-      itemLink: Yup.string()
+      itemLink: Yup.string().trim()
         .required("Paste a valid cart link")
         .test(
           "match-store",
