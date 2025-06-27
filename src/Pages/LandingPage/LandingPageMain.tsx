@@ -56,7 +56,7 @@ const LandingPageMain = () => {
   );
 };
 
-const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionProps>(
+export const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionProps>(
   ({ children }, forwardedRef) => {
     const controls = useAnimation();
     const [ref, inView] = useInView({ threshold: 0.2 });

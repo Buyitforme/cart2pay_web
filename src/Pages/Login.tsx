@@ -8,6 +8,7 @@ import { User } from "lucide-react";
 import AuthLayout from "../Components/AuthLayout";
 import { Input } from "../Components/Inputfield";
 import toast from "react-hot-toast";
+import { AnimatedSection } from "./LandingPage/LandingPageMain";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,50 +33,56 @@ const from = (location.state as { from?: string })?.from || "/dashboard";
   };
 
   return (
-    <AuthLayout>
-      <div className="flex flex-col items-start space-y-2">
-        <div className="flex gap-2 items-center">
-          <Heading size="xl" weight="bold" color="default" className="text-2xl">
-            Welcome
-          </Heading>
-          <span className="text-4xl">
-            <User />
-          </span>
-        </div>
-        <Text size="sm" weight="medium" color="subtle">
-          Securely log into your account to continue
-        </Text>
-      </div>
-
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ isSubmitting }) => (
-          <Form className="space-y-4">
-            <Input label="Email" name="email" type="email" />
-            <Input label="Password" name="password" type="password" />
-            <Button
-              type="submit"
-              variant="primary"
-              size="lg"
-              loading={isSubmitting}
-              className="w-full"
+   
+      <AuthLayout>
+        <div className="flex flex-col items-start space-y-2">
+          <div className="flex gap-2 items-center">
+            <Heading
+              size="xl"
+              weight="bold"
+              color="default"
+              className="text-2xl"
             >
-              Login
-            </Button>
-          </Form>
-        )}
-      </Formik>
+              Welcome
+            </Heading>
+            <span className="text-4xl">
+              <User />
+            </span>
+          </div>
+          <Text size="sm" weight="medium" color="subtle">
+            Securely log into your account to continue
+          </Text>
+        </div>
 
-      <p className="text-sm text-center">
-        Don&apos;t have an account?{" "}
-        <Link to="/signup" className="text-primary">
-          Sign up
-        </Link>
-      </p>
-    </AuthLayout>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="space-y-4">
+              <Input label="Email" name="email" type="email" />
+              <Input label="Password" name="password" type="password" />
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                loading={isSubmitting}
+                className="w-full"
+              >
+                Login
+              </Button>
+            </Form>
+          )}
+        </Formik>
+
+        <p className="text-sm text-center">
+          Don&apos;t have an account?{" "}
+          <Link to="/signup" className="text-primary">
+            Sign up
+          </Link>
+        </p>
+      </AuthLayout>
   );
 };
 

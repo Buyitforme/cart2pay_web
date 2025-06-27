@@ -5,14 +5,15 @@ import StoryImage from "../Assets/svg_images/happy_ladies.jpg";
 import TestimonialSection from "./LandingPage/Testimonials";
 import MainLayout from "../Components/MainLayout";
 import { ImageRenderer } from "../Components/ImageRenderer";
+import { AnimatedSection } from "./LandingPage/LandingPageMain";
 
 const ShareStoryLanding = () => {
   const navigate = useNavigate();
 
   return (
     <>
-      {/* <MainLayout> */}
-        <div className="min-h-screen w-full bg-[#F3F4F6] px-6 pt-20 flex justify-center">
+      <div className="min-h-screen w-full bg-[#F3F4F6] px-6 pt-20 flex justify-center">
+        <AnimatedSection>
           <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Left Text Content */}
             <div className="space-y-6 mt-0 md:mt-12 lg:mt-24">
@@ -63,9 +64,9 @@ const ShareStoryLanding = () => {
               />
             </div>
           </div>
-        </div>
-        <TestimonialSection />
-      {/* </MainLayout> */}
+        </AnimatedSection>
+      </div>
+      <TestimonialSection />
     </>
   );
 };

@@ -7,6 +7,7 @@ import { Button } from "../Components/Button";
 import { Heading, Text } from "../Components/Typography";
 import MainLayout from "../Components/MainLayout";
 import toast from "react-hot-toast";
+import { AnimatedSection } from "./LandingPage/LandingPageMain";
 
 const ContactUs = () => {
   const initialValues = {
@@ -33,7 +34,7 @@ const ContactUs = () => {
 
   return (
     <>
-      {/* <MainLayout> */}
+      <AnimatedSection>
         <div className="min-h-screen bg-background px-6 py-16 flex items-start justify-center">
           <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-8 space-y-6">
             <div className="text-center space-y-2">
@@ -41,8 +42,8 @@ const ContactUs = () => {
                 We’re Happy to Help You!
               </Heading>
               <Text size="md" color="subtle">
-                Need a quick response? Enter your question below,  we’ll get
-                back to you shortly.
+                Need a quick response? Enter your question below, we’ll get back
+                to you shortly.
               </Text>
             </div>
 
@@ -102,7 +103,7 @@ const ContactUs = () => {
             </Formik>
           </div>
         </div>
-      {/* </MainLayout> */}
+      </AnimatedSection>
     </>
   );
 };

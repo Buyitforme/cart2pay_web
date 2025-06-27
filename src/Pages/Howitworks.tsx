@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { PlayCircle } from "lucide-react";
 import { Heading, Text } from "../Components/Typography";
 import previewImage from "../Assets/svg_images/happy girl.jpg";
-import MainLayout from "../Components/MainLayout";
+import { AnimatedSection } from "./LandingPage/LandingPageMain";
 
 const HowItWorks: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
     <>
-      {/* <MainLayout> */}
+      <AnimatedSection>
         <section className=" px-6 bg-white relative bg-background">
           <div className="max-w-5xl mx-auto text-center py-4">
             <Heading size="2xl" weight="bold" className="mb-2">
@@ -62,8 +62,8 @@ const HowItWorks: React.FC = () => {
             </div>
           )}
         </section>
-      {/* </MainLayout> */}
-    </>
+    </AnimatedSection>
+   </>
   );
 };
 
