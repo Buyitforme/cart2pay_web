@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Heading,Text } from "../../../Components/Typography";
+import { Heading, Text } from "../../../Components/Typography";
 import { Button } from "../../../Components/Button";
 import { Card } from "../../../Components/Card";
-
 
 type Order = {
   id: string;
@@ -30,9 +29,9 @@ const mockOrders = [
 ];
 
 const Orders = () => {
-const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  const handleViewOrder = (order:any) => setSelectedOrder(order);
+  const handleViewOrder = (order: any) => setSelectedOrder(order);
 
   return (
     <div className="px-4 md:px-16 py-6">
@@ -112,7 +111,10 @@ const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
               <strong>Date:</strong> {selectedOrder.date}
             </Text>
             <Text>
-              <strong>Status:</strong> {selectedOrder.status}
+              <strong>Status:</strong>{" "}
+              <span className="text-primary font-extrabold">
+                {selectedOrder.status}
+              </span>
             </Text>
             <Text>
               <strong>Total:</strong> {selectedOrder.total}
@@ -121,20 +123,15 @@ const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
               <strong>Delivery:</strong> John Doe, 123 Sample Street, Lagos
             </Text>
 
-            <div className="pt-4 space-x-2 flex justify-end">
+            {/* <div className="pt-4 space-x-2 flex justify-end">
               <Button
                 variant="secondary"
                 onClick={() => alert("Contacting Support...")}
               >
                 Contact Support
               </Button>
-              <Button
-                variant="primary"
-                onClick={() => alert("Tracking Order...")}
-              >
-                Track Order
-              </Button>
-            </div>
+             
+            </div> */}
           </div>
         </div>
       )}

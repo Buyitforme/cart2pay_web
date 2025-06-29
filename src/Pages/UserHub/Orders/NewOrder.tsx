@@ -78,6 +78,7 @@ const handleProceed = () => {
   setLoading(true);
 
   setTimeout(() => {
+    localStorage.removeItem("cart2pay_quote_start");
     setLoading(false);
     navigate("payment");
   }, 2000); // 2 seconds
@@ -112,7 +113,7 @@ const handleProceed = () => {
                 onClick={handleProceed}
                 loading={loading}
               >
-                Proceed to Pay
+                Proceed 
               </Button>
 
               <Button

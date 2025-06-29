@@ -7,7 +7,6 @@ import Faq from "./FAQ";
 import ThirstTraps from "./ThirstTraps";
 import TestimonialSection from "./Testimonials";
 import { ReactNode, useRef } from "react";
-import MainLayout from "../../Components/MainLayout";
 import React from "react";
 
 const variants = {
@@ -20,10 +19,8 @@ interface AnimatedSectionProps {
 }
 
 const LandingPageMain = () => {
-  // Create ref for the StoreMarquee section
   const storeMarqueeRef = useRef<HTMLDivElement>(null);
 
-  // Function to scroll to StoreMarquee
   const scrollToStoreMarquee = () => {
     storeMarqueeRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -68,7 +65,6 @@ export const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionP
     return (
       <motion.div
         ref={(node) => {
-          // Handle both refs - intersection observer and forwarded ref
           ref(node);
           if (typeof forwardedRef === "function") {
             forwardedRef(node);
