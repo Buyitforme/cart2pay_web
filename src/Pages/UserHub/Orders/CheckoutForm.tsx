@@ -3,8 +3,9 @@ import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
 import { Input } from "../../../Components/Inputfield";
 import Select from "../../../Components/Select";
-import { lgaOptions, stateOptions, storeOptions } from "./ordersHelpers";
-import Modal from "../../../Components/Modal"; 
+import Modal from "../../../Components/Modal";
+import ProductPreviewCard from "./ProductPreviewCard";
+import { colorOptions, sizeOptions, quantityOptions, storeOptions } from "./ordersHelpers";
 
 type CheckoutFormSectionProps = {
   index: number;
@@ -21,31 +22,32 @@ const CheckoutFormSection = ({
   const checkout = checkouts[index];
 
   const handleRemove = () => {
-    const newCheckouts = [...checkouts];
-    newCheckouts.splice(index, 1);
-    setFieldValue("checkouts", newCheckouts);
+    const updatedCheckouts = [...checkouts];
+    updatedCheckouts.splice(index, 1);
+    setFieldValue("checkouts", updatedCheckouts);
     setIsModalOpen(false);
   };
-useEffect(() => {
-  if (
-    checkout.itemLink &&
-    checkout.itemLink !== checkout.itemLink.toLowerCase()
-  ) {
-    setFieldValue(
-      `checkouts[${index}].itemLink`,
-      checkout.itemLink.toLowerCase()
-    );
-  }
-}, [checkout.itemLink, index, setFieldValue]);
+
+  useEffect(() => {
+    if (
+      checkout.itemLink &&
+      checkout.itemLink !== checkout.itemLink.toLowerCase()
+    ) {
+      setFieldValue(
+        `checkouts[${index}].itemLink`,
+        checkout.itemLink.toLowerCase()
+      );
+    }
+  }, [checkout.itemLink, index, setFieldValue]);
 
   return (
     <div className="mb-8 bg-white rounded-xl shadow p-6 space-y-10 text-accent">
-      <div className="space-y-2">
+      <div>
         <Heading size="md" weight="semibold">
-          Select Store
+          Choose a store
         </Heading>
         <Select
-          name={`checkouts[${index}].store`}
+          name={`checkouts[${index}].store`} // ✅ Correct
           options={storeOptions}
           value={checkout.store}
           onChange={(e) =>
@@ -55,86 +57,52 @@ useEffect(() => {
         />
       </div>
 
-      {/* Cart Link */}
-      <div className="space-y-4">
+      {/* Product Section */}
+      <div className="space-y-3">
         <Heading size="md" weight="semibold">
-          Paste Cart link
+          Product Details
         </Heading>
+
         <Input
           name={`checkouts[${index}].itemLink`}
-          placeholder="Paste cart link from selected store"
+          label="Product Link"
+          placeholder="Paste individual product link"
           value={checkout.itemLink}
-       
         />
-      </div>
 
-      {/* Delivery Info */}
-      <div className="space-y-4">
-        <Heading size="md" weight="semibold">
-          Delivery Info
-        </Heading>
-        <label className="flex items-center space-x-2">
-          <input
-            type="checkbox"
-            checked={checkout.useSavedAddress}
-            onChange={() =>
-              setFieldValue(
-                `checkouts[${index}].useSavedAddress`,
-                !checkout.useSavedAddress
-              )
-            }
-          />
-          <Text>Use saved address</Text>
-        </label>
-
-        {!checkout.useSavedAddress && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Input
-              name={`checkouts[${index}].fullName`}
-              label="Full Name"
-              value={checkout.fullName}
-            
-            />
-            <Input
-              name={`checkouts[${index}].phone`}
-              label="Phone"
-              value={checkout.phone}
-              type="number"
-            />
-            <Input
-              name={`checkouts[${index}].email`}
-              label="Email"
-              placeholder="Enter email"
-            />
-
-            <Select
-              name={`checkouts[${index}].state`}
-              label="State"
-              options={stateOptions}
-              value={checkout.state}
-              onChange={(e) => {
-                setFieldValue(`checkouts[${index}].state`, e.target.value);
-                setFieldValue(`checkouts[${index}].lga`, "");
-              }}
-              placeholder="Select your state"
-            />
-            <Select
-              name={`checkouts[${index}].lga`}
-              label="LGA"
-              options={lgaOptions[checkout.state] || []}
-              value={checkout.lga}
-              onChange={(e) =>
-                setFieldValue(`checkouts[${index}].lga`, e.target.value)
-              }
-              placeholder="Select your LGA"
-            />
-            <Input
-              name={`checkouts[${index}].address`}
-              label="Delivery Address"
-              value={checkout.address}
-            />
-          </div>
+        {checkout.itemLink && (
+          <ProductPreviewCard url={checkout.itemLink} className="w-fit py-6" />
         )}
+
+        <div className="grid md:grid-cols-3 gap-4">
+          <Select
+            name={`checkouts[${index}].color`}
+            options={colorOptions}
+            value={checkout.color}
+            onChange={(e) =>
+              setFieldValue(`checkouts[${index}].color`, e.target.value)
+            }
+            placeholder="Choose a color"
+          />
+          <Select
+            name={`checkouts[${index}].size`}
+            options={sizeOptions}
+            value={checkout.size}
+            onChange={(e) =>
+              setFieldValue(`checkouts[${index}].size`, e.target.value)
+            }
+            placeholder="Select size"
+          />
+          <Select
+            name={`checkouts[${index}].quantity`}
+            options={quantityOptions}
+            value={checkout.quantity}
+            onChange={(e) =>
+              setFieldValue(`checkouts[${index}].quantity`, e.target.value)
+            }
+            placeholder="Choose quantity"
+          />
+        </div>
       </div>
 
       {/* Remove Button */}
@@ -145,12 +113,12 @@ useEffect(() => {
             variant="destructive"
             onClick={() => setIsModalOpen(true)}
           >
-            Remove Checkout
+            Remove Item
           </Button>
         </div>
       )}
 
-      {/* Modal */}
+      {/* Remove Modal */}
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <Text size="lg" weight="bold">
           Are you sure?
