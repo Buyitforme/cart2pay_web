@@ -2,11 +2,14 @@ import React from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import { Button } from "../../../Components/Button";
 import { Link } from "react-router-dom";
+import { AnimatedSection } from "../../LandingPage/LandingPageMain";
 
 const Home = () => {
   const userName = "Chioma"; 
 
   return (
+     <AnimatedSection>
+
     <div className="py-6 space-y-6 text-[#1E2A47]">
       {/* Welcome */}
       <div>
@@ -155,6 +158,8 @@ const Home = () => {
         </Link>
       </div>
     </div>
+     </AnimatedSection>
+
   );
 };
 

@@ -6,6 +6,7 @@ import CheckoutFormSection from "./CheckoutForm";
 import {  useNavigate } from 'react-router-dom';
 import { storeOptions } from "./ordersHelpers";
 import { Heading, Text } from "../../../Components/Typography";
+import { AnimatedSection } from "../../LandingPage/LandingPageMain";
 
 
 const initialCheckout = {
@@ -113,6 +114,8 @@ const NewOrder = () => {
   };
 
   return (
+           
+ <AnimatedSection>
     <div className="px-0 md:px-20">
       
       <Formik
@@ -173,6 +176,8 @@ const NewOrder = () => {
         )}
       </Formik>
     </div>
+            </AnimatedSection>
+
   );
 };
 

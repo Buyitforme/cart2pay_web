@@ -43,6 +43,8 @@ const routes: RouteObject[] = [
     children: [
       { index: true, element: <DashboardHome /> },
       { path: "orders", element: <Orders /> },
+   
+
       { path: "new-order", element: <NewOrder /> },
       { path: "new-order/payment", element: <Payment /> },
       { path: "profile", element: <UserProfile /> },

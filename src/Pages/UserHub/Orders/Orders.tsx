@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import { Button } from "../../../Components/Button";
 import { Card } from "../../../Components/Card";
+import { AnimatedSection } from "../../LandingPage/LandingPageMain";
 
 type Order = {
   id: string;
@@ -34,6 +35,8 @@ const Orders = () => {
   const handleViewOrder = (order: any) => setSelectedOrder(order);
 
   return (
+     <AnimatedSection>
+
     <div className="px-4 md:px-16 py-6">
       <Heading size="2xl" weight="bold">
         Orders
@@ -136,6 +139,8 @@ const Orders = () => {
         </div>
       )}
     </div>
+     </AnimatedSection>
+
   );
 };
 
