@@ -1,10 +1,6 @@
 // Components/ConfirmModal.tsx
 import React, { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { Button } from "./Button";
-import { Text } from "./Typography";
-
-
 
 interface ModalProps {
   isOpen: boolean;
@@ -12,21 +8,21 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+  if (!isOpen) return null;
+
   return (
-    <Dialog
-      open={isOpen}
-      onClose={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center"
-    >
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-      <div className="bg-white rounded-xl shadow-lg p-6 z-50 w-full max-w-md space-y-4 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div className="relative z-50 bg-white p-6 rounded-lg shadow-lg space-y-4 max-w-sm text-center">
         {children}
       </div>
-    </Dialog>
+    </div>
   );
 };
 
 export default Modal;
-
-

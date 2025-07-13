@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 import { Heading, Text } from "../Components/Typography";
 import { Button } from "../Components/Button";
@@ -8,12 +8,19 @@ import { User } from "lucide-react";
 import AuthLayout from "../Components/AuthLayout";
 import { Input } from "../Components/Inputfield";
 import toast from "react-hot-toast";
-import { AnimatedSection } from "./LandingPage/LandingPageMain";
+import { triggerSignin } from "../redux/features/auth/authThunk";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/state";
+import { resetState } from "../redux/features/auth/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const state = location.state as { from?: string } | null;
+   const formikRef = useRef<FormikProps<any>>(null);
+  const dispatch: AppDispatch = useDispatch();
+  const { error, message, loading, statusCode, data } = useSelector(
+    (state: RootState) => state.auth
+  );
 const from = (location.state as { from?: string })?.from || "/dashboard";
   const initialValues = {
     email: "",
@@ -25,13 +32,26 @@ const from = (location.state as { from?: string })?.from || "/dashboard";
     password: Yup.string().required("Password is required"),
   });
 
-  const handleSubmit = async (values: typeof initialValues) => {
-    await new Promise((res) => setTimeout(res, 2000));
-    localStorage.setItem("userEmail", values.email); // store email
-    navigate(from); // redirect to intended page
 
-  };
+    const handleSignIn = (values: any) => {
+      const payload = {
+        email: values.email,
+        password: values.password,
+      };
+      console.log(payload);
+      dispatch(triggerSignin(payload));
+    };
 
+     useEffect(() => {
+    if (!error && statusCode === 200) {
+      formikRef.current?.resetForm();
+      navigate(from);
+    } else if (error) {
+      toast.error(data?.results?.message);
+      console.log("error full object", data);
+    }
+    // dispatch(resetState());
+  }, [error, statusCode, message, navigate, dispatch, data, from]);
   return (
    
       <AuthLayout>
@@ -57,7 +77,7 @@ const from = (location.state as { from?: string })?.from || "/dashboard";
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit}
+          onSubmit={handleSignIn}
         >
           {({ isSubmitting }) => (
             <Form className="space-y-4">
@@ -67,7 +87,7 @@ const from = (location.state as { from?: string })?.from || "/dashboard";
                 type="submit"
                 variant="primary"
                 size="lg"
-                loading={isSubmitting}
+                loading={loading}
                 className="w-full"
               >
                 Login

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 import { Heading, Text } from "../Components/Typography";
 import { Button } from "../Components/Button";
@@ -10,13 +10,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/state";
 import toast from "react-hot-toast";
 import { triggerSignup } from "../redux/features/auth/authThunk";
+import { resetState } from "../redux/features/auth/authSlice";
+import Modal from "../Components/Modal";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch: AppDispatch = useDispatch();
+  const formikRef = useRef<FormikProps<any>>(null);
 
-  const { error, message, loading, statusCode } = useSelector(
+  const { error, message, loading, statusCode, data } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -27,7 +30,8 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   };
-
+  const passwordRules =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d@$!%*?&^#\-_.]{8,20}$/;
   const validationSchema = Yup.object({
     fullName: Yup.string().required("Full name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
@@ -36,36 +40,39 @@ const Signup = () => {
       .min(10, "Minimum 10 digits")
       .required("Phone number is required"),
     password: Yup.string()
-      .min(6, "At least 6 characters")
-      .required("Password is required"),
+      .required("Password cannot be empty")
+      .matches(
+        passwordRules,
+        "Password must be 8-20 characters and include uppercase, lowercase, number, and special character"
+      )
+      .trim(),
     confirmPassword: Yup.string()
+      .required("Confirm password cannot be empty")
       .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Confirm your password"),
+      .trim(),
   });
 
-
-    const handleSignUp = (values: any) => {
+  const handleSignUp = (values: any) => {
     const payload = {
-      fullName:values.fullName,
+      fullName: values.fullName,
       email: values.email,
       password: values.password,
-      phone:values.phoneNumber,
-
-    }
-    console.log(payload)
-    dispatch(triggerSignup(payload))
-  }
+      phone: values.phoneNumber,
+    };
+    console.log(payload);
+    dispatch(triggerSignup(payload));
+  };
 
   useEffect(() => {
     if (!error && statusCode === 200) {
-          setModalOpen(true);
-      setTimeout(() => {
-        navigate("/auth-pin-set-up");
-      }, 2000);
-    } else if (error && message) {
-      toast.error(message);
+      formikRef.current?.resetForm();
+      setModalOpen(true);
+    } else if (error) {
+      toast.error(data?.results?.message);
+      console.log("error full object", data);
     }
-  }, [error, statusCode, message, navigate, dispatch]);
+    dispatch(resetState());
+  }, [error, statusCode, message, navigate, dispatch, data]);
 
   return (
     <AuthLayout>
@@ -117,22 +124,11 @@ const Signup = () => {
         </Link>
       </p>
 
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg space-y-4 max-w-sm text-center">
-            <h2 className="text-2xl font-bold">🎉 Congratulations!</h2>
-            <p>You've taken the first step on clearing your cart.</p>
-            <Button
-              onClick={() => {
-                setModalOpen(false);
-                navigate("/signin");
-              }}
-            >
-              Continue
-            </Button>
-          </div>
-        </div>
-      )}
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <h2 className="text-2xl font-bold">🎉 Congratulations!</h2>
+        <p>You've taken the first step on clearing your cart.</p>
+        <Button onClick={() => navigate("/signin")}>Continue</Button>
+      </Modal>
     </AuthLayout>
   );
 };

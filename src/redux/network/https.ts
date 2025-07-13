@@ -155,12 +155,6 @@ function handleHttpError({ response, error, formErrors }: HttpError) {
     case 504:
       // Gateway Timeout
       break
-
-    // ================================================================================
-    // ================================================================================
-    // Custom Error Codes
-    // ================================================================================
-    // ================================================================================
     case 449:
       // Just Try Again
       break
@@ -221,16 +215,16 @@ async function ajax({
   })
     .then(response => {
       // Assign Request Response
-      result.status_code = response.data.status_code
+      result.status_code = response.data.statusCode
       result.results = response.data.data || response.data.results
       result.message = response.data.message
       result.status = response.data.status
-      result.timeStamp = response.data.timestamp
+      // result.timeStamp = response.data.timestamp
       // Handle Responses
       handleHttpResponse(response, success)
     })
     .catch(err => {
-      result.status_code = err.status_code
+      result.status_code = err.statusCode
       result.results = err.results || err.data || {}
       result.message = err.message
       result.status = err.status

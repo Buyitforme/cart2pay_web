@@ -1,10 +1,12 @@
 interface ApiUrls {
-  signup: string
+  signup: string,
+  login:string
   
 }
 
 const apiRoutes: ApiUrls = {
   signup: '/api/auth/signup',
+  login:'/api/auth/login'
 }
 
 export default apiRoutes
