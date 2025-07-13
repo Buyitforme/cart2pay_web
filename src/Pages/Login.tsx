@@ -16,12 +16,12 @@ import { resetState } from "../redux/features/auth/authSlice";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-   const formikRef = useRef<FormikProps<any>>(null);
+  const formikRef = useRef<FormikProps<any>>(null);
   const dispatch: AppDispatch = useDispatch();
   const { error, message, loading, statusCode, data } = useSelector(
     (state: RootState) => state.auth
   );
-const from = (location.state as { from?: string })?.from || "/dashboard";
+  const from = (location.state as { from?: string })?.from || "/dashboard";
   const initialValues = {
     email: "",
     password: "",
@@ -32,77 +32,76 @@ const from = (location.state as { from?: string })?.from || "/dashboard";
     password: Yup.string().required("Password is required"),
   });
 
-
-    const handleSignIn = (values: any) => {
-      const payload = {
-        email: values.email,
-        password: values.password,
-      };
-      console.log(payload);
-      dispatch(triggerSignin(payload));
+  const handleSignIn = (values: any) => {
+    const payload = {
+      email: values.email,
+      password: values.password,
     };
+    console.log(payload);
+    dispatch(triggerSignin(payload));
+  };
 
-     useEffect(() => {
-    if (!error && statusCode === 200) {
-      formikRef.current?.resetForm();
-      navigate(from);
-    } else if (error) {
-      toast.error(data?.results?.message);
-      console.log("error full object", data);
-    }
-    // dispatch(resetState());
-  }, [error, statusCode, message, navigate, dispatch, data, from]);
+ useEffect(() => {
+   if (!error && statusCode === 200) {
+     formikRef.current?.resetForm();
+     navigate(from);
+   } else if (error && data?.results?.isVerified === false) {
+     toast.error(message);
+     setTimeout(() => {
+       navigate("/verification");
+     }, 2000);
+   } else if (error) {
+     toast.error(data?.results?.message);
+     console.log("error full object", data);
+   }
+   dispatch(resetState());
+ }, [error, statusCode, message, navigate, dispatch, data, from]);
+
   return (
-   
-      <AuthLayout>
-        <div className="flex flex-col items-start space-y-2">
-          <div className="flex gap-2 items-center">
-            <Heading
-              size="xl"
-              weight="bold"
-              color="default"
-              className="text-2xl"
-            >
-              Welcome
-            </Heading>
-            <span className="text-4xl">
-              <User />
-            </span>
-          </div>
-          <Text size="sm" weight="medium" color="subtle">
-            Securely log into your account to continue
-          </Text>
+    <AuthLayout>
+      <div className="flex flex-col items-start space-y-2">
+        <div className="flex gap-2 items-center">
+          <Heading size="xl" weight="bold" color="default" className="text-2xl">
+            Welcome
+          </Heading>
+          <span className="text-4xl">
+            <User />
+          </span>
         </div>
+        <Text size="sm" weight="medium" color="subtle">
+          Securely log into your account to continue
+        </Text>
+      </div>
 
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSignIn}
-        >
-          {({ isSubmitting }) => (
-            <Form className="space-y-4">
-              <Input label="Email" name="email" type="email" />
-              <Input label="Password" name="password" type="password" />
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                loading={loading}
-                className="w-full"
-              >
-                Login
-              </Button>
-            </Form>
-          )}
-        </Formik>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSignIn}
+      >
+        {({ isSubmitting }) => (
+          <Form className="space-y-4">
+            <Input label="Email" name="email" type="email" />
+            <Input label="Password" name="password" type="password" />
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              loading={loading}
+              className="w-full"
+            >
+              Login
+            </Button>
+          </Form>
+        )}
+      </Formik>
 
-        <p className="text-sm text-center">
-          Don&apos;t have an account?{" "}
-          <Link to="/signup" className="text-primary">
-            Sign up
-          </Link>
-        </p>
-      </AuthLayout>
+      <p className="text-sm text-center">
+        Don&apos;t have an account?{" "}
+        <Link to="/signup" className="text-primary">
+          Sign up
+        </Link>
+      </p>
+    </AuthLayout>
   );
 };
 

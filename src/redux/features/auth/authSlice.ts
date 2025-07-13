@@ -25,8 +25,8 @@ const userSlice = createSlice({
       state.error = initialState.error;
       state.message = initialState.message;
       state.statusCode = initialState.statusCode;
-      state.data = initialState.data;
     },
+  
   },
   extraReducers: (builder) => {
     // SIGN UP
@@ -51,7 +51,7 @@ const userSlice = createSlice({
       state.statusCode = (action.payload as any)?.status_code || 400;
     });
 
-      // SIGN IN
+    // SIGN IN
     builder.addCase(triggerSignin.pending, (state) => {
       state.loading = true;
       state.error = false;

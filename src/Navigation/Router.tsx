@@ -20,6 +20,7 @@ import Payment from "../Pages/UserHub/Payment/Payment";
 import Notifications from "../Pages/Notifications";
 import UserProfile from "../Pages/UserProfile";
 import Orders from "../Pages/UserHub/Orders/Orders";
+import VerificationService from "../Pages/VerificationService";
 
 const routes: RouteObject[] = [
   {
@@ -36,6 +37,7 @@ const routes: RouteObject[] = [
   },
   { path: routeNames.signIn, element: <Login /> },
   { path: routeNames.signUp, element: <Signup /> },
+  { path: routeNames.verificationService, element: <VerificationService /> },
 
   {
     path: "/dashboard",

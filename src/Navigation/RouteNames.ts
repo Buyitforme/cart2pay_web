@@ -8,6 +8,7 @@ const routeNames = {
   signUp: "/signup",
   stories: "/stories",
   share_story: "/share-your-story",
+  verificationService:"verification",
   notFound: "*",
 };
 
