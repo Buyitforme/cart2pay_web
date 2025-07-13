@@ -1,12 +1,16 @@
 import { Toaster } from "react-hot-toast";
 import Router from "./Navigation/Router";
+import { Provider } from "react-redux";
+import store from "./redux/state";
 
 function App() {
   return (
     <div className="bg-white">
       <Toaster position="top-center" reverseOrder={false} />
 
-      <Router />
+      <Provider store={store}>
+        <Router />
+      </Provider>
     </div>
   );
 }

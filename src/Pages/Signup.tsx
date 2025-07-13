@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -6,10 +6,19 @@ import { Heading, Text } from "../Components/Typography";
 import { Button } from "../Components/Button";
 import AuthLayout from "../Components/AuthLayout";
 import { Input } from "../Components/Inputfield";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/state";
+import toast from "react-hot-toast";
+import { triggerSignup } from "../redux/features/auth/authThunk";
 
 const Signup = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+
+  const { error, message, loading, statusCode } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   const initialValues = {
     fullName: "",
@@ -34,10 +43,29 @@ const Signup = () => {
       .required("Confirm your password"),
   });
 
-  const handleSubmit = async (values: typeof initialValues) => {
-    await new Promise((res) => setTimeout(res, 2000));
-    setModalOpen(true);
-  };
+
+    const handleSignUp = (values: any) => {
+    const payload = {
+      fullName:values.fullName,
+      email: values.email,
+      password: values.password,
+      phone:values.phoneNumber,
+
+    }
+    console.log(payload)
+    dispatch(triggerSignup(payload))
+  }
+
+  useEffect(() => {
+    if (!error && statusCode === 200) {
+          setModalOpen(true);
+      setTimeout(() => {
+        navigate("/auth-pin-set-up");
+      }, 2000);
+    } else if (error && message) {
+      toast.error(message);
+    }
+  }, [error, statusCode, message, navigate, dispatch]);
 
   return (
     <AuthLayout>
@@ -56,7 +84,7 @@ const Signup = () => {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={handleSignUp}
       >
         {({ isSubmitting }) => (
           <Form className="space-y-4">
@@ -73,7 +101,7 @@ const Signup = () => {
               type="submit"
               variant="primary"
               size="lg"
-              loading={isSubmitting}
+              loading={loading}
               className="w-full"
             >
               Create account
