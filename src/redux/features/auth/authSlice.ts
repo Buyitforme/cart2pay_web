@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { triggerSignin, triggerSignup } from "./authThunk";
+import { triggerOtpService, triggerSignin, triggerSignup } from "./authThunk";
 
 interface IinitialState {
   error: boolean;
@@ -66,6 +66,27 @@ const userSlice = createSlice({
       state.statusCode = action.payload?.status_code as unknown as number;
     });
     builder.addCase(triggerSignin.rejected, (state, action) => {
+      state.loading = false;
+      state.error = true;
+      state.data = (action.payload as any) || {};
+      state.message = (action.payload as any)?.message || "Unknown error";
+      state.statusCode = (action.payload as any)?.status_code || 400;
+    });
+        // Otp Service
+    builder.addCase(triggerOtpService.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+      state.data = {};
+      state.message = "";
+    });
+    builder.addCase(triggerOtpService.fulfilled, (state, action) => {
+      state.loading = false;
+      state.data = action.payload as any;
+      state.error = false;
+      state.message = action.payload?.message as unknown as string;
+      state.statusCode = action.payload?.status_code as unknown as number;
+    });
+    builder.addCase(triggerOtpService.rejected, (state, action) => {
       state.loading = false;
       state.error = true;
       state.data = (action.payload as any) || {};

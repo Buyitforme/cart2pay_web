@@ -25,3 +25,15 @@ export const triggerSignin = createAsyncThunk(
     }
   }
 )
+
+export const triggerOtpService = createAsyncThunk(
+  'auth/otp_service',
+  async (data: Record<string, string>, { rejectWithValue }) => {
+    try {
+      const response = await AuthService.otp_service(data)
+      return response
+    } catch (error: any) {
+      return rejectWithValue(error) 
+    }
+  }
+)
