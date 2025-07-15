@@ -94,7 +94,7 @@ const handleProceed = () => {
           console.log("Submitted checkouts:", values);
         }}
       >
-        {({ values, setFieldValue, isValid }) => (
+        {({ values, setFieldValue, isValid,dirty }) => (
           <Form>
             {values.checkouts.map((_, index) => (
               <CheckoutFormSection
@@ -109,7 +109,7 @@ const handleProceed = () => {
               <Button
                 type="button"
                 variant="primary"
-                disabled={!isValid || loading}
+                disabled={!(isValid && dirty) || loading}
                 onClick={handleProceed}
                 loading={loading}
               >

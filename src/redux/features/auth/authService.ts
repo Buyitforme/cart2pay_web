@@ -49,4 +49,43 @@ export class AuthService {
   static _deleteToken() {
     localStorage.removeItem("nssf_user_token");
   }
+
+   static async forgot_paassword(data: Record<string, string>) {
+    const response = await post({
+      url: apiRoutes.forgot_password,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      return response;
+    }
+  }
+
+     static async reset_paassword(data: Record<string, string>) {
+    const response = await post({
+      url: apiRoutes.reset_password,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      return response;
+    }
+  }
+
+       static async resend_otp(data: Record<string, string>) {
+    const response = await post({
+      url: apiRoutes.resend_otp,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      return response;
+    }
+  }
 }

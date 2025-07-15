@@ -21,6 +21,8 @@ import Notifications from "../Pages/Notifications";
 import UserProfile from "../Pages/UserProfile";
 import Orders from "../Pages/UserHub/Orders/Orders";
 import VerificationService from "../Pages/VerificationService";
+import ForgotPassword from "../Pages/ForgotPassword";
+import ResetPassword from "../Pages/ResetPassword";
 
 const routes: RouteObject[] = [
   {
@@ -38,6 +40,8 @@ const routes: RouteObject[] = [
   { path: routeNames.signIn, element: <Login /> },
   { path: routeNames.signUp, element: <Signup /> },
   { path: routeNames.verificationService, element: <VerificationService /> },
+  { path: routeNames.forgotPassword, element: <ForgotPassword /> },
+  { path: routeNames.resetPassword, element: <ResetPassword /> },
 
   {
     path: "/dashboard",
@@ -57,7 +61,6 @@ const routes: RouteObject[] = [
     element: <>Page not found</>,
   },
 ];
-
 
 const router = createBrowserRouter(routes);
 
