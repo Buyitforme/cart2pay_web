@@ -37,8 +37,7 @@ const ResetPassword = () => {
     const email = localStorage.getItem("cart2pay_user_email");
     const payload = {
       email: email!,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
+      newPassword: values.password,
     };
     dispatch(triggerResetPassword(payload));
   };
@@ -74,7 +73,7 @@ const ResetPassword = () => {
         validationSchema={resetPasswordSchema}
         onSubmit={handleResetPassword}
       >
-        {({  isValid,dirty }) => (
+        {({ isValid, dirty }) => (
           <Form className="space-y-4">
             <Input label="New Password" name="password" type="password" />
             <Input
@@ -88,8 +87,7 @@ const ResetPassword = () => {
               size="lg"
               loading={loading}
               className="w-full"
-                disabled={!(isValid && dirty) || loading}
-
+              disabled={!(isValid && dirty) || loading}
             >
               Reset password
             </Button>

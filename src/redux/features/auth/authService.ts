@@ -16,7 +16,6 @@ export class AuthService {
   }
 
    static async otp_service(data: Record<string, string>) {
-    AuthService._deleteToken();
     const response = await post({
       url: apiRoutes.otp_service,
       data: { ...data },

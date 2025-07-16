@@ -23,6 +23,7 @@ import Orders from "../Pages/UserHub/Orders/Orders";
 import VerificationService from "../Pages/VerificationService";
 import ForgotPassword from "../Pages/ForgotPassword";
 import ResetPassword from "../Pages/ResetPassword";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const routes: RouteObject[] = [
   {
@@ -44,18 +45,24 @@ const routes: RouteObject[] = [
   { path: routeNames.resetPassword, element: <ResetPassword /> },
 
   {
-    path: "/dashboard",
-    element: <UserHubLayout />,
+    element: <ProtectedRoutes />, 
     children: [
-      { index: true, element: <DashboardHome /> },
-      { path: "orders", element: <Orders /> },
-      { path: "new-order", element: <NewOrder /> },
-      { path: "new-order/payment", element: <Payment /> },
-      { path: "profile", element: <UserProfile /> },
-      { path: "notifications", element: <Notifications /> },
-      { path: "settings", element: <>Settings</> },
+      {
+        path: "/dashboard",
+        element: <UserHubLayout />,
+        children: [
+          { index: true, element: <DashboardHome /> },
+          { path: "orders", element: <Orders /> },
+          { path: "new-order", element: <NewOrder /> },
+          { path: "new-order/payment", element: <Payment /> },
+          { path: "profile", element: <UserProfile /> },
+          { path: "notifications", element: <Notifications /> },
+          { path: "settings", element: <>Settings</> },
+        ],
+      },
     ],
   },
+
   {
     path: "*",
     element: <>Page not found</>,

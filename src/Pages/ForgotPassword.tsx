@@ -26,6 +26,7 @@ const ForgotPassword = () => {
       email: values.email,
     };
     localStorage.setItem("cart2pay_user_email", payload.email);
+    localStorage.setItem("cart2pay_otp_type", "password_reset");
     dispatch(triggerForgotPassword(payload));
   };
 
@@ -70,7 +71,7 @@ const ForgotPassword = () => {
               className="w-full"
   disabled={!(isValid && dirty) || loading}
             >
-              Send reset link
+              Send reset otp
             </Button>
           </Form>
         )}
