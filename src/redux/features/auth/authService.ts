@@ -15,6 +15,19 @@ export class AuthService {
     }
   }
 
+   static async otp_service(data: Record<string, string>) {
+    const response = await post({
+      url: apiRoutes.otp_service,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      console.log("OTP RESPONSE FROM SERVICE", response);
+      throw response;
+    }
+    if (response.status === "success") {
+      return response;
+    }
+  }
   static async signin(data: Record<string, string>) {
     AuthService._deleteToken();
     const response = await post({
@@ -22,11 +35,9 @@ export class AuthService {
       data: { ...data },
     });
     if (response.status === "error") {
-      console.log("LOGIN RESPONSE FROM SERVICE", response);
       throw response;
     }
     if (response.status === "success") {
-      console.log("token", response?.results?.cart2pay_user_token);
       AuthService._saveToken(response?.results?.cart2pay_user_token);
       return response;
     }
@@ -36,5 +47,44 @@ export class AuthService {
   }
   static _deleteToken() {
     localStorage.removeItem("nssf_user_token");
+  }
+
+   static async forgot_paassword(data: Record<string, string>) {
+    const response = await post({
+      url: apiRoutes.forgot_password,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      return response;
+    }
+  }
+
+     static async reset_paassword(data: Record<string, string>) {
+    const response = await post({
+      url: apiRoutes.reset_password,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      return response;
+    }
+  }
+
+       static async resend_otp(data: Record<string, string>) {
+    const response = await post({
+      url: apiRoutes.resend_otp,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      return response;
+    }
   }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
@@ -12,11 +12,14 @@ import { triggerSignin } from "../redux/features/auth/authThunk";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/state";
 import { resetState } from "../redux/features/auth/authSlice";
+import Modal from "../Components/Modal";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const formikRef = useRef<FormikProps<any>>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
   const dispatch: AppDispatch = useDispatch();
   const { error, message, loading, statusCode, data } = useSelector(
     (state: RootState) => state.auth
@@ -41,21 +44,18 @@ const Login = () => {
     dispatch(triggerSignin(payload));
   };
 
- useEffect(() => {
-   if (!error && statusCode === 200) {
-     formikRef.current?.resetForm();
-     navigate(from);
-   } else if (error && data?.results?.isVerified === false) {
-     toast.error(message);
-     setTimeout(() => {
-       navigate("/verification");
-     }, 2000);
-   } else if (error) {
-     toast.error(data?.results?.message);
-     console.log("error full object", data);
-   }
-   dispatch(resetState());
- }, [error, statusCode, message, navigate, dispatch, data, from]);
+  useEffect(() => {
+    if (!error && statusCode === 200) {
+      formikRef.current?.resetForm();
+      navigate(from);
+    } else if (error && message === "Email not verified") {
+      setModalOpen(true);
+    } else if (error && message === "Invalid credentials") {
+      toast.error(message);
+      console.log("error full object", data);
+    } 
+    dispatch(resetState());
+  }, [error, statusCode, message, navigate, dispatch, data, from]);
 
   return (
     <AuthLayout>
@@ -78,7 +78,7 @@ const Login = () => {
         validationSchema={validationSchema}
         onSubmit={handleSignIn}
       >
-        {({ isSubmitting }) => (
+        {({  isValid,dirty }) => (
           <Form className="space-y-4">
             <Input label="Email" name="email" type="email" />
             <Input label="Password" name="password" type="password" />
@@ -88,6 +88,8 @@ const Login = () => {
               size="lg"
               loading={loading}
               className="w-full"
+  disabled={!(isValid && dirty) || loading}
+
             >
               Login
             </Button>
@@ -95,12 +97,28 @@ const Login = () => {
         )}
       </Formik>
 
-      <p className="text-sm text-center">
+<div className='flex flex-col gap-2 items-center'>
+    <Text size="sm" weight="medium" color="default">
+         Forgot password?{" "}
+        <Link to="/forgot-password" className="text-primary">
+          Reset
+        </Link>
+      </Text>
+    <Text size="sm" weight="medium" color="default">
         Don&apos;t have an account?{" "}
         <Link to="/signup" className="text-primary">
           Sign up
         </Link>
-      </p>
+      </Text>
+</div>
+
+
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+        <Text size="sm" weight="medium" color="subtle">
+          Email not vefified, Kindly verify your email
+        </Text>{" "}
+        <Button onClick={() => navigate("/verification")}>verify email</Button>
+      </Modal>
     </AuthLayout>
   );
 };

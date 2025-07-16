@@ -59,7 +59,8 @@ const Signup = () => {
       password: values.password,
       phone: values.phoneNumber,
     };
-    console.log(payload);
+    localStorage.setItem("cart2pay_user_email", payload.email);
+    localStorage.setItem("cart2pay_otp_type", "email_verification");
     dispatch(triggerSignup(payload));
   };
 
@@ -93,7 +94,7 @@ const Signup = () => {
         validationSchema={validationSchema}
         onSubmit={handleSignUp}
       >
-        {({ isSubmitting }) => (
+        {({  isValid,dirty }) => (
           <Form className="space-y-4">
             <Input label="Full Name" name="fullName" />
             <Input label="Email" name="email" type="email" />
@@ -110,6 +111,8 @@ const Signup = () => {
               size="lg"
               loading={loading}
               className="w-full"
+                disabled={!(isValid && dirty) || loading}
+
             >
               Create account
             </Button>
@@ -127,7 +130,7 @@ const Signup = () => {
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <h2 className="text-2xl font-bold">🎉 Congratulations!</h2>
         <p>You've taken the first step on clearing your cart.</p>
-        <Button onClick={() => navigate("/signin")}>Continue</Button>
+        <Button onClick={() => navigate("/verification")}>Continue</Button>
       </Modal>
     </AuthLayout>
   );

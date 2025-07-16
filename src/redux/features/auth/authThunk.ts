@@ -25,3 +25,51 @@ export const triggerSignin = createAsyncThunk(
     }
   }
 )
+
+export const triggerOtpService = createAsyncThunk(
+  'auth/otp_service',
+  async (data: Record<string, string>, { rejectWithValue }) => {
+    try {
+      const response = await AuthService.otp_service(data)
+      return response
+    } catch (error: any) {
+      return rejectWithValue(error) 
+    }
+  }
+)
+
+export const triggerForgotPassword = createAsyncThunk(
+  'auth/forgot_paassword',
+  async (data: Record<string, string>, { rejectWithValue }) => {
+    try {
+      const response = await AuthService.forgot_paassword(data)
+      return response
+    } catch (error: any) {
+      return rejectWithValue(error) 
+    }
+  }
+)
+
+export const triggerResetPassword = createAsyncThunk(
+  'auth/reset_paassword',
+  async (data: Record<string, string>, { rejectWithValue }) => {
+    try {
+      const response = await AuthService.reset_paassword(data)
+      return response
+    } catch (error: any) {
+      return rejectWithValue(error) 
+    }
+  }
+)
+
+export const triggerResendOtp = createAsyncThunk(
+  'auth/resend_otp',
+  async (data: Record<string, string>, { rejectWithValue }) => {
+    try {
+      const response = await AuthService.resend_otp(data)
+      return response
+    } catch (error: any) {
+      return rejectWithValue(error) 
+    }
+  }
+)
