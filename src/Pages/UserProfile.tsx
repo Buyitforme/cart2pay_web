@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { Button } from "../Components/Button";
 import { Input } from "../Components/Inputfield";
-import { Heading,Text } from "../Components/Typography";
+import { Heading, Text } from "../Components/Typography";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Modal from "../Components/Modal";
-
+import { AppDispatch, RootState } from "../redux/state";
+import { useDispatch, useSelector } from "react-redux";
+import { triggerGetUserProfile } from "../redux/features/UserAccountManagement/userAccountManagementThunk";
+import { PageLoader } from "../Components/PageLoader";
 
 const userData = {
   fullName: "Chioma Nwabugwu",
@@ -32,9 +35,12 @@ const UserProfile = () => {
   const [saving, setSaving] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-
-
+  const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { getUserProfileData } = useSelector(
+    (state: RootState) => state.user_account_management
+  );
+const userData = getUserProfileData.data?.results?.data;
   const handleEditToggle = () => setIsEditing(true);
 
   const handleSave = async (values: typeof userData) => {
@@ -48,14 +54,25 @@ const UserProfile = () => {
     }, 2000);
   };
 
-   const handleLogout = () => {
-     localStorage.clear();
-setLoading(true)
-     setTimeout(()=>{
- navigate("/signin");
-     },2000)
-    
-   };
+  const handleLogout = () => {
+    localStorage.clear();
+    setLoading(true);
+    setTimeout(() => {
+      navigate("/signin");
+    }, 2000);
+  };
+  useEffect(() => {
+    dispatch(triggerGetUserProfile({}));
+  }, [dispatch]);
+    console.log('USER PROFILE RETRIEVED', JSON.stringify(getUserProfileData,null,2))
+
+  if (getUserProfileData.loading || !getUserProfileData.data) {
+    return (
+      <div className="flex justify-center items-center h-screen w-full">
+        <PageLoader />
+      </div>
+    );
+  }
   return (
     <div className="flex justify-center items-center min-h-[80vh] px-4">
       <div className="w-full max-w-2xl shadow-lg bg-white rounded-xl p-8 space-y-6">
@@ -78,6 +95,8 @@ setLoading(true)
         <Formik
           initialValues={userData}
           validationSchema={ProfileSchema}
+              enableReinitialize
+
           onSubmit={handleSave}
         >
           {({ handleSubmit, isValid }) => (
@@ -139,7 +158,7 @@ setLoading(true)
         <div className="pt-8 border-t border-gray-200">
           <Button
             variant="destructive"
-            onClick={()=>setIsModalOpen(true)}
+            onClick={() => setIsModalOpen(true)}
             className="w-full"
           >
             Logout
@@ -159,7 +178,7 @@ setLoading(true)
                 </Button>
                 <Button
                   variant="destructive"
-                  onClick={handleLogout} 
+                  onClick={handleLogout}
                   loading={loading}
                 >
                   Yes
@@ -172,6 +191,5 @@ setLoading(true)
     </div>
   );
 };
-
 
 export default UserProfile;

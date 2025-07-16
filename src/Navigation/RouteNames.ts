@@ -11,7 +11,6 @@ const routeNames = {
   verificationService: "/verification",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password",
-
   notFound: "*",
 };
 

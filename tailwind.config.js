@@ -3,25 +3,26 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
   theme: {
     extend: {
-      keyframes: {
-        shimmer: {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(100%)" },
-        },
-        scroll: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-        zoom: {
-          "0%, 100%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.2)" },
-        },
-      },
-      animation: {
-        shimmer: "shimmer 1.5s infinite",
-        scroll: "scroll 5s linear infinite",
-        zoom: "zoom 1.5s ease-in-out infinite", // ✅ Move this out of keyframes
-      },
+     keyframes: {
+  shimmer: {
+    "0%": { transform: "translateX(-100%)" },
+    "100%": { transform: "translateX(100%)" },
+  },
+  scroll: {
+    "0%": { transform: "translateX(0%)" },
+    "100%": { transform: "translateX(-50%)" },
+  },
+  zoom: {
+    "0%, 100%": { transform: "scale(1)" },
+    "50%": { transform: "scale(1.4)" },
+  },
+},
+animation: {
+  shimmer: "shimmer 2s infinite",
+  scroll: "scroll 5s linear infinite",
+  zoom: "zoom 1.5s ease-in-out infinite",
+},
+
       fontFamily: {
         heading: ["Montserrat", "ui-sans-serif", "system-ui"],
         body: ["Poppins", "ui-sans-serif", "system-ui"],

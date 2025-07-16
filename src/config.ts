@@ -5,6 +5,7 @@ interface ApiUrls {
   forgot_password: string;
   reset_password: string;
   resend_otp: string;
+  get_user_profile: string
 }
 
 const apiRoutes: ApiUrls = {
@@ -14,6 +15,7 @@ const apiRoutes: ApiUrls = {
   forgot_password: "/api/auth/forgot-password",
   reset_password: "/api/auth/reset-password",
   resend_otp: "/api/auth/resend-otp",
+  get_user_profile :"/api/user/user-profile"
 };
 
 export default apiRoutes;

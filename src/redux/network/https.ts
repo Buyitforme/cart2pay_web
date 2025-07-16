@@ -33,7 +33,7 @@ const requestInterceptorSuccessCB = async (successfulReq: any) => {
     successfulReq.data = JSONData
   }
   const authToken = JSON.parse(
-    localStorage.getItem('nssf_user_token') as string
+    localStorage.getItem('cart2pay_user_token') as string
   )
 
   if (authToken) {
@@ -68,27 +68,34 @@ const responseInterceptorSuccessCB = (successRes: any) => {
 }
 
 // Response Error
-const responseInterceptorErrorCB = async (error: any) => {
-  const originalRequest = error.config
-  if (
-    error.response?.status === 401 &&
-    error.response.data.message ===
-      'Authentication failed, invalid credentials.' &&
-    !originalRequest._retry
-  ) {
-    originalRequest._retry = true
-    console.log('ORIGINAL REQUEST****', originalRequest._retry)
+// const responseInterceptorErrorCB = async (error: any) => {
+//   const originalRequest = error.config
+//   console.log('status',error.response?.status)
+//   if (
+//     error.response?.status === 401 &&
+//     error.response.data.message ===
+//       'Authentication failed, invalid credentials.' &&
+//     !originalRequest._retry
+//   ) {
+//     originalRequest._retry = true
+//     console.log('ORIGINAL REQUEST****', originalRequest._retry)
    
-  } else if (
-    error.response?.status === 401 
+//   } else if (
+//     error.response?.status === 401 
    
-  ) {
-    localStorage.removeItem('cart2pay_user_token')
-    window.location.replace('/')
-  }
+//   ) {
+//     localStorage.removeItem('cart2pay_user_token')
+//     // window.location.replace('/')
+//   }
 
-  return await Promise.reject(error.response.data)
-}
+//   return await Promise.reject(error.response.data)
+// }
+const responseInterceptorErrorCB = async (error: any) => {
+  if (error.response?.status === 401) {
+    window.location.replace('/');
+  }
+  return await Promise.reject(error.response.data);
+};
 
 ;(() => {
   axiosInstance.interceptors.request.use(
