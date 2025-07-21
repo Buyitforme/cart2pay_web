@@ -5,7 +5,7 @@ import { cn } from "../lib/utils";
 export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
-  weight?: "normal" | "medium" | "semibold" | "bold";
+  weight?: "light" |"normal" | "medium" | "semibold" | "bold";
   color?:
     | "default"
     | "muted"
@@ -44,6 +44,7 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
     };
 
     const weights = {
+      light : "font-extralightt",
       normal: "font-normal",
       medium: "font-medium",
       semibold: "font-semibold",

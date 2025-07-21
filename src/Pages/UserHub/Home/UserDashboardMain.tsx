@@ -4,15 +4,25 @@ import { Button } from "../../../Components/Button";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const userName = "Chioma"; 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good morning";
+    if (hour < 17) return "Good afternoon";
+    if (hour < 22) return "Good evening";
+    return "Hello";
+  };
+  const greeting = getGreeting();
+  const userFullName = localStorage.getItem("user_full_name") || "";
 
   return (
     <div className="py-6 space-y-6 text-[#1E2A47]">
-      {/* Welcome */}
       <div>
-        <Heading size="xl" weight="bold">
-          👋 Welcome back, {userName}
-        </Heading>
+        <div className="flex gap-1">
+          <Heading size="xl" >
+            {greeting},{" "}
+          </Heading>
+          <Heading size="xl" weight="light">{userFullName}</Heading>
+        </div>
         <Text size="lg" className="text-gray-600 mt-1">
           Here’s a quick overview of your activity.
         </Text>

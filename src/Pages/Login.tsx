@@ -46,6 +46,8 @@ const Login = () => {
 
   useEffect(() => {
     if (!error && statusCode === 200) {
+            console.log("success full object", data?.results?.fullName);
+            localStorage.setItem('user_full_name',data?.results?.fullName)
       formikRef.current?.resetForm();
       navigate(from);
     } else if (error && message === "Email not verified") {

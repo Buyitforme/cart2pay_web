@@ -9,18 +9,20 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../Components/Modal";
 import { AppDispatch, RootState } from "../redux/state";
 import { useDispatch, useSelector } from "react-redux";
-import { triggerGetUserProfile } from "../redux/features/UserAccountManagement/userAccountManagementThunk";
+import {
+  triggerEditUserProfile,
+  triggerGetUserProfile,
+} from "../redux/features/UserAccountManagement/userAccountManagementThunk";
 import { PageLoader } from "../Components/PageLoader";
 
-const userData = {
-  fullName: "Chioma Nwabugwu",
-  email: "chioma@example.com",
-  phone: "08123456789",
-  address: "123 Main Street",
-  state: "Lagos",
-  lga: "Ikeja",
+const initialValues = {
+  fullName: "",
+  email: "",
+  phone: "",
+  address: "",
+  state: "",
+  lga: "",
 };
-
 const ProfileSchema = Yup.object().shape({
   fullName: Yup.string().required("Full name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -37,22 +39,51 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
-  const { getUserProfileData } = useSelector(
+  const { getUserProfileData, editUserProfileData } = useSelector(
     (state: RootState) => state.user_account_management
   );
-const userData = getUserProfileData.data?.results?.data;
+  
+  const userData = getUserProfileData.data?.results?.data ;
   const handleEditToggle = () => setIsEditing(true);
 
-  const handleSave = async (values: typeof userData) => {
-    setSaving(true);
-    // Simulate API save
-    setTimeout(() => {
-      setSaving(false);
-      setIsEditing(false);
-      toast.success("Profile successfully saved");
-      console.log("Saved values:", values);
-    }, 2000);
+ const isFormDirty = (values: any) =>
+    values.fullName !== initialValues.fullName ||
+    values.email !== initialValues.email ||
+    values.phone !== initialValues.phone;
+    
+  const handleSave = async (values: any) => {
+    const payload = {
+      fullName: values.fullName,
+      email: values.email,
+      phone: values.phone,
+    address: values.address,
+    state: values.state,
+    lga: values.lga,
+    };
+    dispatch(triggerEditUserProfile(payload));
   };
+
+  useEffect(() => {
+    if (!editUserProfileData.error && editUserProfileData.statusCode === 200) {
+      setSaving(true);
+      setTimeout(() => {
+        setSaving(false);
+        setIsEditing(false);
+        toast.success(editUserProfileData.message);
+      }, 2000);
+    } else if (editUserProfileData.error) {
+      toast.error(editUserProfileData.message);
+      console.log("error full object", editUserProfileData.data);
+    }
+    // dispatch(resetState());
+  }, [
+    editUserProfileData.error,
+    editUserProfileData.statusCode,
+    editUserProfileData.message,
+    navigate,
+    dispatch,
+    editUserProfileData.data,
+  ]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -64,7 +95,11 @@ const userData = getUserProfileData.data?.results?.data;
   useEffect(() => {
     dispatch(triggerGetUserProfile({}));
   }, [dispatch]);
-    console.log('USER PROFILE RETRIEVED', JSON.stringify(getUserProfileData,null,2))
+  console.log(
+    "USER PROFILE RETRIEVED",
+    JSON.stringify(getUserProfileData, null, 2)
+  );
+
 
   if (getUserProfileData.loading || !getUserProfileData.data) {
     return (
@@ -95,11 +130,11 @@ const userData = getUserProfileData.data?.results?.data;
         <Formik
           initialValues={userData}
           validationSchema={ProfileSchema}
-              enableReinitialize
-
+          enableReinitialize
           onSubmit={handleSave}
         >
-          {({ handleSubmit, isValid }) => (
+          {({ handleSubmit, isValid,dirty }) => (
+            
             <Form onSubmit={handleSubmit} className="space-y-4">
               <Input
                 label="Full Name"
@@ -138,8 +173,8 @@ const userData = getUserProfileData.data?.results?.data;
                   <Button
                     type="submit"
                     variant="primary"
-                    loading={saving}
-                    disabled={!isValid || saving}
+                    loading={editUserProfileData.loading}
+            disabled={!(isValid && isFormDirty) || editUserProfileData.loading}
                   >
                     Save Changes
                   </Button>
@@ -193,3 +228,5 @@ const userData = getUserProfileData.data?.results?.data;
 };
 
 export default UserProfile;
+
+

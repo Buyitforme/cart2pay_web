@@ -1,5 +1,7 @@
 import apiRoutes from "../../../config";
-import { get} from "../../network/https";
+import { get, put} from "../../network/https";
+import { EditUserProfilePayload, EditUserProfileResponse } from "./types";
+
 
 
 export class userAccountManagementService {
@@ -17,4 +19,22 @@ export class userAccountManagementService {
     }
   }
 
+static async edit_user_profile(data: EditUserProfilePayload): Promise<EditUserProfileResponse> {
+    const response = await put({
+      url: apiRoutes.get_user_profile,
+      data,
+    });
+
+    if (response.status === "error") {
+      throw response;
+    }
+
+    if (response.status === "success") {
+      console.log("USER PROFILE", JSON.stringify(response, null, 2));
+      return response as EditUserProfileResponse
+    }
+    throw new Error("Unexpected response structure");
+  }
+
 }
+
