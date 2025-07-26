@@ -1,110 +1,362 @@
 import { useState } from "react";
-import { Formik, Form } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
-import CheckoutFormSection from "./CheckoutForm";
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Heading, Text } from "../../../Components/Typography";
+import { useNavigate } from "react-router-dom";
+import {
+  colorOptions,
+  lgaOptions,
+  sizeOptions,
+  stateOptions,
+  storeOptions,
+} from "./ordersHelpers";
+import Select from "../../../Components/Select";
+import Modal from "../../../Components/Modal";
+import { Input } from "../../../Components/Inputfield";
 
-const initialCheckout = {
+const initialItem = {
   store: "",
   itemLink: "",
-  address: "",
+  size: "",
+  color: "",
+  quantity: "",
+  customSize: "",
+  customColor: "",
+};
+
+const deliveryFields = {
   useSavedAddress: true,
   fullName: "",
   phone: "",
   email: "",
   state: "",
   lga: "",
+  address: "",
 };
 
 const validationSchema = Yup.object({
-  checkouts: Yup.array().of(
-    Yup.object({
-      store: Yup.string().required("Select a store"),
-      itemLink: Yup.string().trim()
-        .required("Paste a valid cart link")
-        .test(
-          "match-store",
-          "Link doesn't match the selected store",
-          function (value) {
-            const store = this.parent.store;
-            const storeDomains: Record<string, string[]> = {
-              shein: ["shein.com"],
-              zara: ["zara.com"],
-              "fashion-nova": ["fashionnova.com"],
-              other: [],
-            };
-            if (!value || !store || store === "other") return true;
-            return storeDomains[store]?.some((domain) =>
-              value.includes(domain)
-            );
-          }
-        ),
-      useSavedAddress: Yup.boolean(),
-      fullName: Yup.string().when("useSavedAddress", {
-        is: false,
-        then: (schema) => schema.required("Enter full name"),
-      }),
-      phone: Yup.string().when("useSavedAddress", {
-        is: false,
-        then: (schema) => schema.required("Enter phone number"),
-      }),
-      email: Yup.string()
-        .email("Invalid email")
-        .when("useSavedAddress", {
-          is: false,
-          then: (schema) => schema.required("Enter email"),
-        }),
-      state: Yup.string().when("useSavedAddress", {
-        is: false,
-        then: (schema) => schema.required("Select state"),
-      }),
-      lga: Yup.string().when("useSavedAddress", {
-        is: false,
-        then: (schema) => schema.required("Select LGA"),
-      }),
-      address: Yup.string().when("useSavedAddress", {
-        is: false,
-        then: (schema) => schema.required("Enter address"),
-      }),
-    })
-  ),
+  store: Yup.string().required("Select a store"),
+  items: Yup.array()
+    .of(
+      Yup.object({
+        itemLink: Yup.string()
+          .trim()
+          .required("Paste a valid cart link")
+          .test(
+            "match-store",
+            "Link doesn't match the selected store",
+            function (value) {
+              const { store } = this.options.context || {};
+              const storeDomains: Record<string, string[]> = {
+                shein: ["shein.com"],
+                zara: ["zara.com"],
+                "fashion-nova": ["fashionnova.com"],
+                other: [],
+              };
+              if (!value || !store || store === "other") return true;
+              return storeDomains[store]?.some((domain) =>
+                value.includes(domain)
+              );
+            }
+          ),
+        size: Yup.string().required("Size is required"),
+        color: Yup.string().required("Color is required"),
+        quantity: Yup.number()
+          .required("Quantity is required")
+          .min(1, "Must be at least 1"),
+      })
+    )
+    .min(1, "At least one item is required"),
+  useSavedAddress: Yup.boolean(),
+  fullName: Yup.string().when("useSavedAddress", {
+    is: false,
+    then: (schema) => schema.required("Enter full name"),
+  }),
+  phone: Yup.string().when("useSavedAddress", {
+    is: false,
+    then: (schema) => schema.required("Enter phone number"),
+  }),
+  email: Yup.string()
+    .email("Invalid email")
+    .when("useSavedAddress", {
+      is: false,
+      then: (schema) => schema.required("Enter email"),
+    }),
+  state: Yup.string().when("useSavedAddress", {
+    is: false,
+    then: (schema) => schema.required("Select state"),
+  }),
+  lga: Yup.string().when("useSavedAddress", {
+    is: false,
+    then: (schema) => schema.required("Select LGA"),
+  }),
+  address: Yup.string().when("useSavedAddress", {
+    is: false,
+    then: (schema) => schema.required("Enter address"),
+  }),
 });
 
-const NewOrder = () => {
+export const NewOrder = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-const handleProceed = () => {
-  setLoading(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  setTimeout(() => {
-    localStorage.removeItem("cart2pay_quote_start");
-    setLoading(false);
-    navigate("payment");
-  }, 2000); // 2 seconds
-};
-
+  const handleProceed = () => {
+    setLoading(true);
+    setTimeout(() => {
+      localStorage.removeItem("cart2pay_quote_start");
+      setLoading(false);
+      navigate("payment");
+    }, 2000);
+  };
 
   return (
     <div className="px-0 md:px-20">
       <Formik
-        initialValues={{ checkouts: [initialCheckout] }}
+        initialValues={{
+          store: "",
+          items: [initialItem],
+
+          ...deliveryFields,
+        }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          console.log("Submitted checkouts:", values);
+          console.log("Submitted:", values);
         }}
+        enableReinitialize
       >
-        {({ values, setFieldValue, isValid,dirty }) => (
+        {({ values, setFieldValue, isValid, dirty }) => (
           <Form>
-            {values.checkouts.map((_, index) => (
-              <CheckoutFormSection
-                key={index}
-                index={index}
-                checkouts={values.checkouts}
-                setFieldValue={setFieldValue}
+            <div className="space-y-2 mb-3">
+              <Heading size="md" weight="semibold">
+                Select Store
+              </Heading>
+              <Select
+                name="store"
+                options={storeOptions}
+                value={values.store}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setFieldValue("store", e.target.value)
+                }
+                placeholder="Choose a store"
               />
-            ))}
+            </div>
+            <FieldArray name="items">
+              {({ remove, push }) => (
+                <>
+                  <div className="mb-8 bg-white rounded-xl shadow p-6 space-y-10 text-accent">
+                    {values.items.map((item, index) => (
+                      <div className="space-y-2" key={index}>
+                        <Heading size="md" weight="semibold">
+                          {index + 1}. Product details
+                        </Heading>
+                        <Text size="sm" color="subtle">
+                          If you're providing a cart link, you don't need to
+                          fill in the variant fields.
+                        </Text>
 
+                        <div className="flex flex-col md:flex-row gap-4 w-full mt-4">
+                          <div className="w-full md:basis-1/3">
+                            <Text size="md" weight="semibold" className="mb-2">
+                              Product/Cart Url
+                            </Text>
+                            <Input
+                              name={`items[${index}].itemLink`}
+                              value={item.itemLink}
+                              placeholder="Url"
+                            />
+                          </div>
+
+                          <div className="w-full md:basis-2/3">
+                            <Text size="md" weight="semibold" className="mb-2">
+                              Variants
+                            </Text>
+                            <div className="flex flex-col md:flex-row gap-4">
+                              {/* Size */}
+                              <div className="w-full md:w-1/3">
+                                {item.size !== "other" ? (
+                                  <Select
+                                    name={`items[${index}].size`}
+                                    options={sizeOptions}
+                                    value={item.size}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLSelectElement>
+                                    ) =>
+                                      setFieldValue(
+                                        `items[${index}].size`,
+                                        e.target.value
+                                      )
+                                    }
+                                    placeholder="Size"
+                                  />
+                                ) : (
+                                  <Input
+                                    name={`items[${index}].customSize`}
+                                    placeholder="Enter custom size"
+                                    value={item.customSize}
+                                  />
+                                )}
+                              </div>
+
+                              {/* Color */}
+                              <div className="w-full md:w-1/3">
+                                {item.color !== "other" ? (
+                                  <Select
+                                    name={`items[${index}].color`}
+                                    options={colorOptions}
+                                    value={item.color}
+                                    onChange={(e) =>
+                                      setFieldValue(
+                                        `items[${index}].color`,
+                                        e.target.value
+                                      )
+                                    }
+                                    placeholder="Color"
+                                  />
+                                ) : (
+                                  <Input
+                                    name={`items[${index}].customColor`}
+                                    placeholder="Enter custom color"
+                                    value={item.customColor}
+                                  />
+                                )}
+                              </div>
+
+                              {/* Quantity */}
+                              <div className="w-full md:w-1/3">
+                                <Input
+                                  name={`items[${index}].quantity`}
+                                  type="number"
+                                  placeholder="Quantity"
+                                  value={item.quantity}
+                                  onChange={(e: any) =>
+                                    setFieldValue(
+                                      `items[${index}].quantity`,
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {values.items.length > 1 && (
+                          <div className="flex justify-end">
+                            <Button
+                              variant="primary"
+                              type="button"
+                              onClick={() => setIsModalOpen(true)}
+                            >
+                              Remove Item
+                            </Button>
+                          </div>
+                        )}
+                        <Modal
+                          isOpen={isModalOpen}
+                          onClose={() => setIsModalOpen(false)}
+                        >
+                          <Text size="lg" weight="bold" color="subtle">
+                            Are you sure you want to remove this item?
+                          </Text>
+
+                          <div className="flex justify-center gap-2 pt-4">
+                            <Button
+                              variant="secondary"
+                              onClick={() => setIsModalOpen(false)}
+                            >
+                              Cancel
+                            </Button>
+                            <Button
+                              variant="destructive"
+                              onClick={() => {
+                                remove(index);
+                                setIsModalOpen(false);
+                              }}
+                            >
+                              Yes
+                            </Button>
+                          </div>
+                        </Modal>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="pb-8">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => push(initialItem)}
+                    >
+                      Add Another Item
+                    </Button>
+                  </div>
+                </>
+              )}
+            </FieldArray>
+
+            {/* Delivery Info */}
+            <div className="space-y-4 mb-8 bg-white rounded-xl shadow p-6 text-accent">
+              <Heading size="md" weight="semibold">
+                Delivery Info
+              </Heading>
+
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={values.useSavedAddress}
+                  onChange={() =>
+                    setFieldValue("useSavedAddress", !values.useSavedAddress)
+                  }
+                />
+                <Text>Use saved address</Text>
+              </label>
+
+              {!values.useSavedAddress && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input
+                    name="fullName"
+                    label="Full Name"
+                    value={values.fullName}
+                  />
+                  <Input
+                    name="phone"
+                    label="Phone"
+                    value={values.phone}
+                    type="number"
+                  />
+                  <Input name="email" label="Email" value={values.email} />
+
+                  <Select
+                    name="state"
+                    label="State"
+                    options={stateOptions}
+                    value={values.state}
+                    onChange={(e: any) => {
+                      setFieldValue("state", e.target.value);
+                      setFieldValue("lga", "");
+                    }}
+                  />
+                  <Select
+                    name="lga"
+                    label="LGA"
+                    options={lgaOptions[values.state] || []}
+                    value={values.lga}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                      setFieldValue("lga", e.target.value)
+                    }
+                  />
+                  <Input
+                    name="address"
+                    label="Delivery Address"
+                    value={values.address}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Actions */}
             <div className="pt-4 space-x-4">
               <Button
                 type="button"
@@ -113,20 +365,7 @@ const handleProceed = () => {
                 onClick={handleProceed}
                 loading={loading}
               >
-                Proceed 
-              </Button>
-
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() =>
-                  setFieldValue("checkouts", [
-                    ...values.checkouts,
-                    initialCheckout,
-                  ])
-                }
-              >
-                Add Another Checkout
+                Proceed
               </Button>
             </div>
           </Form>
@@ -135,6 +374,5 @@ const handleProceed = () => {
     </div>
   );
 };
-
 
 export default NewOrder;

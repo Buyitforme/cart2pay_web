@@ -35,7 +35,7 @@ const Select: React.FC<SelectProps> = ({
         value={value}
         onChange={onChange}
         {...rest}
-        className={`w-full h-10 px-4 py-2 mt-2 border border-gray-300 rounded-lg shadow-sm text-sm text-[#1E2A47] bg-white focus:outline-none  focus:ring-accent transition ${className}`}
+        className={`w-full h-10 px-4 py-2  border border-gray-300 rounded-lg shadow-sm text-sm text-[#1E2A47] bg-white focus:outline-none  focus:ring-accent transition ${className}`}
       >
         <option value="" disabled>
           {placeholder}

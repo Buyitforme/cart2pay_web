@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Button } from "../Components/Button";
 import { Input } from "../Components/Inputfield";
@@ -15,26 +15,8 @@ import {
 } from "../redux/features/UserAccountManagement/userAccountManagementThunk";
 import { PageLoader } from "../Components/PageLoader";
 
-const initialValues = {
-  fullName: "",
-  email: "",
-  phone: "",
-  address: "",
-  state: "",
-  lga: "",
-};
-const ProfileSchema = Yup.object().shape({
-  fullName: Yup.string().required("Full name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  phone: Yup.string().required("Phone number is required"),
-  address: Yup.string().required("Address is required"),
-  state: Yup.string().required("State is required"),
-  lga: Yup.string().required("LGA is required"),
-});
-
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -42,40 +24,46 @@ const UserProfile = () => {
   const { getUserProfileData, editUserProfileData } = useSelector(
     (state: RootState) => state.user_account_management
   );
-  
-  const userData = getUserProfileData.data?.results?.data ;
+  const userData = getUserProfileData.data?.results?.data;
   const handleEditToggle = () => setIsEditing(true);
 
- const isFormDirty = (values: any) =>
-    values.fullName !== initialValues.fullName ||
-    values.email !== initialValues.email ||
-    values.phone !== initialValues.phone;
-    
+  const initialValues = {
+    fullName: userData?.fullName || "",
+    email: userData?.email || "",
+    phone: userData?.phone || "",
+    address: userData?.address || "",
+    state: userData?.state || "",
+    lga: userData?.lga || "",
+  };
+  const ProfileSchema = Yup.object().shape({
+    fullName: Yup.string().required("Full name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phone: Yup.string().required("Phone number is required"),
+    address: Yup.string().nullable(),
+    state: Yup.string().nullable(),
+    lga: Yup.string().nullable(),
+  });
+
   const handleSave = async (values: any) => {
+    console.log("handleSave called with:", values);
     const payload = {
       fullName: values.fullName,
       email: values.email,
       phone: values.phone,
-    address: values.address,
-    state: values.state,
-    lga: values.lga,
     };
     dispatch(triggerEditUserProfile(payload));
   };
 
   useEffect(() => {
     if (!editUserProfileData.error && editUserProfileData.statusCode === 200) {
-      setSaving(true);
+      toast.success(editUserProfileData.message);
       setTimeout(() => {
-        setSaving(false);
-        setIsEditing(false);
-        toast.success(editUserProfileData.message);
+        window.location.reload()
       }, 2000);
     } else if (editUserProfileData.error) {
       toast.error(editUserProfileData.message);
       console.log("error full object", editUserProfileData.data);
     }
-    // dispatch(resetState());
   }, [
     editUserProfileData.error,
     editUserProfileData.statusCode,
@@ -95,11 +83,6 @@ const UserProfile = () => {
   useEffect(() => {
     dispatch(triggerGetUserProfile({}));
   }, [dispatch]);
-  console.log(
-    "USER PROFILE RETRIEVED",
-    JSON.stringify(getUserProfileData, null, 2)
-  );
-
 
   if (getUserProfileData.loading || !getUserProfileData.data) {
     return (
@@ -108,6 +91,8 @@ const UserProfile = () => {
       </div>
     );
   }
+  console.log("editUserProfileData.loading:", editUserProfileData.loading);
+
   return (
     <div className="flex justify-center items-center min-h-[80vh] px-4">
       <div className="w-full max-w-2xl shadow-lg bg-white rounded-xl p-8 space-y-6">
@@ -128,14 +113,15 @@ const UserProfile = () => {
         </div>
 
         <Formik
-          initialValues={userData}
+          initialValues={initialValues}
           validationSchema={ProfileSchema}
-          enableReinitialize
-          onSubmit={handleSave}
+          onSubmit={(values) => {
+            console.log("🚀 Formik onSubmit triggered with:", values);
+            handleSave(values);
+          }}
         >
-          {({ handleSubmit, isValid,dirty }) => (
-            
-            <Form onSubmit={handleSubmit} className="space-y-4">
+          {({ dirty }) => (
+            <Form className="space-y-4">
               <Input
                 label="Full Name"
                 name="fullName"
@@ -174,10 +160,11 @@ const UserProfile = () => {
                     type="submit"
                     variant="primary"
                     loading={editUserProfileData.loading}
-            disabled={!(isValid && isFormDirty) || editUserProfileData.loading}
+                    disabled={!dirty || editUserProfileData.loading}
                   >
                     Save Changes
                   </Button>
+
                   <Button
                     type="button"
                     variant="secondary"
@@ -228,5 +215,3 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
-
-

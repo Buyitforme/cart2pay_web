@@ -3,8 +3,8 @@ import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
 import { Input } from "../../../Components/Inputfield";
 import Select from "../../../Components/Select";
-import { lgaOptions, stateOptions, storeOptions } from "./ordersHelpers";
-import Modal from "../../../Components/Modal"; 
+import { colorOptions, lgaOptions, sizeOptions, stateOptions, storeOptions } from "./ordersHelpers";
+import Modal from "../../../Components/Modal";
 
 type CheckoutFormSectionProps = {
   index: number;
@@ -26,17 +26,17 @@ const CheckoutFormSection = ({
     setFieldValue("checkouts", newCheckouts);
     setIsModalOpen(false);
   };
-useEffect(() => {
-  if (
-    checkout.itemLink &&
-    checkout.itemLink !== checkout.itemLink.toLowerCase()
-  ) {
-    setFieldValue(
-      `checkouts[${index}].itemLink`,
-      checkout.itemLink.toLowerCase()
-    );
-  }
-}, [checkout.itemLink, index, setFieldValue]);
+  useEffect(() => {
+    if (
+      checkout.itemLink &&
+      checkout.itemLink !== checkout.itemLink.toLowerCase()
+    ) {
+      setFieldValue(
+        `checkouts[${index}].itemLink`,
+        checkout.itemLink.toLowerCase()
+      );
+    }
+  }, [checkout.itemLink, index, setFieldValue]);
 
   return (
     <div className="mb-8 bg-white rounded-xl shadow p-6 space-y-10 text-accent">
@@ -56,16 +56,61 @@ useEffect(() => {
       </div>
 
       {/* Cart Link */}
-      <div className="space-y-4">
+      <div className="space-y-2">
         <Heading size="md" weight="semibold">
-          Paste Cart link
+          Product details
         </Heading>
-        <Input
-          name={`checkouts[${index}].itemLink`}
-          placeholder="Paste cart link from selected store"
-          value={checkout.itemLink}
-       
-        />
+        <Text size="sm" className="text-muted-foreground">
+          If you're providing a cart link, you don't need to fill in the variant
+          fields.
+        </Text>
+
+        <div className="flex flex-col md:flex-row gap-4 w-full pt-4">
+          {/* Product/Cart Link (1/3 width) */}
+          <div className="w-full md:basis-1/3">
+            <Text size="md" weight="semibold">
+              Product/Cart Link
+            </Text>
+            <Input
+              name={`checkouts[${index}].itemLink`}
+              placeholder="Paste cart link from selected store"
+              value={checkout.itemLink}
+            />
+          </div>
+
+          {/* Variants (2/3 width) */}
+          <div className="w-full md:basis-2/3">
+            <Text size="md" weight="semibold">
+              Variants
+            </Text>
+            <div className="flex flex-col md:flex-row gap-6">
+              <Select
+                name={`checkouts[${index}].store`}
+                options={sizeOptions}
+                value={checkout.store}
+                onChange={(e) =>
+                  setFieldValue(`checkouts[${index}].store`, e.target.value)
+                }
+                placeholder=" Size"
+              />
+              <Select
+                name={`checkouts[${index}].store`}
+                options={colorOptions}
+                value={checkout.store}
+                onChange={(e) =>
+                  setFieldValue(`checkouts[${index}].store`, e.target.value)
+                }
+                placeholder="Color"
+              />
+              <Input
+                className="w-full"
+                name={`checkouts[${index}].itemLink`}
+                placeholder="Quantity"
+                value={checkout.itemLink}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Delivery Info */}
@@ -93,7 +138,6 @@ useEffect(() => {
               name={`checkouts[${index}].fullName`}
               label="Full Name"
               value={checkout.fullName}
-            
             />
             <Input
               name={`checkouts[${index}].phone`}
