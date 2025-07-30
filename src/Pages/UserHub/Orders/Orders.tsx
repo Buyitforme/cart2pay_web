@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import { Button } from "../../../Components/Button";
 import { Card } from "../../../Components/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/state";
+import { triggerOrderHistory } from "../../../redux/features/orderManagement/orderManagementThunk";
 
 type Order = {
   id: string;
@@ -30,9 +33,17 @@ const mockOrders = [
 
 const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const { orderHistory } = useSelector(
+    (state: RootState) => state.order_management
+  );
+  const dispatch: AppDispatch = useDispatch();
+  console.log('orderhistory:',orderHistory.data)
+  
+  useEffect(() => {
+    dispatch(triggerOrderHistory({}));
+  }, [dispatch]);
 
   const handleViewOrder = (order: any) => setSelectedOrder(order);
-
   return (
     <div className="px-4 md:px-16 py-6">
       <Heading size="2xl" weight="bold">
