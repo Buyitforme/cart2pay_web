@@ -18,7 +18,18 @@ export class orderManagementService {
     }
   }
 
-
+ static async order_details(orderId :string) {
+    const response = await get({
+       url: `${apiRoutes.order_details}/${orderId}`,
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+        console.log('ORDER DETAILS',JSON.stringify(response,null,2))
+      return response;
+    }
+  }
 
 }
 

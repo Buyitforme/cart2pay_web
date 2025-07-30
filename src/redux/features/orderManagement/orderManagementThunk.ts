@@ -14,3 +14,15 @@ export const triggerOrderHistory = createAsyncThunk(
     }
   }
 )
+
+export const triggerOrderDetails = createAsyncThunk(
+  'order_management/order_details',
+  async (orderId: string, thunkAPI) => {
+    try {
+      const response = await orderManagementService.order_details(orderId);
+      return response
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || 'Something went wrong');
+    }
+  }
+);

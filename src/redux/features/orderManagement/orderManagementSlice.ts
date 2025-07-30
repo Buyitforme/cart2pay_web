@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { triggerOrderHistory } from "./orderManagementThunk";
+import { triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
 
 interface IinitialState {
   orderHistory: {
@@ -9,9 +9,23 @@ interface IinitialState {
     message: string;
     statusCode?: number | null;
   };
+   orderDetails: {
+    error: boolean;
+    loading: boolean;
+    data: Record<string, any>;
+    message: string;
+    statusCode?: number | null;
+  };
 }
 const initialState: IinitialState = {
   orderHistory: {
+    error: false,
+    loading: false,
+    data: {},
+    message: "",
+    statusCode: null,
+  },
+    orderDetails: {
     error: false,
     loading: false,
     data: {},
@@ -54,6 +68,32 @@ const orderManagementSlice = createSlice({
           state.orderHistory.message =
             (action.payload as any)?.message || "Unknown error";
           state.orderHistory.statusCode =
+            (action.payload as any)?.status_code || 400;
+        });
+
+          // GET ORDER DETAILS
+        builder.addCase(triggerOrderDetails.pending, (state) => {
+          state.orderDetails.loading = true;
+          state.orderDetails.error = false;
+          state.orderDetails.data = {};
+          state.orderDetails.message = "";
+        });
+        builder.addCase(triggerOrderDetails.fulfilled, (state, action) => {
+          state.orderDetails.loading = false;
+          state.orderDetails.data = action.payload as any;
+          state.orderDetails.error = false;
+          state.orderDetails.message = action.payload
+            ?.message as unknown as string;
+          state.orderDetails.statusCode = action.payload
+            ?.status_code as unknown as number;
+        });
+        builder.addCase(triggerOrderDetails.rejected, (state, action) => {
+          state.orderDetails.loading = false;
+          state.orderDetails.error = true;
+          state.orderDetails.data = (action.payload as any) || {};
+          state.orderDetails.message =
+            (action.payload as any)?.message || "Unknown error";
+          state.orderDetails.statusCode =
             (action.payload as any)?.status_code || 400;
         });
   },

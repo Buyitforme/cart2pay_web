@@ -13,13 +13,13 @@ const Home = () => {
   );
   const userData = getUserProfileData.data?.results?.data;
     const dispatch: AppDispatch = useDispatch();
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning";
-    if (hour < 17) return "Good afternoon";
-    if (hour < 22) return "Good evening";
-    return "Hello";
-  };
+ const getGreeting = () => {
+  const hour = new Date().getHours();
+
+  if (hour < 12) return "Good morning";     
+  if (hour < 17) return "Good afternoon";   
+  return "Good evening";                    
+};
   const greeting = getGreeting();
    useEffect(() => {
       dispatch(triggerGetUserProfile({}));
