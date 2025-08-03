@@ -8,6 +8,7 @@ interface ApiUrls {
   get_user_profile: string
   order_history: string
   order_details: string
+  create_order: string
 }
 
 const apiRoutes: ApiUrls = {
@@ -19,7 +20,8 @@ const apiRoutes: ApiUrls = {
   resend_otp: "/api/auth/resend-otp",
   get_user_profile :"/api/user/user-profile",
   order_history :"api/order/orders/history",
-  order_details:"api/order/order"
+  order_details:"api/order/order",
+  create_order:"api/order/create"
 };
 
 export default apiRoutes;

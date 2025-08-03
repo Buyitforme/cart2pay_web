@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
+import { triggerCreateOrder, triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
 
 interface IinitialState {
   orderHistory: {
@@ -16,6 +16,14 @@ interface IinitialState {
     message: string;
     statusCode?: number | null;
   };
+     createOrder: {
+    error: boolean;
+    loading: boolean;
+    data: Record<string, any>;
+    message: string;
+    statusCode?: number | null;
+  };
+
 }
 const initialState: IinitialState = {
   orderHistory: {
@@ -32,16 +40,24 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+   createOrder: {
+    error: false,
+    loading: false,
+    data: {},
+    message: "",
+    statusCode: null,
+  },
 };
 
 const orderManagementSlice = createSlice({
   name: "order_management",
   initialState,
   reducers: {
-    resetorderHistoryState: (state) => {
-      state.orderHistory.error = initialState.orderHistory.error;
-      state.orderHistory.message = initialState.orderHistory.message;
-      state.orderHistory.statusCode = initialState.orderHistory.statusCode;
+   
+     resetCreateOrderState: (state) => {
+      state.createOrder.error = initialState.createOrder.error;
+      state.createOrder.message = initialState.createOrder.message;
+      state.createOrder.statusCode = initialState.createOrder.statusCode;
     },
   },
   extraReducers: (builder) => {
@@ -96,7 +112,34 @@ const orderManagementSlice = createSlice({
           state.orderDetails.statusCode =
             (action.payload as any)?.status_code || 400;
         });
+
+              // CREATE ORDER 
+        builder.addCase(triggerCreateOrder.pending, (state) => {
+          state.createOrder.loading = true;
+          state.createOrder.error = false;
+          state.createOrder.data = {};
+          state.createOrder.message = "";
+        });
+        builder.addCase(triggerCreateOrder.fulfilled, (state, action) => {
+          state.createOrder.loading = false;
+          state.createOrder.data = action.payload as any;
+          state.createOrder.error = false;
+          state.createOrder.message = action.payload
+            ?.message as unknown as string;
+          state.createOrder.statusCode = action.payload
+            ?.status_code as unknown as number;
+        });
+        builder.addCase(triggerCreateOrder.rejected, (state, action) => {
+          state.createOrder.loading = false;
+          state.createOrder.error = true;
+          state.createOrder.data = (action.payload as any) || {};
+          state.createOrder.message =
+            (action.payload as any)?.message || "Unknown error";
+          state.createOrder.statusCode =
+            (action.payload as any)?.status_code || 400;
+        });
   },
 });
+export const {resetCreateOrderState} = orderManagementSlice.actions
 
 export default orderManagementSlice.reducer;

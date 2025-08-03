@@ -32,7 +32,7 @@ const navLinks = [
     ],
   },
   {
-    label: "New Order",
+    label: "Shop for me",
     to: "/dashboard/new-order",
     icon: <ShoppingBag className="w-5 h-5" />,
     children: [

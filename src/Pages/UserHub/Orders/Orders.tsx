@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { triggerOrderHistory } from "../../../redux/features/orderManagement/orderManagementThunk";
 import { useNavigate } from "react-router-dom";
+import { PageLoader } from "../../../Components/PageLoader";
 
 export interface Order {
   _id: string;
@@ -44,7 +45,13 @@ const Orders: FC = () => {
     dispatch(triggerOrderHistory({}));
   }, [dispatch]);
 
-
+  if (orderHistory.loading || !orderHistory.data) {
+    return (
+      <div className="flex justify-center items-center h-screen w-full">
+        <PageLoader />
+      </div>
+    );
+  }
   return (
     <div className="px-4 md:px-16 py-6">
       <Heading size="2xl" weight="bold">
@@ -61,7 +68,7 @@ const Orders: FC = () => {
             variant="primary"
             onClick={() => (window.location.href = "/dashboard/new-order")}
           >
-            Start Shopping
+            Let's shop for you
           </Button>
         </div>
       ) : (
