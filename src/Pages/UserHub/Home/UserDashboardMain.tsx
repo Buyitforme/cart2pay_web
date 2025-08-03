@@ -1,28 +1,43 @@
-import React from "react";
+import { useEffect } from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import { Button } from "../../../Components/Button";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/state";
+import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
+import SectionRenderer from "../../../Components/SectionRenderer";
 
 const Home = () => {
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning";
-    if (hour < 17) return "Good afternoon";
-    if (hour < 22) return "Good evening";
-    return "Hello";
-  };
-  const greeting = getGreeting();
-  const userFullName = localStorage.getItem("user_full_name") || "";
+    const { getUserProfileData} = useSelector(
+    (state: RootState) => state.user_account_management
+  );
+  const userData = getUserProfileData.data?.results?.data;
+    const dispatch: AppDispatch = useDispatch();
+ const getGreeting = () => {
+  const hour = new Date().getHours();
 
+  if (hour < 12) return "Good morning";     
+  if (hour < 17) return "Good afternoon";   
+  return "Good evening";                    
+};
+  const greeting = getGreeting();
+   useEffect(() => {
+      dispatch(triggerGetUserProfile({}));
+    }, [dispatch]);
   return (
     <div className="py-6 space-y-6 text-[#1E2A47]">
       <div>
-        <div className="flex gap-1">
-          <Heading size="xl" >
-            {greeting},{" "}
-          </Heading>
-          <Heading size="xl" weight="light">{userFullName}</Heading>
-        </div>
+<div className="flex gap-1 items-center">
+  <Heading size="xl">{greeting},</Heading>
+  <Heading size="xl" weight="light">
+    {getUserProfileData.loading ? (
+      <span className="bg-gray-200 animate-pulse h-6 w-48 rounded inline-block align-middle"></span>
+    ) : (
+      userData?.fullName || <SectionRenderer left={undefined} right={undefined} />
+    )}
+  </Heading>
+</div>
+
         <Text size="lg" className="text-gray-600 mt-1">
           Here’s a quick overview of your activity.
         </Text>

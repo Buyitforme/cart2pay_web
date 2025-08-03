@@ -24,6 +24,7 @@ import VerificationService from "../Pages/VerificationService";
 import ForgotPassword from "../Pages/ForgotPassword";
 import ResetPassword from "../Pages/ResetPassword";
 import ProtectedRoutes from "./ProtectedRoutes";
+import OrderDetails from "../Pages/UserHub/Orders/OrderDetails";
 
 const routes: RouteObject[] = [
   {
@@ -45,7 +46,7 @@ const routes: RouteObject[] = [
   { path: routeNames.resetPassword, element: <ResetPassword /> },
 
   {
-    element: <ProtectedRoutes />, 
+    element: <ProtectedRoutes />,
     children: [
       {
         path: "/dashboard",
@@ -55,6 +56,7 @@ const routes: RouteObject[] = [
           { path: "orders", element: <Orders /> },
           { path: "new-order", element: <NewOrder /> },
           { path: "new-order/payment", element: <Payment /> },
+          { path: "orders/order-details/:orderId", element: <OrderDetails /> },
           { path: "profile", element: <UserProfile /> },
           { path: "notifications", element: <Notifications /> },
           { path: "settings", element: <>Settings</> },

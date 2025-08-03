@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
@@ -14,6 +14,12 @@ import {
 import Select from "../../../Components/Select";
 import Modal from "../../../Components/Modal";
 import { Input } from "../../../Components/Inputfield";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/state";
+import { CreateOrderPayload } from "../../../redux/features/orderManagement/types";
+import { triggerCreateOrder } from "../../../redux/features/orderManagement/orderManagementThunk";
+import toast from "react-hot-toast";
+import { resetCreateOrderState } from "../../../redux/features/orderManagement/orderManagementSlice";
 
 const initialItem = {
   store: "",
@@ -101,16 +107,47 @@ export const NewOrder = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { createOrder } = useSelector(
+    (state: RootState) => state.order_management
+  );
+  const dispatch: AppDispatch = useDispatch();
 
-  const handleProceed = () => {
-    setLoading(true);
-    setTimeout(() => {
-      localStorage.removeItem("cart2pay_quote_start");
-      setLoading(false);
-      navigate("payment");
-    }, 2000);
+
+  const handleCreateOrder = (values: any) => {
+        console.log('function called')
+
+    const payload: CreateOrderPayload = {
+      store: values.store,
+      address: values.address,
+      phone: values.phone,
+      email: values.email,
+      details: values.items.map((item: any) => ({
+        link: item.itemLink,
+        prize: null, // or parse if applicable
+        variant: {
+          size: item.customSize || item.size,
+          color: item.customColor || item.color,
+          quantity: Number(item.quantity),
+        },
+      })),
+    };
+
+    dispatch(triggerCreateOrder(payload));
   };
 
+  useEffect(() => {
+    if (!createOrder.error && createOrder.statusCode === 201) {
+      toast.success(createOrder.message);
+      setTimeout(() => {
+      localStorage.removeItem("cart2pay_quote_start");
+      navigate("payment");
+    }, 2000);
+    } else if (createOrder.error) {
+      toast.error(createOrder.message);
+      console.log("order", createOrder.data);
+    }
+    dispatch(resetCreateOrderState());
+  }, [createOrder.data, createOrder.error, createOrder.message, createOrder.statusCode, dispatch, navigate]);
   return (
     <div className="px-0 md:px-20">
       <Formik
@@ -121,9 +158,7 @@ export const NewOrder = () => {
           ...deliveryFields,
         }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-          console.log("Submitted:", values);
-        }}
+        onSubmit={handleCreateOrder}
         enableReinitialize
       >
         {({ values, setFieldValue, isValid, dirty }) => (
@@ -285,7 +320,7 @@ export const NewOrder = () => {
 
                   <div className="pb-8">
                     <Button
-                      type="button"
+                      type="submit"
                       variant="secondary"
                       onClick={() => push(initialItem)}
                     >
@@ -359,11 +394,10 @@ export const NewOrder = () => {
             {/* Actions */}
             <div className="pt-4 space-x-4">
               <Button
-                type="button"
+                type="submit"
                 variant="primary"
-                disabled={!(isValid && dirty) || loading}
-                onClick={handleProceed}
-                loading={loading}
+                disabled={!(isValid && dirty) || createOrder.loading}
+                loading={createOrder.loading}
               >
                 Proceed
               </Button>

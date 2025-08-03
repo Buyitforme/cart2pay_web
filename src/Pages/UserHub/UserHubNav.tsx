@@ -23,9 +23,16 @@ const navLinks = [
     label: "Orders",
     to: "/dashboard/orders",
     icon: <ShoppingBag className="w-5 h-5" />,
+      children: [
+      {
+        label: "Order details",
+        to: "/dashboard/orders/order-details/:orderId", 
+        icon: <CreditCard className="w-5 h-5" />,
+      },
+    ],
   },
   {
-    label: "New Order",
+    label: "Shop for me",
     to: "/dashboard/new-order",
     icon: <ShoppingBag className="w-5 h-5" />,
     children: [
