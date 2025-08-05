@@ -120,12 +120,14 @@ const Quote = () => {
 
       {!orderDetails.loading && order?.total === 0 ? (
         <div className="text-center space-y-4 py-10">
-      <Heading size="lg" weight="bold">
-  Order Received!
-</Heading>
-<Text size="sm" color="subtle">
-  We're processing your order, this usually takes about 24 hours or less depending on the quantity of items. You'll receive an email and in-app notification once it's ready.
-</Text>
+          <Heading size="lg" weight="bold">
+            Order Received!
+          </Heading>
+          <Text size="sm" color="subtle">
+            We're processing your order, this usually takes about 24 hours or
+            less depending on the quantity of items. You'll receive an email and
+            in-app notification once it's ready.
+          </Text>
 
           {/* <div className="text-3xl font-bold text-accent">
             {formatTime(countdown)}

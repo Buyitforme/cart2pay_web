@@ -140,7 +140,7 @@ export const NewOrder = () => {
       toast.success(createOrder.message);
       setTimeout(() => {
       localStorage.removeItem("cart2pay_quote_start");
-      navigate("payment");
+      navigate("/dashboard/orders");
     }, 2000);
     } else if (createOrder.error) {
       toast.error(createOrder.message);

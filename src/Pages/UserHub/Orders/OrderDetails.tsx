@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { triggerOrderDetails } from "../../../redux/features/orderManagement/orderManagementThunk";
 import toast from "react-hot-toast";
-import { BeatLoader, SyncLoader } from "react-spinners";
+import { BarLoader, BeatLoader, SyncLoader } from "react-spinners";
 import GoBack from "../../../Components/GoBack";
+import SkeletonLoader from "../../../Components/SkeletonLoader";
+import { Text } from "../../../Components/Typography";
+import ContentLoader from "../../../Components/ContentLoader";
+import TextLoader from "../../../Components/TextLoader";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -28,6 +32,7 @@ const OrderDetails = () => {
       toast.error(orderDetails.message);
     }
   }, [orderDetails.error, orderDetails.message, orderDetails.statusCode]);
+  console.log("details length:", parsedDetails.length);
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-md">
       <GoBack label={"Order Details"} />
@@ -44,7 +49,7 @@ const OrderDetails = () => {
           value={
             order?.createdAt
               ? new Date(order.createdAt).toLocaleString()
-              : "..."
+              : null
           }
         />
 
@@ -52,20 +57,9 @@ const OrderDetails = () => {
           <h2 className="text-lg font-semibold mb-2">Items:</h2>
           <ul className="space-y-3">
             {orderDetails.loading ? (
-              // Show skeleton loaders while fetching
-              Array(4)
-                .fill(0)
-                .map((_, index) => (
-                  <li
-                    key={index}
-                    className="p-4 border rounded-xl bg-gray-100 animate-pulse space-y-2"
-                  >
-                    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                    <div className="h-4 bg-gray-300 rounded w-1/2"></div>
-                    <div className="h-4 bg-gray-300 rounded w-2/3"></div>
-                    <div className="h-4 bg-gray-300 rounded w-2/3"></div>
-                  </li>
-                ))
+              <div className="flex justify-center items-center">
+                <ContentLoader />
+              </div>
             ) : parsedDetails.length > 0 ? (
               // Show actual order details when loaded
               parsedDetails.map((item: any, index: number) => (
@@ -107,15 +101,6 @@ const OrderDetails = () => {
           </ul>
         </div>
 
-        {/* <div className="grid grid-cols-2 gap-4 mt-6">
-          <SummaryBox label="Items Total" value={order?.total} />
-          <SummaryBox label="Shiping Fee" value={order?.fee} />
-          <SummaryBox label="Surcharge" value={order?.surcharge} />
-          <SummaryBox label="Cart2pay Fee" value={order?.service_fee} />
-          <SummaryBox label="Local delivery" value={order?.delivery} />
-
-          <SummaryBox label="Sum total" value={order?.sumTotal} />
-        </div> */}
       </div>
     </div>
   );
@@ -129,21 +114,13 @@ const DetailRow = ({
 }) => (
   <div className="flex justify-between border-b py-2 text-gray-700">
     <span className="font-medium">{label}</span>
-    <span>{value ?? <span className="dot-loading" aria-label="Loading">...</span>}</span>
+    <span>
+      {value ?? (
+        <TextLoader />
+      )}
+    </span>
   </div>
 );
 
-const SummaryBox = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | number;
-}) => (
-  <div className="bg-gray-100 p-4 rounded-lg text-center">
-    <div className="text-sm text-gray-500">{label}</div>
-    <div className="text-xl font-semibold">{value ?? 0}</div>
-  </div>
-);
 
 export default OrderDetails;
