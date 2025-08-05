@@ -208,55 +208,76 @@ export const NewOrder = () => {
                               Variants
                             </Text>
                             <div className="flex flex-col md:flex-row gap-4">
-                              {/* Size */}
-                              <div className="w-full md:w-1/3">
-                                {item.size !== "other" ? (
-                                  <Select
-                                    name={`items[${index}].size`}
-                                    options={sizeOptions}
-                                    value={item.size}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLSelectElement>
-                                    ) =>
-                                      setFieldValue(
-                                        `items[${index}].size`,
-                                        e.target.value
-                                      )
-                                    }
-                                    placeholder="Size"
-                                  />
-                                ) : (
-                                  <Input
-                                    name={`items[${index}].customSize`}
-                                    placeholder="Enter custom size"
-                                    value={item.customSize}
-                                  />
-                                )}
-                              </div>
+                           {/* Size */}
+<div className="w-full md:w-1/3">
+  {item.size !== "other" ? (
+    <Select
+      name={`items[${index}].size`}
+      options={sizeOptions}
+      value={item.size}
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+        setFieldValue(`items[${index}].size`, e.target.value)
+      }
+      placeholder="Size"
+    />
+  ) : (
+    <div className="space-y-2">
+      <Input
+        name={`items[${index}].customSize`}
+        placeholder="Enter custom size"
+        value={item.customSize}
+        onChange={(e) =>
+          setFieldValue(`items[${index}].customSize`, e.target.value)
+        }
+      />
+      <button
+        type="button"
+        className="text-xs text-blue-500 underline"
+        onClick={() =>
+          setFieldValue(`items[${index}].size`, "") 
+        }
+      >
+        Back to size options
+      </button>
+    </div>
+  )}
+</div>
 
-                              {/* Color */}
-                              <div className="w-full md:w-1/3">
-                                {item.color !== "other" ? (
-                                  <Select
-                                    name={`items[${index}].color`}
-                                    options={colorOptions}
-                                    value={item.color}
-                                    onChange={(e) =>
-                                      setFieldValue(
-                                        `items[${index}].color`,
-                                        e.target.value
-                                      )
-                                    }
-                                    placeholder="Color"
-                                  />
-                                ) : (
-                                  <Input
-                                    name={`items[${index}].customColor`}
-                                    placeholder="Enter custom color"
-                                    value={item.customColor}
-                                  />
-                                )}
-                              </div>
+{/* Color */}
+<div className="w-full md:w-1/3">
+  {item.color !== "other" ? (
+    <Select
+      name={`items[${index}].color`}
+      options={colorOptions}
+      value={item.color}
+      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+        setFieldValue(`items[${index}].color`, e.target.value)
+      }
+      placeholder="Color"
+    />
+  ) : (
+    <div className="space-y-2">
+      <Input
+        name={`items[${index}].customColor`}
+        placeholder="Enter custom color"
+        value={item.customColor}
+        onChange={(e) =>
+          setFieldValue(`items[${index}].customColor`, e.target.value)
+        }
+      />
+      <button
+        type="button"
+        className="text-xs text-blue-500 underline"
+        onClick={() =>
+          setFieldValue(`items[${index}].color`, "")
+        }
+      >
+        Back to color options
+      </button>
+    </div>
+  )}
+</div>
+
 
                               {/* Quantity */}
                               <div className="w-full md:w-1/3">
