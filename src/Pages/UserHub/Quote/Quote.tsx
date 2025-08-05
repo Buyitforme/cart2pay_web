@@ -22,10 +22,9 @@ const Quote = () => {
   const { orderDetails } = useSelector(
     (state: RootState) => state.order_management
   );
-    const dispatch: AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
-    const order = orderDetails?.data?.results;
-
+  const order = orderDetails?.data?.results;
 
   const [loading, setsLoading] = useState(false);
   const [paymentConfirmed, setPaymentComfirmed] = useState(false);
@@ -105,43 +104,32 @@ const Quote = () => {
       setPaymentComfirmed(true);
     }, 6000);
   };
-    useEffect(() => {
-      dispatch(triggerOrderDetails(orderId!));
-    }, [dispatch, orderId]);
+  useEffect(() => {
+    dispatch(triggerOrderDetails(orderId!));
+  }, [dispatch, orderId]);
   if (orderDetails.loading || !orderDetails.data) {
-     return (
-       <div className="flex justify-center items-center h-screen w-full">
-         <PageLoader />
-       </div>
-     );
-   }
+    return (
+      <div className="flex justify-center items-center h-screen w-full">
+        <PageLoader />
+      </div>
+    );
+  }
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded-xl space-y-8">
       <GoBack label={"Quote"} />
 
-      {!orderDetails.loading && order?.total !== 0 ? (
+      {!orderDetails.loading && order?.total === 0 ? (
         <div className="text-center space-y-4 py-10">
-          <Heading size="lg" weight="bold">
-            Order Request Received
-          </Heading>
-          <Text size="sm" color="subtle">
-            We've received your order request and our team is reviewing it
-            carefully.
-            <br />
-            Please allow up to <strong>24 hours</strong> for us to finalize your
-            total in ₦aira.
-            <br />
-            It may be ready much sooner depending on the number of items in your
-            cart.
-          </Text>
+      <Heading size="lg" weight="bold">
+  Order Received!
+</Heading>
+<Text size="sm" color="subtle">
+  We're processing your order, this usually takes about 24 hours or less depending on the quantity of items. You'll receive an email and in-app notification once it's ready.
+</Text>
 
-          <Text size="sm" color="primary">
-            You’ll get an email and in-app notification once it’s ready.
-          </Text>
-
-          <div className="text-3xl font-bold text-accent">
+          {/* <div className="text-3xl font-bold text-accent">
             {formatTime(countdown)}
-          </div>
+          </div> */}
 
           <div className="flex flex-col sm:flex-row justify-center gap-3 pt-6">
             <Button
@@ -161,12 +149,14 @@ const Quote = () => {
             <Heading size="lg" weight="bold" color="default">
               🎉 Your Quote Is Ready!
             </Heading>
-     <Text className="text-gray-600 text-base" color="subtle">
-  Review your order summary below, including all costs and fees. When you're ready, proceed with payment.
-</Text>
-<Text className="text-sm text-orange-600" color="warning">
-  Quick tip! To avoid stockouts, please complete your payment as soon as possible because items are selling out fast.
-</Text>
+            <Text className="text-gray-600 text-base" color="subtle">
+              Review your order summary below, including all costs and fees.
+              When you're ready, proceed with payment.
+            </Text>
+            <Text className="text-sm text-orange-600" color="warning">
+              Quick tip! To avoid stockouts, please complete your payment as
+              soon as possible because items are selling out fast.
+            </Text>
           </div>
 
           {/* Cart Details */}
@@ -287,7 +277,11 @@ const Quote = () => {
             </Button>
           </div>
 
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} className="w-[30%]">
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            className="w-[30%]"
+          >
             <div className="py-2 w-full">
               <Heading size="md" className="text-center">
                 Bank Transfer Details
@@ -343,7 +337,6 @@ const Quote = () => {
             isOpen={paymentConfirmed}
             onClose={() => setPaymentComfirmed(false)}
           >
-            
             <div className="">
               <div className="flex flex-col items-center justify-center space-y-4">
                 <Lottie
