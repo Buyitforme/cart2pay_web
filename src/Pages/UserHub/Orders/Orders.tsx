@@ -93,7 +93,8 @@ const Orders: FC = () => {
               <Text>
                 <strong>Total:</strong> ₦{order.sumTotal || 0}
               </Text>
-              <Button
+              <div className="flex justify-between">
+                 <Button
                 size="sm"
                 className="mt-4"
                 variant="outline"
@@ -101,6 +102,16 @@ onClick={() => navigate(`/dashboard/orders/order-details/${order._id}`)}
               >
                 View Details
               </Button>
+               <Button
+                size="sm"
+                className="mt-4"
+                variant="outline"
+onClick={() => navigate(`/dashboard/orders/quote/${order._id}`)}
+              >
+                View Quote
+              </Button>
+              </div>
+             
             </Card>
           ))}
         </div>

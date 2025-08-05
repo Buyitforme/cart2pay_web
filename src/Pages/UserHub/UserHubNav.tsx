@@ -29,19 +29,17 @@ const navLinks = [
         to: "/dashboard/orders/order-details/:orderId", 
         icon: <CreditCard className="w-5 h-5" />,
       },
+        {
+        label: "Quote",
+        to: "/dashboard/orders/quote/:orderId", // <-- corrected
+        icon: <CreditCard className="w-5 h-5" />,
+      },
     ],
   },
   {
     label: "Shop for me",
     to: "/dashboard/new-order",
     icon: <ShoppingBag className="w-5 h-5" />,
-    children: [
-      {
-        label: "Payment",
-        to: "/dashboard/new-order/payment", // <-- corrected
-        icon: <CreditCard className="w-5 h-5" />,
-      },
-    ],
   },
 
 ];

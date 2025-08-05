@@ -8,7 +8,12 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+export const Modal = ({ 
+  isOpen, 
+  onClose, 
+  children, 
+  className 
+}: ModalProps & { className?: string }) => {
   if (!isOpen) return null;
 
   return (
@@ -18,7 +23,9 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         onClick={onClose}
         aria-hidden="true"
       />
-      <div className="relative z-50 bg-white p-6 rounded-lg shadow-lg space-y-4 max-w-sm text-center">
+      <div 
+        className={`relative z-50 bg-white p-6 rounded-lg shadow-lg space-y-4 ${className} text-center`}
+      >
         {children}
       </div>
     </div>

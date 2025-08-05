@@ -4,6 +4,14 @@ module.exports = {
   theme: {
     extend: {
      keyframes: {
+      dots: {
+          '0%, 20%': { content: "' '" },
+          '40%': { content: "'.'" },
+          '60%': { content: "'..'" },
+          '80%, 100%': { content: "'...'" },
+        },
+      
+     
   shimmer: {
     "0%": { transform: "translateX(-100%)" },
     "100%": { transform: "translateX(100%)" },
@@ -21,6 +29,7 @@ animation: {
   shimmer: "shimmer 2s infinite",
   scroll: "scroll 5s linear infinite",
   zoom: "zoom 1.5s ease-in-out infinite",
+   dots: 'dots 1.2s steps(4, end) infinite',
 },
 
       fontFamily: {

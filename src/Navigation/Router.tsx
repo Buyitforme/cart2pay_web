@@ -16,7 +16,7 @@ import UserHubLayout from "../Pages/UserHub/UserHubLayout";
 import DashboardHome from "../Pages/UserHub/Home/UserDashboardMain";
 import MainLayout from "../Components/MainLayout";
 import NewOrder from "../Pages/UserHub/Orders/NewOrder";
-import Payment from "../Pages/UserHub/Payment/Payment";
+import Quote from "../Pages/UserHub/Quote/Quote";
 import Notifications from "../Pages/Notifications";
 import UserProfile from "../Pages/UserProfile";
 import Orders from "../Pages/UserHub/Orders/Orders";
@@ -55,7 +55,7 @@ const routes: RouteObject[] = [
           { index: true, element: <DashboardHome /> },
           { path: "orders", element: <Orders /> },
           { path: "new-order", element: <NewOrder /> },
-          { path: "new-order/payment", element: <Payment /> },
+          { path: "orders/quote/:orderId", element: <Quote /> },
           { path: "orders/order-details/:orderId", element: <OrderDetails /> },
           { path: "profile", element: <UserProfile /> },
           { path: "notifications", element: <Notifications /> },

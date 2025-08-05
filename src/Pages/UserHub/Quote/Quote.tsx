@@ -2,40 +2,51 @@ import React, { useEffect, useState } from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import Select from "../../../Components/Select";
 import { Button } from "../../../Components/Button";
-import { Copy} from "lucide-react";
-import Modal from "../../../Components/Modal";
+import { ArrowLeft, Copy } from "lucide-react";
 import Tooltip from "../../../Components/Tooltip";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
 import success from "../../../Animations/success.json";
-const Payment = () => {
+import GoBack from "../../../Components/GoBack";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/state";
+import { triggerOrderDetails } from "../../../redux/features/orderManagement/orderManagementThunk";
+import { PageLoader } from "../../../Components/PageLoader";
+import { Modal } from "../../../Components/Modal";
+const Quote = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
- 
+  const { orderId } = useParams();
+  const { orderDetails } = useSelector(
+    (state: RootState) => state.order_management
+  );
+    const dispatch: AppDispatch = useDispatch();
+
+    const order = orderDetails?.data?.results;
+
+
   const [loading, setsLoading] = useState(false);
   const [paymentConfirmed, setPaymentComfirmed] = useState(false);
-const COUNTDOWN_KEY = "cart2pay_quote_start";
-const COUNTDOWN_DURATION = 2 * 60; // 1 hour in seconds
+  const COUNTDOWN_KEY = "cart2pay_quote_start";
+  const COUNTDOWN_DURATION = 2 * 60; // 1 hour in seconds
 
-const getInitialCountdown = () => {
-  const storedStart = localStorage.getItem(COUNTDOWN_KEY);
-  const now = Date.now();
+  const getInitialCountdown = () => {
+    const storedStart = localStorage.getItem(COUNTDOWN_KEY);
+    const now = Date.now();
 
-  if (storedStart) {
-    const elapsed = Math.floor((now - parseInt(storedStart, 10)) / 1000);
-    return Math.max(COUNTDOWN_DURATION - elapsed, 0);
-  } else {
-    localStorage.setItem(COUNTDOWN_KEY, now.toString());
-    return COUNTDOWN_DURATION;
-  }
-};
+    if (storedStart) {
+      const elapsed = Math.floor((now - parseInt(storedStart, 10)) / 1000);
+      return Math.max(COUNTDOWN_DURATION - elapsed, 0);
+    } else {
+      localStorage.setItem(COUNTDOWN_KEY, now.toString());
+      return COUNTDOWN_DURATION;
+    }
+  };
 
-// 👇 Set initial countdown right when useState runs
-const [countdown, setCountdown] = useState(getInitialCountdown);
-const [quoteReady, setQuoteReady] = useState(false);
-
+  // 👇 Set initial countdown right when useState runs
+  const [countdown, setCountdown] = useState(getInitialCountdown);
 
   const accountDetails = {
     name: "Cart2pay Ltd",
@@ -58,25 +69,23 @@ const [quoteReady, setQuoteReady] = useState(false);
     setIsModalOpen(true);
   };
 
-useEffect(() => {
-  if (quoteReady || countdown <= 0) return;
+  useEffect(() => {
+    if (countdown <= 0) return;
 
-  const interval = setInterval(() => {
-    setCountdown((prev) => {
-      const newCountdown = prev - 1;
-      if (newCountdown <= 0) {
-        clearInterval(interval);
-        setQuoteReady(true);
-        localStorage.removeItem(COUNTDOWN_KEY);
-        return 0;
-      }
-      return newCountdown;
-    });
-  }, 1000);
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        const newCountdown = prev - 1;
+        if (newCountdown <= 0) {
+          clearInterval(interval);
+          localStorage.removeItem(COUNTDOWN_KEY);
+          return 0;
+        }
+        return newCountdown;
+      });
+    }, 1000);
 
-  return () => clearInterval(interval);
-}, [countdown, quoteReady]);
-
+    return () => clearInterval(interval);
+  }, [countdown]);
 
   const formatTime = (seconds: number) => {
     const m = String(Math.floor(seconds / 60)).padStart(2, "0");
@@ -96,9 +105,21 @@ useEffect(() => {
       setPaymentComfirmed(true);
     }, 6000);
   };
+    useEffect(() => {
+      dispatch(triggerOrderDetails(orderId!));
+    }, [dispatch, orderId]);
+  if (orderDetails.loading || !orderDetails.data) {
+     return (
+       <div className="flex justify-center items-center h-screen w-full">
+         <PageLoader />
+       </div>
+     );
+   }
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded-xl space-y-8">
-      {!quoteReady ? (
+      <GoBack label={"Quote"} />
+
+      {!orderDetails.loading && order?.total !== 0 ? (
         <div className="text-center space-y-4 py-10">
           <Heading size="lg" weight="bold">
             Order Request Received
@@ -138,13 +159,14 @@ useEffect(() => {
         <div className="max-w-3xl mx-auto p-6 rounded-xl space-y-8">
           <div className="text-center space-y-2">
             <Heading size="lg" weight="bold" color="default">
-              🎉 Your Total Is Ready!
+              🎉 Your Quote Is Ready!
             </Heading>
-            <Text className="text-gray-600 text-base" color="subtle">
-              We’ve carefully reviewed your cart and calculated your total in
-              ₦aira. Please take a moment to review the summary below before
-              making payment.
-            </Text>
+     <Text className="text-gray-600 text-base" color="subtle">
+  Review your order summary below, including all costs and fees. When you're ready, proceed with payment.
+</Text>
+<Text className="text-sm text-orange-600" color="warning">
+  Quick tip! To avoid stockouts, please complete your payment as soon as possible because items are selling out fast.
+</Text>
           </div>
 
           {/* Cart Details */}
@@ -162,11 +184,11 @@ useEffect(() => {
             <div>
               <Text className="text-sm text-muted-foreground">Store</Text>
               <Heading size="sm" weight="semibold">
-                Zara
+                {order?.store}
               </Heading>
             </div>
 
-            <div>
+            {/* <div>
               <Text className="text-sm text-muted-foreground">Cart Link</Text>
               <a
                 href="https://zara.com"
@@ -176,7 +198,7 @@ useEffect(() => {
               >
                 View Cart on Zara
               </a>
-            </div>
+            </div> */}
           </div>
 
           {/* Delivery Info */}
@@ -185,13 +207,13 @@ useEffect(() => {
               Delivery Information
             </Heading>
             <Text>
-              <strong>Name:</strong> Chioma Nwabugwu
+              <strong>Email:</strong> {order?.email}
             </Text>
             <Text>
-              <strong>Phone:</strong> 07039379012
+              <strong>Phone:</strong> {order?.phone}
             </Text>
             <Text>
-              <strong>Address:</strong> 22 lekki phase 1, Eti-osa, Lagos
+              <strong>Address:</strong> {order?.address}
             </Text>
           </div>
 
@@ -201,12 +223,12 @@ useEffect(() => {
               Cost Breakdown
             </Heading>
             <div className="flex justify-between">
-              <Text>Cart Total (USD)</Text>
-              <Text>$120.00</Text>
+              <Text>Item(s) cost in USD</Text>
+              <Text>USD {order?.total}</Text>
             </div>
             <div className="flex justify-between">
-              <Text>Shipping Fee (USD)</Text>
-              <Text>$34</Text>
+              <Text>Shipping Fee in USD</Text>
+              <Text>USD {order?.fee}</Text>
             </div>
             <div className="flex justify-between">
               <Text>Exchange Rate</Text>
@@ -215,21 +237,21 @@ useEffect(() => {
 
             <div className="flex justify-between items-start gap-4">
               <Text className="min-w-0 break-words">
-                Surcharge (FX risks: 0.5% Cart + Shipping)
+                Surcharge (0.5% Items + Shipping)
               </Text>
               <Text className="text-right whitespace-nowrap font-medium">
-                ₦2,000
+                ₦{order?.surcharge}
               </Text>
             </div>
             <div className="flex justify-between text-gray-700">
               <Text>Cart2pay fee (2% Cart + Shipping) </Text>
-              <Text className="font-medium">₦4,000</Text>
+              <Text className="font-medium">₦{order?.service_fee}</Text>
             </div>
             <div className="flex justify-between font-bold text-lg pt-2">
               <Text>Total to Pay (₦)</Text>
               <div className="py-2 px-3 bg-highlight rounded">
                 <Text size="lg" color="" weight="bold" className="font-black ">
-                  ₦198,200
+                  ₦{order?.sumTotal}
                 </Text>
               </div>
             </div>
@@ -265,8 +287,8 @@ useEffect(() => {
             </Button>
           </div>
 
-          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <div className="space-y-4">
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} className="w-[30%]">
+            <div className="py-2 w-full">
               <Heading size="md" className="text-center">
                 Bank Transfer Details
               </Heading>
@@ -321,7 +343,8 @@ useEffect(() => {
             isOpen={paymentConfirmed}
             onClose={() => setPaymentComfirmed(false)}
           >
-            <div className="space-y-12">
+            
+            <div className="">
               <div className="flex flex-col items-center justify-center space-y-4">
                 <Lottie
                   animationData={success}
@@ -361,4 +384,4 @@ useEffect(() => {
   );
 };
 
-export default Payment;
+export default Quote;

@@ -29,3 +29,9 @@
     transform: translateX(-100%);
   }
 }
+.dot-loading::after {
+  display: inline-block;
+  animation: dots 1.2s steps(4, end) infinite;
+  content: '';
+  white-space: pre;
+}
