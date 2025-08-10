@@ -1,5 +1,5 @@
 import apiRoutes from "../../../config";
-import {get, post} from "../../network/https";
+import {get, post, put} from "../../network/https";
 import { CreateOrderPayload } from "./types";
 
 type SafePayload = Omit<CreateOrderPayload, "details"> & {
@@ -58,3 +58,36 @@ export class orderManagementService {
 
 }
 
+export class addressManagementService {
+  static async get_addresses(data: Record<string, string>) {
+    const response = await get({
+      url: apiRoutes.get_addresses,
+      data: { ...data },
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+        console.log('ORDERS',JSON.stringify(response,null,2))
+      return response;
+    }
+  }
+static async make_default(data:boolean, addressId: string) {
+  const response = await put({
+    url: `${apiRoutes.get_addresses}/${addressId}/make-default`,
+        data: { isDefault: data }, 
+
+  });
+
+  if (response.status === "error") {
+    throw response;
+  }
+  
+  if (response.status === "success") {
+    console.log('ORDERS', JSON.stringify(response, null, 2));
+    return response;
+  }
+}
+
+
+}

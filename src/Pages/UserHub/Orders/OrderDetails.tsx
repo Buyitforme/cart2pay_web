@@ -40,16 +40,17 @@ const OrderDetails = () => {
       <div className="space-y-4">
         <DetailRow label="Order ID" value={order?._id} />
         <DetailRow label="Store" value={order?.store} />
-        <DetailRow label="Delivery address" value={order?.address} />
-        <DetailRow label="Phone" value={order?.phone} />
+        <DetailRow label="Street" value={order?.delivery_information?.street} />
+        <DetailRow label="State" value={order?.delivery_information?.state} />
+        <DetailRow label="Lga" value={order?.delivery_information?.lga} />
+
+        <DetailRow label="Phone" value={order?.delivery_information?.phone} />
         <DetailRow label="Email" value={order?.email} />
         <DetailRow label="Status" value={order?.status} />
         <DetailRow
           label="Date created"
           value={
-            order?.createdAt
-              ? new Date(order.createdAt).toLocaleString()
-              : null
+            order?.createdAt ? new Date(order.createdAt).toLocaleString() : null
           }
         />
 
@@ -100,7 +101,6 @@ const OrderDetails = () => {
             )}
           </ul>
         </div>
-
       </div>
     </div>
   );
@@ -114,13 +114,8 @@ const DetailRow = ({
 }) => (
   <div className="flex justify-between border-b py-2 text-gray-700">
     <span className="font-medium">{label}</span>
-    <span>
-      {value ?? (
-        <TextLoader />
-      )}
-    </span>
+    <span>{value ?? <TextLoader />}</span>
   </div>
 );
-
 
 export default OrderDetails;

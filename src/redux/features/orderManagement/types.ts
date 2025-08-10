@@ -6,14 +6,17 @@ export interface OrderItemVariant {
 
 export interface OrderItem {
   link: string;
-  prize: number | null;
   variant: OrderItemVariant;
 }
 
 export interface CreateOrderPayload {
   store: string;
-  address: string;
+  state:string;
+  lga:string;
+  street: string;
+  first_name:string;
+  last_name:string;
   phone: string;
-  email: string;
+  email:string;
   details: OrderItem[];
 }

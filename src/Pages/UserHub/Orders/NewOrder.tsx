@@ -17,9 +17,14 @@ import { Input } from "../../../Components/Inputfield";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { CreateOrderPayload } from "../../../redux/features/orderManagement/types";
-import { triggerCreateOrder } from "../../../redux/features/orderManagement/orderManagementThunk";
+import {
+  triggerCreateOrder,
+  triggerGetAddreses,
+} from "../../../redux/features/orderManagement/orderManagementThunk";
 import toast from "react-hot-toast";
 import { resetCreateOrderState } from "../../../redux/features/orderManagement/orderManagementSlice";
+import TextLoader from "../../../Components/TextLoader";
+import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
 
 const initialItem = {
   store: "",
@@ -75,7 +80,11 @@ const validationSchema = Yup.object({
     )
     .min(1, "At least one item is required"),
   useSavedAddress: Yup.boolean(),
-  fullName: Yup.string().when("useSavedAddress", {
+  firstName: Yup.string().when("useSavedAddress", {
+    is: false,
+    then: (schema) => schema.required("Enter full name"),
+  }),
+  lastName: Yup.string().when("useSavedAddress", {
     is: false,
     then: (schema) => schema.required("Enter full name"),
   }),
@@ -105,25 +114,31 @@ const validationSchema = Yup.object({
 
 export const NewOrder = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { createOrder } = useSelector(
+  const { createOrder, addresses } = useSelector(
     (state: RootState) => state.order_management
   );
+  const { getUserProfileData } = useSelector(
+    (state: RootState) => state.user_account_management
+  );
   const dispatch: AppDispatch = useDispatch();
-
+  const userData = getUserProfileData.data?.results?.data;
+  const selectedAddress = addresses?.data?.results?.find(
+    (addr: any) => addr.isDefault === true
+  );
 
   const handleCreateOrder = (values: any) => {
-        console.log('function called')
-
     const payload: CreateOrderPayload = {
       store: values.store,
-      address: values.address,
-      phone: values.phone,
-      email: values.email,
+      state: selectedAddress?.state,
+      lga: selectedAddress?.lga,
+      street: selectedAddress?.street,
+      first_name: selectedAddress?.firstName,
+      last_name: selectedAddress?.lastName,
+      phone: selectedAddress?.phone,
+      email: userData?.email,
       details: values.items.map((item: any) => ({
         link: item.itemLink,
-        prize: null, // or parse if applicable
         variant: {
           size: item.customSize || item.size,
           color: item.customColor || item.color,
@@ -134,20 +149,32 @@ export const NewOrder = () => {
 
     dispatch(triggerCreateOrder(payload));
   };
-
+  useEffect(() => {
+    dispatch(triggerGetAddreses({}));
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(triggerGetUserProfile({}));
+  }, [dispatch]);
   useEffect(() => {
     if (!createOrder.error && createOrder.statusCode === 201) {
       toast.success(createOrder.message);
       setTimeout(() => {
-      localStorage.removeItem("cart2pay_quote_start");
-      navigate("/dashboard/orders");
-    }, 2000);
+        localStorage.removeItem("cart2pay_quote_start");
+        navigate("/dashboard/orders");
+      }, 2000);
     } else if (createOrder.error) {
       toast.error(createOrder.message);
       console.log("order", createOrder.data);
     }
     dispatch(resetCreateOrderState());
-  }, [createOrder.data, createOrder.error, createOrder.message, createOrder.statusCode, dispatch, navigate]);
+  }, [
+    createOrder.data,
+    createOrder.error,
+    createOrder.message,
+    createOrder.statusCode,
+    dispatch,
+    navigate,
+  ]);
   return (
     <div className="px-0 md:px-20">
       <Formik
@@ -208,76 +235,97 @@ export const NewOrder = () => {
                               Variants
                             </Text>
                             <div className="flex flex-col md:flex-row gap-4">
-                           {/* Size */}
-<div className="w-full md:w-1/3">
-  {item.size !== "other" ? (
-    <Select
-      name={`items[${index}].size`}
-      options={sizeOptions}
-      value={item.size}
-      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-        setFieldValue(`items[${index}].size`, e.target.value)
-      }
-      placeholder="Size"
-    />
-  ) : (
-    <div className="space-y-2">
-      <Input
-        name={`items[${index}].customSize`}
-        placeholder="Enter custom size"
-        value={item.customSize}
-        onChange={(e) =>
-          setFieldValue(`items[${index}].customSize`, e.target.value)
-        }
-      />
-      <button
-        type="button"
-        className="text-xs text-blue-500 underline"
-        onClick={() =>
-          setFieldValue(`items[${index}].size`, "") 
-        }
-      >
-        Back to size options
-      </button>
-    </div>
-  )}
-</div>
+                              {/* Size */}
+                              <div className="w-full md:w-1/3">
+                                {item.size !== "other" ? (
+                                  <Select
+                                    name={`items[${index}].size`}
+                                    options={sizeOptions}
+                                    value={item.size}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLSelectElement>
+                                    ) =>
+                                      setFieldValue(
+                                        `items[${index}].size`,
+                                        e.target.value
+                                      )
+                                    }
+                                    placeholder="Size"
+                                  />
+                                ) : (
+                                  <div className="space-y-2">
+                                    <Input
+                                      name={`items[${index}].customSize`}
+                                      placeholder="Enter custom size"
+                                      value={item.customSize}
+                                      onChange={(e) =>
+                                        setFieldValue(
+                                          `items[${index}].customSize`,
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                    <button
+                                      type="button"
+                                      className="text-xs text-blue-500 underline"
+                                      onClick={() =>
+                                        setFieldValue(
+                                          `items[${index}].size`,
+                                          ""
+                                        )
+                                      }
+                                    >
+                                      Back to size options
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
 
-{/* Color */}
-<div className="w-full md:w-1/3">
-  {item.color !== "other" ? (
-    <Select
-      name={`items[${index}].color`}
-      options={colorOptions}
-      value={item.color}
-      onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-        setFieldValue(`items[${index}].color`, e.target.value)
-      }
-      placeholder="Color"
-    />
-  ) : (
-    <div className="space-y-2">
-      <Input
-        name={`items[${index}].customColor`}
-        placeholder="Enter custom color"
-        value={item.customColor}
-        onChange={(e) =>
-          setFieldValue(`items[${index}].customColor`, e.target.value)
-        }
-      />
-      <button
-        type="button"
-        className="text-xs text-blue-500 underline"
-        onClick={() =>
-          setFieldValue(`items[${index}].color`, "")
-        }
-      >
-        Back to color options
-      </button>
-    </div>
-  )}
-</div>
-
+                              {/* Color */}
+                              <div className="w-full md:w-1/3">
+                                {item.color !== "other" ? (
+                                  <Select
+                                    name={`items[${index}].color`}
+                                    options={colorOptions}
+                                    value={item.color}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLSelectElement>
+                                    ) =>
+                                      setFieldValue(
+                                        `items[${index}].color`,
+                                        e.target.value
+                                      )
+                                    }
+                                    placeholder="Color"
+                                  />
+                                ) : (
+                                  <div className="space-y-2">
+                                    <Input
+                                      name={`items[${index}].customColor`}
+                                      placeholder="Enter custom color"
+                                      value={item.customColor}
+                                      onChange={(e) =>
+                                        setFieldValue(
+                                          `items[${index}].customColor`,
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                    <button
+                                      type="button"
+                                      className="text-xs text-blue-500 underline"
+                                      onClick={() =>
+                                        setFieldValue(
+                                          `items[${index}].color`,
+                                          ""
+                                        )
+                                      }
+                                    >
+                                      Back to color options
+                                    </button>
+                                  </div>
+                                )}
+                              </div>
 
                               {/* Quantity */}
                               <div className="w-full md:w-1/3">
@@ -355,60 +403,46 @@ export const NewOrder = () => {
             {/* Delivery Info */}
             <div className="space-y-4 mb-8 bg-white rounded-xl shadow p-6 text-accent">
               <Heading size="md" weight="semibold">
-                Delivery Info
+                Customer's delivery address
               </Heading>
 
-              <label className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={values.useSavedAddress}
-                  onChange={() =>
-                    setFieldValue("useSavedAddress", !values.useSavedAddress)
-                  }
-                />
-                <Text>Use saved address</Text>
-              </label>
+              {addresses?.data?.results?.length === 0 ? (
+                // First-time user — no addresses yet
+                <Button
+                  variant="primary"
+                    onClick={()=>navigate('new-order/address')}
+                >
+                  Add Address
+                </Button>
+              ) : (
+                <>
+                  <Text size="md" weight="semibold">
+                    First name: {selectedAddress?.firstName || <TextLoader />}
+                  </Text>
+                  <Text size="md" weight="semibold">
+                    Last name: {selectedAddress?.lastName || <TextLoader />}
+                  </Text>
+                  <Text size="md" weight="semibold">
+                    State: {selectedAddress?.state || <TextLoader />}
+                  </Text>
+                  <Text size="md" weight="semibold">
+                    Lga: {selectedAddress?.lga || <TextLoader />}
+                  </Text>
+                  <Text size="md" weight="semibold">
+                    Street: {selectedAddress?.street || <TextLoader />}
+                  </Text>
+                  <Text size="md" weight="semibold">
+                    Phone number: {selectedAddress?.phone || <TextLoader />}
+                  </Text>
 
-              {!values.useSavedAddress && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input
-                    name="fullName"
-                    label="Full Name"
-                    value={values.fullName}
-                  />
-                  <Input
-                    name="phone"
-                    label="Phone"
-                    value={values.phone}
-                    type="number"
-                  />
-                  <Input name="email" label="Email" value={values.email} />
-
-                  <Select
-                    name="state"
-                    label="State"
-                    options={stateOptions}
-                    value={values.state}
-                    onChange={(e: any) => {
-                      setFieldValue("state", e.target.value);
-                      setFieldValue("lga", "");
-                    }}
-                  />
-                  <Select
-                    name="lga"
-                    label="LGA"
-                    options={lgaOptions[values.state] || []}
-                    value={values.lga}
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                      setFieldValue("lga", e.target.value)
-                    }
-                  />
-                  <Input
-                    name="address"
-                    label="Delivery Address"
-                    value={values.address}
-                  />
-                </div>
+                  <button
+                    type="button"
+                    className="text-xs text-blue-500 underline"
+                    onClick={()=>navigate('address')}
+                  >
+                    Change Address
+                  </button>
+                </>
               )}
             </div>
 

@@ -25,6 +25,7 @@ import ForgotPassword from "../Pages/ForgotPassword";
 import ResetPassword from "../Pages/ResetPassword";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OrderDetails from "../Pages/UserHub/Orders/OrderDetails";
+import Address from "../Pages/UserHub/Orders/Address";
 
 const routes: RouteObject[] = [
   {
@@ -60,6 +61,7 @@ const routes: RouteObject[] = [
           { path: "profile", element: <UserProfile /> },
           { path: "notifications", element: <Notifications /> },
           { path: "settings", element: <>Settings</> },
+          { path: "new-order/address", element: <Address /> },
         ],
       },
     ],

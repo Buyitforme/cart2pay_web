@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import Select from "../../../Components/Select";
 import { Button } from "../../../Components/Button";
-import { ArrowLeft, Copy } from "lucide-react";
-import Tooltip from "../../../Components/Tooltip";
+import { Copy } from "lucide-react";
+
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import Lottie from "lottie-react";
@@ -118,7 +118,7 @@ const Quote = () => {
     <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded-xl space-y-8">
       <GoBack label={"Quote"} />
 
-      {!orderDetails.loading && order?.total === 0 ? (
+      {!orderDetails.loading && order?.sum_total === 0 ? (
         <div className="text-center space-y-4 py-10">
           <Heading size="lg" weight="bold">
             Order Received!

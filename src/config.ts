@@ -9,6 +9,7 @@ interface ApiUrls {
   order_history: string
   order_details: string
   create_order: string
+  get_addresses:string
 }
 
 const apiRoutes: ApiUrls = {
@@ -21,7 +22,9 @@ const apiRoutes: ApiUrls = {
   get_user_profile :"/api/user/user-profile",
   order_history :"api/order/orders/history",
   order_details:"api/order/order",
-  create_order:"api/order/create"
+  create_order:"api/order/create",
+  get_addresses:"/api/address/addresses",
+
 };
 
 export default apiRoutes;
