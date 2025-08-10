@@ -6,7 +6,7 @@ import Cart2payEssentials from "./Cart2payEssentials";
 import Faq from "./FAQ";
 import ThirstTraps from "./ThirstTraps";
 import TestimonialSection from "./Testimonials";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import React from "react";
 
 const variants = {
@@ -28,8 +28,16 @@ const LandingPageMain = () => {
     });
   };
 
+ 
+
+  // Reset scroll position on mount
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" }); // or "smooth" if you prefer
+  }, []);
+
+
   return (
-    <>
+  <>
       <div className="px-5 md:px-20">
         <AnimatedSection>
           <HeroSection onExploreClick={scrollToStoreMarquee} />

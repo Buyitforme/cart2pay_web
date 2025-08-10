@@ -6,37 +6,57 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
 import SectionRenderer from "../../../Components/SectionRenderer";
+import { triggerOrderHistory } from "../../../redux/features/orderManagement/orderManagementThunk";
+import { PageLoader } from "../../../Components/PageLoader";
+import { capitalizeFirstLetter } from "../../../utils";
 
 const Home = () => {
-    const { getUserProfileData} = useSelector(
+  const { getUserProfileData } = useSelector(
     (state: RootState) => state.user_account_management
   );
+  const { orderHistory } = useSelector(
+    (state: RootState) => state.order_management
+  );
   const userData = getUserProfileData.data?.results?.data;
-    const dispatch: AppDispatch = useDispatch();
- const getGreeting = () => {
-  const hour = new Date().getHours();
+  const orders = orderHistory.data?.results || [];
 
-  if (hour < 12) return "Good morning";     
-  if (hour < 17) return "Good afternoon";   
-  return "Good evening";                    
-};
+  const dispatch: AppDispatch = useDispatch();
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+
+    if (hour < 12) return "Good morning";
+    if (hour < 17) return "Good afternoon";
+    return "Good evening";
+  };
   const greeting = getGreeting();
-   useEffect(() => {
-      dispatch(triggerGetUserProfile({}));
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(triggerGetUserProfile({}));
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(triggerOrderHistory({}));
+  }, [dispatch]);
+  if (orderHistory.loading || !orderHistory.data) {
+    return (
+      <div className="flex justify-center items-center h-screen w-full">
+        <PageLoader />
+      </div>
+    );
+  }
   return (
     <div className="py-6 space-y-6 text-[#1E2A47]">
       <div>
-<div className="flex gap-1 items-center">
-  <Heading size="xl">{greeting},</Heading>
-  <Heading size="xl" weight="light">
-    {getUserProfileData.loading ? (
-      <span className="bg-gray-200 animate-pulse h-6 w-48 rounded inline-block align-middle"></span>
-    ) : (
-      userData?.fullName || <SectionRenderer left={undefined} right={undefined} />
-    )}
-  </Heading>
-</div>
+        <div className="flex gap-1 items-center">
+          <Heading size="xl">{greeting},</Heading>
+          <Heading size="xl" weight="light">
+            {getUserProfileData.loading ? (
+              <span className="bg-gray-200 animate-pulse h-6 w-48 rounded inline-block align-middle"></span>
+            ) : (
+              userData?.fullName || (
+                <SectionRenderer left={undefined} right={undefined} />
+              )
+            )}
+          </Heading>
+        </div>
 
         <Text size="lg" className="text-gray-600 mt-1">
           Here’s a quick overview of your activity.
@@ -50,99 +70,114 @@ const Home = () => {
             Start a New Order
           </Heading>
           <Text size="sm" className="text-gray-500">
-            Submit your cart and let us complete your checkout.
+            Submit your cart or item URL, and we’ll complete the checkout for
+            you.
           </Text>
         </div>
         <Link to="/dashboard/new-order">
-          <Button variant="primary">New Order</Button>
+          <Button variant="primary" className="whitespace-normal py-8 md:py-0">
+            Shop for me
+          </Button>{" "}
         </Link>
       </div>
 
       {/* Recent Orders */}
       <div className="bg-white rounded-xl shadow p-4">
         <Heading size="md" weight="bold" className="mb-4">
-          Recent Checkouts completed
+          Recent Orders
         </Heading>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between border-b pb-2">
-            <div>
-              <Text size="md" weight="medium">
-                Zara
-              </Text>
-              <Text size="sm" className="text-gray-500">
-                ₦25,000 • Paid
-              </Text>
-            </div>
-            <Button variant="outline">Reorder</Button>
-          </div>
+          {orders.slice(0, 3).map((order: any) => (
+            <div
+              key={order._id}
+              className="flex items-center justify-between border-b pb-2"
+            >
+              <div>
+                {/* Store name */}
+                <Text size="md" weight="medium">
+                  {order.store || "Unknown Store"}
+                </Text>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <Text size="md" weight="medium">
-                Shein
-              </Text>
-              <Text size="sm" className="text-gray-500">
-                ₦13,500 • Paid
-              </Text>
+                {/* Date created & Status */}
+                <Text size="sm" className="text-gray-500">
+                  {new Date(order.createdAt).toLocaleDateString()} •{" "}
+                  {capitalizeFirstLetter(order.status)}
+                </Text>
+              </div>
             </div>
-            <Button variant="outline">Reorder</Button>
-          </div>
+          ))}
         </div>
       </div>
 
       {/* Helpful Tip + CTA */}
       <div className="bg-[#708238] text-white rounded-xl p-6 shadow space-y-4">
         <Text size="sm" weight="medium">
-          ℹ️ Tip:
+          Tip:
         </Text>
 
         <Heading size="lg" weight="semibold" color="muted_white">
-          We all love a good sale, right? These stores are offering massive
+          Who doesn’t love a great deal? Check out these stores with huge
           discounts this week!
         </Heading>
 
         <Text size="sm" className="text-[#DCDCDC]">
-          Go add your favorite items to cart and bring it to us to handle
-          payments
+          Spot something you love? send the item(s) URL our way, and we’ll
+          handle the checkout for you.
         </Text>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
-          <Link to="/dashboard/new-order?store=fashion-nova">
+          <a
+            href="https://www.fashionnova.com/collections/sale"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button
               variant="secondary"
               className="w-full text-[#1E2A47] bg-white hover:bg-[#f5f5f5]"
             >
               🛍️ Fashion Nova
             </Button>
-          </Link>
+          </a>
 
-          <Link to="/dashboard/new-order?store=shein">
+          <a
+            href="https://www.shein.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button
               variant="secondary"
               className="w-full text-[#1E2A47] bg-white hover:bg-[#f5f5f5]"
             >
               🛍️ Shein
             </Button>
-          </Link>
+          </a>
 
-          <Link to="/dashboard/new-order?store=zara">
+          <a
+            href="https://www.zara.com/ww/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button
               variant="secondary"
               className="w-full text-[#1E2A47] bg-white hover:bg-[#f5f5f5]"
             >
               🛍️ Zara
             </Button>
-          </Link>
+          </a>
 
-          <Link to="/dashboard/new-order?store=hm">
+          <a
+            href="https://www2.hm.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button
               variant="secondary"
               className="w-full text-[#1E2A47] bg-white hover:bg-[#f5f5f5]"
             >
               🛍️ H&M
             </Button>
-          </Link>
+          </a>
         </div>
       </div>
 
@@ -152,21 +187,19 @@ const Home = () => {
           Stores We Support
         </Heading>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {["Shein", "Zara", "Fashion Nova", "AliExpress", "Amazon"].map(
-            (store) => (
-              <div
-                key={store}
-                className="p-3 rounded-lg border text-center hover:shadow transition"
-              >
-                <Text weight="semibold">{store}</Text>
-              </div>
-            )
-          )}
+          {["Shein", "Zara", "Fashion Nova", "Amazon"].map((store) => (
+            <div
+              key={store}
+              className="p-3 rounded-lg border text-center hover:shadow transition"
+            >
+              <Text weight="semibold">{store}</Text>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Quick Links */}
-      <div className="flex flex-col md:flex-row gap-4">
+      {/* <div className="flex flex-col md:flex-row gap-4">
         <Link to="/stories" className="flex-1">
           <div className="bg-white rounded-xl shadow p-4 text-center hover:bg-[#DCDCDC] transition">
             <Text weight="bold">📢 Share Your Story</Text>
@@ -178,7 +211,7 @@ const Home = () => {
             <Text weight="bold">🛟 Contact Support</Text>
           </div>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

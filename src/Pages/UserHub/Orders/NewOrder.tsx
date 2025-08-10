@@ -4,13 +4,7 @@ import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
 import { useNavigate } from "react-router-dom";
-import {
-  colorOptions,
-  lgaOptions,
-  sizeOptions,
-  stateOptions,
-  storeOptions,
-} from "./ordersHelpers";
+import { colorOptions, sizeOptions, storeOptions } from "./ordersHelpers";
 import Select from "../../../Components/Select";
 import Modal from "../../../Components/Modal";
 import { Input } from "../../../Components/Inputfield";
@@ -178,6 +172,9 @@ export const NewOrder = () => {
   ]);
   return (
     <div className="px-0 md:px-20">
+      <Heading size="md" weight="semibold">
+               Personal shopper
+              </Heading>
       <Formik
         initialValues={{
           store: "",
@@ -191,8 +188,8 @@ export const NewOrder = () => {
       >
         {({ values, setFieldValue, isValid, dirty }) => (
           <Form>
-            <div className="space-y-2 mb-3">
-              <Heading size="md" weight="semibold">
+            <div className="space-y-2 mb-3 pt-8">
+              <Heading size="md" weight="light">
                 Select Store
               </Heading>
               <Select
@@ -409,37 +406,83 @@ export const NewOrder = () => {
 
               {addresses?.data?.results?.length === 0 && !addresses.loading ? (
                 // First-time user — no addresses yet
-                <Button
-                  variant="primary"
-                    onClick={()=>navigate('address')}
-                >
+                <Button variant="primary" onClick={() => navigate("address")}>
                   Add Address
                 </Button>
               ) : (
                 <>
-                  <Text size="md" weight="semibold">
-                    First name: {capitalizeFirstLetter(selectedAddress?.firstName) || <TextLoader />}
-                  </Text>
-                  <Text size="md" weight="semibold">
-                    Last name: {capitalizeFirstLetter(selectedAddress?.lastName) || <TextLoader />}
-                  </Text>
-                  <Text size="md" weight="semibold">
-                    State: {capitalizeFirstLetter(selectedAddress?.state) || <TextLoader />}
-                  </Text>
-                  <Text size="md" weight="semibold">
-                    Lga: {capitalizeFirstLetter(selectedAddress?.lga) || <TextLoader />}
-                  </Text>
-                  <Text size="md" weight="semibold">
-                    Street: {selectedAddress?.street || <TextLoader />}
-                  </Text>
-                  <Text size="md" weight="semibold">
-                    Phone number: {selectedAddress?.phone || <TextLoader />}
-                  </Text>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Text size="md" weight="semibold">
+                      First name
+                    </Text>
+                    <span className="font-light">
+                      {selectedAddress?.firstName ? (
+                        capitalizeFirstLetter(selectedAddress.firstName)
+                      ) : (
+                        <TextLoader />
+                      )}
+                    </span>
+
+                    <Text size="md" weight="semibold">
+                      Last name
+                    </Text>
+                    <span className="font-light">
+                      {selectedAddress?.lastName ? (
+                        capitalizeFirstLetter(selectedAddress.lastName)
+                      ) : (
+                        <TextLoader />
+                      )}
+                    </span>
+
+                    <Text size="md" weight="semibold">
+                      State
+                    </Text>
+                    <span className="font-light">
+                      {selectedAddress?.state ? (
+                        capitalizeFirstLetter(selectedAddress.state)
+                      ) : (
+                        <TextLoader />
+                      )}
+                    </span>
+
+                    <Text size="md" weight="semibold">
+                      Lga
+                    </Text>
+                    <span className="font-light">
+                      {selectedAddress?.lga ? (
+                        capitalizeFirstLetter(selectedAddress.lga)
+                      ) : (
+                        <TextLoader />
+                      )}
+                    </span>
+
+                    <Text size="md" weight="semibold">
+                      Street
+                    </Text>
+                    <span className="font-light">
+                      {selectedAddress?.street ? (
+                        selectedAddress.street
+                      ) : (
+                        <TextLoader />
+                      )}
+                    </span>
+
+                    <Text size="md" weight="semibold">
+                      Phone number
+                    </Text>
+                    <span className="font-light">
+                      {selectedAddress?.phone ? (
+                        selectedAddress.phone
+                      ) : (
+                        <TextLoader />
+                      )}
+                    </span>
+                  </div>
 
                   <button
                     type="button"
                     className="text-xs text-blue-500 underline"
-                    onClick={()=>navigate('address')}
+                    onClick={() => navigate("address")}
                   >
                     Change Address
                   </button>

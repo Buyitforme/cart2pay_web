@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   X,
   Menu,
@@ -55,6 +55,7 @@ const navLinks = [
 const UserHubNav = () => {
   const [open, setOpen] = useState(false);
   const [animate, setAnimate] = useState(false);
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setAnimate(true);
@@ -69,14 +70,14 @@ const UserHubNav = () => {
       <nav className="bg-white border-b border-gray-200 py-3 px-4 md:px-16">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
+          <div className="flex items-center" onClick={()=>navigate('/dashboard')}>
             <Heading size="lg" weight="bold" color="default">
               Cart2
             </Heading>
             <Heading size="lg" weight="bold" color="primary">
               PAY
             </Heading>
-          </Link>
+          </div>
 
           {/* Center Nav - Desktop only */}
           <div className="hidden md:flex flex-1 justify-center space-x-8">
