@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { addressManagementService, orderManagementService } from "./orderManagementService"
-import { CreateOrderPayload } from "./types"
+import { CreateAddressPayload, CreateOrderPayload } from "./types"
 
 
 
@@ -77,3 +77,26 @@ export const TriggerMakeDefaultAddress = createAsyncThunk(
 );
 
 
+export const TriggerCreateAddress = createAsyncThunk(
+  "order_management/make_default",
+  async (addressId: string, { rejectWithValue }) => {
+    try {
+      const response = await addressManagementService.make_default(true, addressId);
+      return response; 
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const triggerCreateAddress = createAsyncThunk(
+  "order_management/create",
+  async (payload: CreateAddressPayload, { rejectWithValue }) => {
+    try {
+      const response = await addressManagementService.create_address(payload);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error);
+    }
+  }
+);

@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { triggerCreateOrder, triggerGetAddreses, TriggerMakeDefaultAddress, triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
+import { triggerCreateAddress, triggerCreateOrder, triggerGetAddreses, TriggerMakeDefaultAddress, triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
 
 interface IinitialState {
+   error: boolean;
+    loading: boolean;
+    data: Record<string, any>;
+    message: string;
+    statusCode?: number | null;
+
   orderHistory: {
     error: boolean;
     loading: boolean;
@@ -39,6 +45,12 @@ interface IinitialState {
   };
 }
 const initialState: IinitialState = {
+   error: false,
+    loading: false,
+    data: {},
+    message: "",
+    statusCode: null,
+
   orderHistory: {
     error: false,
     loading: false,
@@ -81,7 +93,12 @@ const orderManagementSlice = createSlice({
   initialState,
   reducers: {
    
-     resetCreateOrderState: (state) => {
+     resetState: (state) => {
+      state.error = initialState.error;
+      state.message = initialState.message;
+      state.statusCode = initialState.statusCode;
+    },
+      resetCreateOrderState: (state) => {
       state.createOrder.error = initialState.createOrder.error;
       state.createOrder.message = initialState.createOrder.message;
       state.createOrder.statusCode = initialState.createOrder.statusCode;
@@ -220,9 +237,34 @@ const orderManagementSlice = createSlice({
           state.makeDefault.statusCode =
             (action.payload as any)?.status_code || 400;
         });
+            // MAKE DEFAULT ADDRESES 
+        builder.addCase(triggerCreateAddress.pending, (state) => {
+          state.loading = true;
+          state.error = false;
+          state.data = {};
+          state.message = "";
+        });
+        builder.addCase(triggerCreateAddress.fulfilled, (state, action) => {
+          state.loading = false;
+          state.data = action.payload as any;
+          state.error = false;
+          state.message = action.payload
+            ?.message as unknown as string;
+          state.statusCode = action.payload
+            ?.status_code as unknown as number;
+        });
+        builder.addCase(triggerCreateAddress.rejected, (state, action) => {
+          state.loading = false;
+          state.error = true;
+          state.data = (action.payload as any) || {};
+          state.message =
+            (action.payload as any)?.message || "Unknown error";
+          state.statusCode =
+            (action.payload as any)?.status_code || 400;
+        });
 
   },
 });
-export const {resetCreateOrderState,resetMakeDefaultState} = orderManagementSlice.actions
+export const {resetCreateOrderState,resetState,resetMakeDefaultState} = orderManagementSlice.actions
 
 export default orderManagementSlice.reducer;

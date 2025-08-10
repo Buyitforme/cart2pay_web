@@ -20,3 +20,12 @@ export interface CreateOrderPayload {
   email:string;
   details: OrderItem[];
 }
+
+export interface CreateAddressPayload {
+    firstName:string,
+lastName:string,
+  state: string,
+  lga: string,
+  street: string,
+  phone:string
+}

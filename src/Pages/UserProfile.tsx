@@ -140,7 +140,7 @@ const UserProfile = () => {
                 type="text"
                 disabled={!isEditing}
               />
-              <Input
+              {/* <Input
                 label="Address"
                 name="address"
                 type="text"
@@ -152,7 +152,7 @@ const UserProfile = () => {
                 type="text"
                 disabled={!isEditing}
               />
-              <Input label="LGA" name="lga" type="text" disabled={!isEditing} />
+              <Input label="LGA" name="lga" type="text" disabled={!isEditing} /> */}
 
               {isEditing && (
                 <div className="pt-4 flex justify-end gap-4">

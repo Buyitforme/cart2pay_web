@@ -1,11 +1,10 @@
 import apiRoutes from "../../../config";
-import {get, post, put} from "../../network/https";
-import { CreateOrderPayload } from "./types";
+import { get, post, put } from "../../network/https";
+import { CreateAddressPayload, CreateOrderPayload } from "./types";
 
 type SafePayload = Omit<CreateOrderPayload, "details"> & {
   details: string;
 };
-
 
 export class orderManagementService {
   static async order_history(data: Record<string, string>) {
@@ -17,20 +16,20 @@ export class orderManagementService {
       throw response;
     }
     if (response.status === "success") {
-        console.log('ORDERS',JSON.stringify(response,null,2))
+      console.log("ORDERS", JSON.stringify(response, null, 2));
       return response;
     }
   }
 
- static async order_details(orderId :string) {
+  static async order_details(orderId: string) {
     const response = await get({
-       url: `${apiRoutes.order_details}/${orderId}`,
+      url: `${apiRoutes.order_details}/${orderId}`,
     });
     if (response.status === "error") {
       throw response;
     }
     if (response.status === "success") {
-        console.log('ORDER DETAILS',JSON.stringify(response,null,2))
+      console.log("ORDER DETAILS", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -55,7 +54,6 @@ export class orderManagementService {
       return response;
     }
   }
-
 }
 
 export class addressManagementService {
@@ -68,26 +66,38 @@ export class addressManagementService {
       throw response;
     }
     if (response.status === "success") {
-        console.log('ORDERS',JSON.stringify(response,null,2))
+      console.log("ORDERS", JSON.stringify(response, null, 2));
       return response;
     }
   }
-static async make_default(data:boolean, addressId: string) {
-  const response = await put({
-    url: `${apiRoutes.get_addresses}/${addressId}/make-default`,
-        data: { isDefault: data }, 
+  static async make_default(data: boolean, addressId: string) {
+    const response = await put({
+      url: `${apiRoutes.get_addresses}/${addressId}/make-default`,
+      data: { isDefault: data },
+    });
 
-  });
+    if (response.status === "error") {
+      throw response;
+    }
 
-  if (response.status === "error") {
-    throw response;
+    if (response.status === "success") {
+      console.log("ORDERS", JSON.stringify(response, null, 2));
+      return response;
+    }
   }
-  
-  if (response.status === "success") {
-    console.log('ORDERS', JSON.stringify(response, null, 2));
-    return response;
+
+  static async create_address(data: CreateAddressPayload) {
+    const response = await post({
+      url: apiRoutes.create_address,
+      data,
+    });
+
+    if (response.status === "error") {
+      throw response;
+    }
+
+    if (response.status === "success") {
+      return response;
+    }
   }
-}
-
-
 }

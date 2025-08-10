@@ -5,6 +5,7 @@ import { PencilIcon } from "lucide-react";
 import { AppDispatch, RootState } from "../../../redux/state";
 import {
   TriggerMakeDefaultAddress,
+  triggerCreateAddress,
   triggerGetAddreses,
 } from "../../../redux/features/orderManagement/orderManagementThunk";
 import GoBack from "../../../Components/GoBack";
@@ -16,7 +17,12 @@ import { Form, Formik } from "formik";
 import { lgaOptions, stateOptions } from "./ordersHelpers";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { resetMakeDefaultState } from "../../../redux/features/orderManagement/orderManagementSlice";
+import {
+  resetMakeDefaultState,
+  resetState,
+} from "../../../redux/features/orderManagement/orderManagementSlice";
+import { CreateAddressPayload } from "../../../redux/features/orderManagement/types";
+import { PageLoader } from "../../../Components/PageLoader";
 
 const initialValues: any = {
   firstName: "",
@@ -52,14 +58,12 @@ export const validationSchema = Yup.object().shape({
 });
 const Address = () => {
   const navigate = useNavigate();
-  const { addresses, makeDefault } = useSelector(
-    (state: RootState) => state.order_management
-  );
+  const { addresses, makeDefault, error, loading, message, statusCode } =
+    useSelector((state: RootState) => state.order_management);
   const dispatch: AppDispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-
   useEffect(() => {
     dispatch(triggerGetAddreses({}));
   }, [dispatch]);
@@ -69,10 +73,15 @@ const Address = () => {
       const defaultAddr = addresses.data.results.find(
         (addr: any) => addr.isDefault
       );
+
       if (defaultAddr) {
         setSelectedId(defaultAddr._id);
       }
+
+      // explicitly show the list view
+      setShowForm(false);
     } else {
+      // no addresses, show the form
       setShowForm(true);
     }
   }, [addresses]);
@@ -81,10 +90,9 @@ const Address = () => {
     console.log("Edit address", id);
   };
 
-  const handleMakeDefaultAddress = () => {
-      if (selectedId) {
-    dispatch(TriggerMakeDefaultAddress(selectedId));
-  }
+  const handleMakeDefaultAddress = (id: string) => {
+    console.log("Clicked ID:", id);
+    dispatch(TriggerMakeDefaultAddress(id));
   };
   useEffect(() => {
     if (!makeDefault.error && makeDefault.statusCode === 200) {
@@ -105,29 +113,60 @@ const Address = () => {
     navigate,
   ]);
 
+  const handleCreateAddress = (values: any) => {
+    const payload: CreateAddressPayload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      phone: values.phone,
+      state: values.state,
+      lga: values.lga,
+      street: values.street,
+    };
+    console.log("PAYLOAD", payload);
+    dispatch(triggerCreateAddress(payload));
+  };
+
+  useEffect(() => {
+    if (!error && statusCode === 200) {
+      toast.success(message);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else if (error) {
+      toast.error(message);
+    }
+    dispatch(resetState());
+  }, [dispatch, error, message, statusCode]);
+
+  if (addresses.loading || !addresses.data) {
+    return (
+      <div className="flex justify-center items-center h-screen w-full">
+        <PageLoader />
+      </div>
+    );
+  }
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-md">
       <GoBack label={showForm ? "Add address" : "Select address"} />
 
-      {!showForm ? (
+      {showForm && !addresses.loading ? (
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={() => console.log("hello")}
+          onSubmit={handleCreateAddress}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, isValid, dirty }) => (
             <Form className="space-y-4">
-              {/* Address Form */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input
                   name="firstName"
-                  label="Full Name"
-                  value={values.fullName}
+                  label="First name"
+                  value={values.firstName}
                 />
                 <Input
                   name="lastName"
-                  label="Full Name"
-                  value={values.fullName}
+                  label="Last name"
+                  value={values.lastName}
                 />
                 <Input
                   name="phone"
@@ -135,7 +174,6 @@ const Address = () => {
                   value={values.phone}
                   type="number"
                 />
-                <Input name="email" label="Email" value={values.email} />
                 <Select
                   name="state"
                   label="State"
@@ -155,14 +193,26 @@ const Address = () => {
                     setFieldValue("lga", e.target.value)
                   }
                 />
-                <Input
-                  name="street"
-                  label="Delivery Address"
-                  value={values.street}
-                />
+                <Input name="street" label="Street" value={values.street} />
               </div>
-
-              <Button className="mt-4">Save Address</Button>
+              <div className="flex gap-2 items-center ">
+                {" "}
+                <Button
+                  loading={loading}
+                  disabled={!(isValid && dirty) || loading}
+                  className="mt-4"
+                  type="submit"
+                >
+                  Save Address
+                </Button>
+                <button
+                  type="button"
+                  className="text-xs text-blue-500 underline"
+                  onClick={() => setShowForm(false)}
+                >
+                  Back to select address
+                </button>
+              </div>
             </Form>
           )}
         </Formik>
@@ -185,9 +235,7 @@ const Address = () => {
                     name="address"
                     value={addr._id}
                     checked={selectedId === addr._id}
-                    onChange={() => setSelectedId(addr._id)}
-                                    onClick={handleMakeDefaultAddress}
-
+                    onChange={() => setSelectedId(addr._id)} // only update selectedId here
                   />
                   <div>
                     <Text size="sm" weight="medium">
@@ -206,21 +254,35 @@ const Address = () => {
                     )}
                   </div>
                 </div>
-                <PencilIcon
+                {/* <PencilIcon
                   className="w-4 h-4 text-gray-500 hover:text-primary"
                   onClick={() => handleEdit(addr._id)}
-                />
+                /> */}
               </label>
             ))}
           </div>
-
-          <Button
-            className="mt-6"
-            variant="outline"
-            onClick={() => setShowForm(true)}
-          >
-            Add New Address
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              className="mt-6"
+              loading={makeDefault.loading}
+              variant="primary"
+              disabled={!selectedId}
+              onClick={() => {
+                if (selectedId) {
+                  handleMakeDefaultAddress(selectedId);
+                }
+              }}
+            >
+              Select Address
+            </Button>
+            <Button
+              className="mt-6"
+              variant="outline"
+              onClick={() => setShowForm(true)}
+            >
+              Add New Address
+            </Button>
+          </div>
         </>
       )}
     </div>

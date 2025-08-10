@@ -25,6 +25,7 @@ import toast from "react-hot-toast";
 import { resetCreateOrderState } from "../../../redux/features/orderManagement/orderManagementSlice";
 import TextLoader from "../../../Components/TextLoader";
 import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
+import { capitalizeFirstLetter } from "../../../utils";
 
 const initialItem = {
   store: "",
@@ -406,27 +407,27 @@ export const NewOrder = () => {
                 Customer's delivery address
               </Heading>
 
-              {addresses?.data?.results?.length === 0 ? (
+              {addresses?.data?.results?.length === 0 && !addresses.loading ? (
                 // First-time user — no addresses yet
                 <Button
                   variant="primary"
-                    onClick={()=>navigate('new-order/address')}
+                    onClick={()=>navigate('address')}
                 >
                   Add Address
                 </Button>
               ) : (
                 <>
                   <Text size="md" weight="semibold">
-                    First name: {selectedAddress?.firstName || <TextLoader />}
+                    First name: {capitalizeFirstLetter(selectedAddress?.firstName) || <TextLoader />}
                   </Text>
                   <Text size="md" weight="semibold">
-                    Last name: {selectedAddress?.lastName || <TextLoader />}
+                    Last name: {capitalizeFirstLetter(selectedAddress?.lastName) || <TextLoader />}
                   </Text>
                   <Text size="md" weight="semibold">
-                    State: {selectedAddress?.state || <TextLoader />}
+                    State: {capitalizeFirstLetter(selectedAddress?.state) || <TextLoader />}
                   </Text>
                   <Text size="md" weight="semibold">
-                    Lga: {selectedAddress?.lga || <TextLoader />}
+                    Lga: {capitalizeFirstLetter(selectedAddress?.lga) || <TextLoader />}
                   </Text>
                   <Text size="md" weight="semibold">
                     Street: {selectedAddress?.street || <TextLoader />}

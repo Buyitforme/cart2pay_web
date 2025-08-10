@@ -10,6 +10,7 @@ interface ApiUrls {
   order_details: string
   create_order: string
   get_addresses:string
+  create_address:string
 }
 
 const apiRoutes: ApiUrls = {
@@ -24,6 +25,8 @@ const apiRoutes: ApiUrls = {
   order_details:"api/order/order",
   create_order:"api/order/create",
   get_addresses:"/api/address/addresses",
+   create_address:"api/address/create",
+
 
 };
 
