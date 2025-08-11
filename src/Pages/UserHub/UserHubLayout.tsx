@@ -8,7 +8,7 @@ const UserHubLayout = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathname]); // run whenever the path changes
+  }, [pathname]); 
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -16,6 +16,7 @@ const UserHubLayout = () => {
       <main className="py-12 flex-1 bg-background px-4 md:px-16">
         <Outlet />
       </main>
+      
       <Footer />
     </div>
   );

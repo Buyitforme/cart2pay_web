@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import pageLoader from "../Animations/pageLoader.json";
+import pageLoader from "../Animations/Loading_dots.json";
 
 export const PageLoader = () => {
   return (

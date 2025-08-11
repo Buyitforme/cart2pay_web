@@ -28,16 +28,13 @@ const LandingPageMain = () => {
     });
   };
 
- 
-
   // Reset scroll position on mount
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" }); // or "smooth" if you prefer
   }, []);
 
-
   return (
-  <>
+    <>
       <div className="px-5 md:px-20">
         <AnimatedSection>
           <HeroSection onExploreClick={scrollToStoreMarquee} />
@@ -61,33 +58,34 @@ const LandingPageMain = () => {
   );
 };
 
-export const AnimatedSection = React.forwardRef<HTMLDivElement, AnimatedSectionProps>(
-  ({ children }, forwardedRef) => {
-    const controls = useAnimation();
-    const [ref, inView] = useInView({ threshold: 0.2 });
+export const AnimatedSection = React.forwardRef<
+  HTMLDivElement,
+  AnimatedSectionProps
+>(({ children }, forwardedRef) => {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ threshold: 0.2 });
 
-    if (inView) {
-      controls.start("visible");
-    }
-
-    return (
-      <motion.div
-        ref={(node) => {
-          ref(node);
-          if (typeof forwardedRef === "function") {
-            forwardedRef(node);
-          } else if (forwardedRef) {
-            forwardedRef.current = node;
-          }
-        }}
-        animate={controls}
-        initial="hidden"
-        variants={variants}
-      >
-        {children}
-      </motion.div>
-    );
+  if (inView) {
+    controls.start("visible");
   }
-);
+
+  return (
+    <motion.div
+      ref={(node) => {
+        ref(node);
+        if (typeof forwardedRef === "function") {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      }}
+      animate={controls}
+      initial="hidden"
+      variants={variants}
+    >
+      {children}
+    </motion.div>
+  );
+});
 
 export default LandingPageMain;

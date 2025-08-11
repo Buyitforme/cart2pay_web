@@ -74,8 +74,7 @@ const OrderDetails = () => {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-blue-600 underline"
-                    >
+className="text-blue-600 underline break-all"                    >
                       {item.link}
                     </a>
                   </p>
