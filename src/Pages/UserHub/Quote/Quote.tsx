@@ -118,7 +118,7 @@ const Quote = () => {
     <div className="max-w-3xl mx-auto p-6 bg-white shadow rounded-xl space-y-8">
       <GoBack label={"Quote"} />
 
-      {!orderDetails.loading && order?.sum_total === 0 ? (
+      {!orderDetails.loading && order?.items_total === 0 ? (
         <div className="text-center space-y-4 py-10">
           <Heading size="lg" weight="bold">
             Order Received!
@@ -153,7 +153,6 @@ const Quote = () => {
             </Heading>
             <Text className="text-gray-600 text-base" color="subtle">
               Review your order summary below, including all costs and fees.
-              When you're ready, proceed with payment.
             </Text>
             <Text className="text-sm text-orange-600" color="warning">
               Quick tip! To avoid stockouts, please complete your payment as
@@ -202,10 +201,14 @@ const Quote = () => {
               <strong>Email:</strong> {order?.email}
             </Text>
             <Text>
-              <strong>Phone:</strong> {order?.phone}
+              <strong>Phone:</strong> {order?.delivery_information?.phone}
             </Text>
             <Text>
-              <strong>Address:</strong> {order?.address}
+              <strong>Address:</strong>{" "}
+{[order?.delivery_information?.street, order?.delivery_information?.lga, order?.delivery_information?.state]
+  .filter(Boolean)
+  .join(", ")}
+
             </Text>
           </div>
 
@@ -215,12 +218,20 @@ const Quote = () => {
               Cost Breakdown
             </Heading>
             <div className="flex justify-between">
-              <Text>Item(s) cost in USD</Text>
-              <Text>USD {order?.total}</Text>
+              <Text>Item(s) cost </Text>
+              <Text>$ {order?.items_total}</Text>
             </div>
             <div className="flex justify-between">
-              <Text>Shipping Fee in USD</Text>
-              <Text>USD {order?.fee}</Text>
+              <Text>Shipping Fee </Text>
+              <Text>$ {order?.shipping_fee}</Text>
+            </div>
+             <div className="flex justify-between">
+              <Text>Tax</Text>
+              <Text>$ {order?.tax}</Text>
+            </div>
+            <div className="flex justify-between">
+              <Text>Duties</Text>
+              <Text>$ {order?.duties}</Text>
             </div>
             <div className="flex justify-between">
               <Text>Exchange Rate</Text>
@@ -229,21 +240,25 @@ const Quote = () => {
 
             <div className="flex justify-between items-start gap-4">
               <Text className="min-w-0 break-words">
-                Surcharge (0.5% Items + Shipping)
+                Surcharge (0.5% Items + Shipping + Tax + Duties)
               </Text>
               <Text className="text-right whitespace-nowrap font-medium">
                 ₦{order?.surcharge}
               </Text>
             </div>
             <div className="flex justify-between text-gray-700">
-              <Text>Cart2pay fee (2% Cart + Shipping) </Text>
+              <Text>Cart2pay fee (Flat rate) </Text>
               <Text className="font-medium">₦{order?.service_fee}</Text>
+            </div>
+              <div className="flex justify-between text-gray-700">
+              <Text>Local delivery </Text>
+              <Text className="font-medium">₦{order?.local_delivery_fee}</Text>
             </div>
             <div className="flex justify-between font-bold text-lg pt-2">
               <Text>Total to Pay (₦)</Text>
               <div className="py-2 px-3 bg-highlight rounded">
                 <Text size="lg" color="" weight="bold" className="font-black ">
-                  ₦{order?.sumTotal}
+                  ₦{order?.sum_total}
                 </Text>
               </div>
             </div>
