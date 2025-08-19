@@ -219,23 +219,23 @@ const Quote = () => {
             </Heading>
             <div className="flex justify-between">
               <Text>Item(s) cost </Text>
-              <Text>$ {order?.items_total}</Text>
+              <Text>$ {order?.items_total.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between">
               <Text>Shipping Fee </Text>
-              <Text>$ {order?.shipping_fee}</Text>
+              <Text>$ {order?.shipping_fee.toLocaleString()}</Text>
             </div>
              <div className="flex justify-between">
               <Text>Tax</Text>
-              <Text>$ {order?.tax}</Text>
+              <Text>$ {order?.tax.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between">
               <Text>Duties</Text>
-              <Text>$ {order?.duties}</Text>
+              <Text>$ {order?.duties.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between">
               <Text>Exchange Rate</Text>
-              <Text>₦1,500 / $1</Text>
+              <Text>₦{order?.exchange_rate.toLocaleString()} / $1</Text>
             </div>
 
             <div className="flex justify-between items-start gap-4">
@@ -243,22 +243,22 @@ const Quote = () => {
                 Surcharge (0.5% Items + Shipping + Tax + Duties)
               </Text>
               <Text className="text-right whitespace-nowrap font-medium">
-                ₦{order?.surcharge}
+                ₦{order?.surcharge.toLocaleString()}
               </Text>
             </div>
             <div className="flex justify-between text-gray-700">
               <Text>Cart2pay fee (Flat rate) </Text>
-              <Text className="font-medium">₦{order?.service_fee}</Text>
+              <Text className="font-medium">₦{order?.service_fee.toLocaleString()}</Text>
             </div>
               <div className="flex justify-between text-gray-700">
               <Text>Local delivery </Text>
-              <Text className="font-medium">₦{order?.local_delivery_fee}</Text>
+              <Text className="font-medium">₦{order?.local_delivery_fee.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between font-bold text-lg pt-2">
               <Text>Total to Pay (₦)</Text>
               <div className="py-2 px-3 bg-highlight rounded">
                 <Text size="lg" color="" weight="bold" className="font-black ">
-                  ₦{order?.sum_total}
+                  ₦{order?.sum_total.toLocaleString()}
                 </Text>
               </div>
             </div>
@@ -290,7 +290,7 @@ const Quote = () => {
 
           <div className="pt-4">
             <Button variant="primary" onClick={handlePay} className="font-bold">
-              Pay ₦182,000
+              Pay ₦{order?.sum_total.toLocaleString()}
             </Button>
           </div>
 
