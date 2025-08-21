@@ -29,3 +29,12 @@ lastName:string,
   street: string,
   phone:string
 }
+
+export interface EditAddressPayload{
+  firstName:string,
+  lastName:string,
+  state: string,
+  lga: string,
+  street: string,
+  phone: string
+}

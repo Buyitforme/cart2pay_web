@@ -11,6 +11,9 @@ interface ApiUrls {
   create_order: string
   get_addresses:string
   create_address:string
+  payment_details:string
+  confirm_payment:string
+  deleteAddress:string
 }
 
 const apiRoutes: ApiUrls = {
@@ -26,7 +29,9 @@ const apiRoutes: ApiUrls = {
   create_order:"api/order/create",
   get_addresses:"/api/address/addresses",
    create_address:"api/address/create",
-
+   payment_details:"api/order/details",
+   confirm_payment:"api/order/confirm",
+deleteAddress:'api/address/delete/'
 
 };
 

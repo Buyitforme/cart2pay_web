@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import Select from "../../../Components/Select";
 import { Button } from "../../../Components/Button";
-import { Copy } from "lucide-react";
 
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -11,7 +10,11 @@ import success from "../../../Animations/success.json";
 import GoBack from "../../../Components/GoBack";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
-import { triggerOrderDetails } from "../../../redux/features/orderManagement/orderManagementThunk";
+import {
+  triggerConfirmPayment,
+  triggerGeneratePaymentDetails,
+  triggerOrderDetails,
+} from "../../../redux/features/orderManagement/orderManagementThunk";
 import { PageLoader } from "../../../Components/PageLoader";
 import { Modal } from "../../../Components/Modal";
 const Quote = () => {
@@ -19,7 +22,7 @@ const Quote = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { orderId } = useParams();
-  const { orderDetails } = useSelector(
+  const { orderDetails, generatePaymentDetails, confirmPayment } = useSelector(
     (state: RootState) => state.order_management
   );
   const dispatch: AppDispatch = useDispatch();
@@ -64,8 +67,7 @@ const Quote = () => {
     }
 
     // proceed with payment logic
-    console.log("Paying with:", selectedPaymentMethod);
-    setIsModalOpen(true);
+    dispatch(triggerGeneratePaymentDetails(orderId!));
   };
 
   useEffect(() => {
@@ -86,27 +88,40 @@ const Quote = () => {
     return () => clearInterval(interval);
   }, [countdown]);
 
-  const formatTime = (seconds: number) => {
-    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
-    const s = String(seconds % 60).padStart(2, "0");
-    return `${m}:${s}`;
-  };
-
   const handlePaymentConfirmation = () => {
-    setsLoading(true);
-    setTimeout(() => {
-      toast.success(
-        "We’re verifying your payment. You’ll get a confirmation shortly."
-      );
-    }, 4000);
-    setTimeout(() => {
-      setIsModalOpen(false);
-      setPaymentComfirmed(true);
-    }, 6000);
+    if (!orderId) {
+      return;
+    }
+    dispatch(triggerConfirmPayment(orderId!));
+
   };
   useEffect(() => {
     dispatch(triggerOrderDetails(orderId!));
   }, [dispatch, orderId]);
+
+  useEffect(() => {
+    if (
+      !generatePaymentDetails.error &&
+      generatePaymentDetails.statusCode === 200
+    ) {
+      setIsModalOpen(true);
+    } else if (generatePaymentDetails.error) {
+      toast.error(generatePaymentDetails.message);
+    }
+  }, [
+    generatePaymentDetails.error,
+    generatePaymentDetails.message,
+    generatePaymentDetails.statusCode,
+  ]);
+
+  useEffect(() => {
+    if (!confirmPayment.error && confirmPayment.statusCode === 200) {
+      setPaymentComfirmed(true);
+    } else if (confirmPayment.error) {
+      toast.error(confirmPayment.message);
+    }
+  }, [confirmPayment.error, confirmPayment.message, confirmPayment.statusCode]);
+
   if (orderDetails.loading || !orderDetails.data) {
     return (
       <div className="flex justify-center items-center h-screen w-full">
@@ -124,9 +139,8 @@ const Quote = () => {
             Order Received!
           </Heading>
           <Text size="sm" color="subtle">
-            We're processing your order, this usually takes about 24 hours or
-            less depending on the quantity of items. You'll receive an email and
-            in-app notification once it's ready.
+           
+           We’re reviewing your order and will get your quote ready shortly. You’ll receive an email and an in-app notification once it’s ready.
           </Text>
 
           {/* <div className="text-3xl font-bold text-accent">
@@ -178,18 +192,6 @@ const Quote = () => {
                 {order?.store}
               </Heading>
             </div>
-
-            {/* <div>
-              <Text className="text-sm text-muted-foreground">Cart Link</Text>
-              <a
-                href="https://zara.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline text-sm"
-              >
-                View Cart on Zara
-              </a>
-            </div> */}
           </div>
 
           {/* Delivery Info */}
@@ -205,10 +207,13 @@ const Quote = () => {
             </Text>
             <Text>
               <strong>Address:</strong>{" "}
-{[order?.delivery_information?.street, order?.delivery_information?.lga, order?.delivery_information?.state]
-  .filter(Boolean)
-  .join(", ")}
-
+              {[
+                order?.delivery_information?.street,
+                order?.delivery_information?.lga,
+                order?.delivery_information?.state,
+              ]
+                .filter(Boolean)
+                .join(", ")}
             </Text>
           </div>
 
@@ -225,7 +230,7 @@ const Quote = () => {
               <Text>Shipping Fee </Text>
               <Text>$ {order?.shipping_fee.toLocaleString()}</Text>
             </div>
-             <div className="flex justify-between">
+            <div className="flex justify-between">
               <Text>Tax</Text>
               <Text>$ {order?.tax.toLocaleString()}</Text>
             </div>
@@ -248,11 +253,15 @@ const Quote = () => {
             </div>
             <div className="flex justify-between text-gray-700">
               <Text>Cart2pay fee (Flat rate) </Text>
-              <Text className="font-medium">₦{order?.service_fee.toLocaleString()}</Text>
+              <Text className="font-medium">
+                ₦{order?.service_fee.toLocaleString()}
+              </Text>
             </div>
-              <div className="flex justify-between text-gray-700">
+            <div className="flex justify-between text-gray-700">
               <Text>Local delivery </Text>
-              <Text className="font-medium">₦{order?.local_delivery_fee.toLocaleString()}</Text>
+              <Text className="font-medium">
+                ₦{order?.local_delivery_fee.toLocaleString()}
+              </Text>
             </div>
             <div className="flex justify-between font-bold text-lg pt-2">
               <Text>Total to Pay (₦)</Text>
@@ -288,106 +297,106 @@ const Quote = () => {
             />
           </div>
 
-          <div className="pt-4">
-            <Button variant="primary" onClick={handlePay} className="font-bold">
-              Pay ₦{order?.sum_total.toLocaleString()}
-            </Button>
-          </div>
+ <div className="flex flex-col gap-6 pt-4">
+  {/* Left button */}
+  <div>  <Button
+    variant="primary"
+    onClick={handlePay}
+    loading={generatePaymentDetails.loading}
+  >
+    Get Payment Details
+  </Button></div>
+
+
+  {/* Right section */}
+  <div className="f">
+    <p className="text-sm text-gray-500 mb-1">
+      Once you’ve completed your bank transfer, tap below so we can verify your payment.
+    </p>
+    <Button
+      variant="secondary"
+      onClick={handlePaymentConfirmation}
+    className="font-bold "
+      loading={confirmPayment.loading}
+    >
+      Confirm I’ve Paid
+    </Button>
+  </div>
+</div>
+
+
 
           <Modal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            className="w-[30%]"
           >
-            <div className="py-2 w-full">
-              <Heading size="md" className="text-center">
-                Bank Transfer Details
-              </Heading>
+            <div className="py-2 w-full flex flex-col items-center justify-center">
+              <Lottie
+                animationData={success}
+                loop={true}
+                style={{ width: 80, height: 80 }}
+              />
 
               {/* Account Name */}
               <div className="space-y-1">
                 <Text size="sm" color="subtle">
-                  Account Name
+                  Kindly, {generatePaymentDetails.message}
                 </Text>
-                <Text weight="medium">{accountDetails.name}</Text>
-              </div>
-
-              {/* Account Number with Copy */}
-              <div className="space-y-1">
-                <Text size="sm" color="subtle">
-                  Account Number
-                </Text>
-                <div className="flex items-center justify-between bg-gray-100 rounded px-3 py-2">
-                  <Text weight="medium">{accountDetails.number}</Text>
-                  <button
-                    onClick={handleCopy}
-                    className="text-gray-400 hover:text-accent duration-300"
-                  >
-                    <Copy className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Bank */}
-              <div className="space-y-1">
-                <Text size="sm" color="subtle">
-                  Bank
-                </Text>
-                <Text weight="medium">{accountDetails.bank}</Text>
               </div>
 
               {/* Done Button */}
               <div className="pt-4">
                 <Button
                   variant="primary"
-                  onClick={handlePaymentConfirmation}
+                  onClick={() => {
+                    setIsModalOpen(false);
+                  }}
                   className="w-full"
                   loading={loading}
                 >
-                  I've made payment
+                  Ok
                 </Button>
               </div>
             </div>
           </Modal>
 
-          <Modal
-            isOpen={paymentConfirmed}
-            onClose={() => setPaymentComfirmed(false)}
-          >
-            <div className="">
-              <div className="flex flex-col items-center justify-center space-y-4">
-                <Lottie
-                  animationData={success}
-                  loop={true}
-                  style={{ width: 80, height: 80 }}
-                />
-                <Heading size="md">Payment Confirmed</Heading>
-                <Text size="sm" className="text-center text-gray-500">
-                  Your payment has been confirmed and your order will be placed
-                  shortly.This usually takes about 15 minutes.
-                  <br />
-                  Please check your email for the receipt and shipping
-                  information.
-                </Text>
-              </div>
+         <Modal
+  isOpen={paymentConfirmed}
+  onClose={() => setPaymentComfirmed(false)}
+>
+  <div className="flex flex-col items-center justify-center space-y-6 p-6">
+    {/* Title */}
+    <h2 className="text-lg font-semibold text-gray-800 text-center">
+      Payment Confirmation Submitted
+    </h2>
 
-              <div className="flex justify-between items-center">
-                <Button
-                  variant="primary"
-                  onClick={() => navigate("/dashboard/orders")}
-                >
-                  View order
-                </Button>
+    {/* Body text */}
+    <Text size="sm" className="text-center text-gray-500">
+      Great! We’ve received your payment confirmation.  
+      You’ll be notified via email once the payment is verified.
+    </Text>
 
-                <Button
-                  variant="outline"
-                  onClick={() => navigate("/dashboard/new-order")}
-                >
-                  Start a new order
-                </Button>
-              </div>
-            </div>
-          </Modal>
+    {/* Actions */}
+    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-4">
+      <Button
+        variant="primary"
+        className="w-full"
+        onClick={() => setPaymentComfirmed(false)}
+      >
+        Ok
+      </Button>
+
+      <Button
+        variant="outline"
+        className="w-full"
+        onClick={() => navigate("/dashboard/new-order")}
+      >
+        Start New Order
+      </Button>
+    </div>
+  </div>
+</Modal>
+
         </div>
       )}
     </div>

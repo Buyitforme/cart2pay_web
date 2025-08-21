@@ -16,7 +16,7 @@ import {
   triggerGetAddreses,
 } from "../../../redux/features/orderManagement/orderManagementThunk";
 import toast from "react-hot-toast";
-import { resetCreateOrderState } from "../../../redux/features/orderManagement/orderManagementSlice";
+import { resetCreateOrderState, updateFormData } from "../../../redux/features/orderManagement/orderManagementSlice";
 import TextLoader from "../../../Components/TextLoader";
 import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
 import { capitalizeFirstLetter } from "../../../utils";
@@ -110,13 +110,15 @@ const validationSchema = Yup.object({
 export const NewOrder = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { createOrder, addresses } = useSelector(
+  const { createOrder, addresses, formData } = useSelector(
     (state: RootState) => state.order_management
   );
   const { getUserProfileData } = useSelector(
     (state: RootState) => state.user_account_management
   );
   const dispatch: AppDispatch = useDispatch();
+
+
   const userData = getUserProfileData.data?.results?.data;
   const selectedAddress = addresses?.data?.results?.find(
     (addr: any) => addr.isDefault === true

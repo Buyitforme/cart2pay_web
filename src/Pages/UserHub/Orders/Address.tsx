@@ -99,7 +99,7 @@ const Address = () => {
       toast.success(makeDefault.message);
       setTimeout(() => {
         localStorage.removeItem("cart2pay_quote_start");
-        navigate("/dashboard/new-order");
+       navigate(-1);
       }, 2000);
     } else if (makeDefault.error) {
       toast.error(makeDefault.message);
@@ -122,7 +122,6 @@ const Address = () => {
       lga: values.lga,
       street: values.street,
     };
-    console.log("PAYLOAD", payload);
     dispatch(triggerCreateAddress(payload));
   };
 
@@ -205,13 +204,16 @@ const Address = () => {
                 >
                   Save Address
                 </Button>
-                <button
+                {addresses?.data?.results?.length > 0 && (
+  <button
                   type="button"
                   className="text-xs text-blue-500 underline"
                   onClick={() => setShowForm(false)}
                 >
                   Back to select address
                 </button>
+                )}
+              
               </div>
             </Form>
           )}

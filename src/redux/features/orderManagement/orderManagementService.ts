@@ -1,6 +1,6 @@
 import apiRoutes from "../../../config";
-import { get, post, put } from "../../network/https";
-import { CreateAddressPayload, CreateOrderPayload } from "./types";
+import { get, post, put, del } from "../../network/https";
+import { CreateAddressPayload, CreateOrderPayload, EditAddressPayload } from "./types";
 
 type SafePayload = Omit<CreateOrderPayload, "details"> & {
   details: string;
@@ -54,6 +54,32 @@ export class orderManagementService {
       return response;
     }
   }
+
+  static async generate_payment_details(orderId: string) {
+    const response = await get({
+      url: `${apiRoutes.payment_details}/${orderId}`,
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      console.log("PAYMENT DETAILS", JSON.stringify(response, null, 2));
+      return response;
+    }
+  }
+
+   static async confirm_payment(orderId: string) {
+    const response = await get({
+      url: `${apiRoutes.confirm_payment}/${orderId}`,
+    });
+    if (response.status === "error") {
+      throw response;
+    }
+    if (response.status === "success") {
+      console.log("CONFIRM PAYMENT DETAILS", JSON.stringify(response, null, 2));
+      return response;
+    }
+  }
 }
 
 export class addressManagementService {
@@ -97,6 +123,37 @@ export class addressManagementService {
     }
 
     if (response.status === "success") {
+      return response;
+    }
+  }
+   static async edit_address(data: EditAddressPayload, addressId: string) {
+    const response = await put({
+      url: `${apiRoutes.get_addresses}/${addressId}`,
+      data,
+    });
+
+    if (response.status === "error") {
+      throw response;
+    }
+
+    if (response.status === "success") {
+        console.log("Ad****", JSON.stringify(response, null, 2));
+
+      return response;
+    }
+  }
+   static async delete_address( addressId: string) {
+    const response = await del({
+      url: `${apiRoutes.deleteAddress}${addressId}`,
+    });
+
+    if (response.status === "error") {
+      throw response;
+    }
+
+    if (response.status === "success") {
+        console.log("Ad****", JSON.stringify(response, null, 2));
+
       return response;
     }
   }

@@ -32,7 +32,6 @@ const OrderDetails = () => {
       toast.error(orderDetails.message);
     }
   }, [orderDetails.error, orderDetails.message, orderDetails.statusCode]);
-  console.log("details length:", parsedDetails.length);
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-2xl shadow-md">
       <GoBack label={"Order Details"} />

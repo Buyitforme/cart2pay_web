@@ -87,12 +87,10 @@ const Orders: FC = () => {
                 <strong>Store:</strong> {order.store}
               </Text>
               <Text>
-                <strong>Date:</strong>{" "}
+                <strong>Date submitted:</strong>{" "}
                 {new Date(order.createdAt).toLocaleDateString()}
               </Text>
-              <Text>
-                <strong>Total:</strong> ₦{order.sumTotal || 0}
-              </Text>
+             
               <div className="flex justify-between">
                  <Button
                 size="sm"

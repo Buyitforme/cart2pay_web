@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { triggerCreateAddress, triggerCreateOrder, triggerGetAddreses, TriggerMakeDefaultAddress, triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
+import { triggerConfirmPayment, triggerCreateAddress, triggerCreateOrder, triggerDeleteAddress, triggerEditAddress, triggerGeneratePaymentDetails, triggerGetAddreses, TriggerMakeDefaultAddress, triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
 
 interface IinitialState {
+    formData: Record<string,string>,
+
    error: boolean;
     loading: boolean;
     data: Record<string, any>;
@@ -43,8 +45,38 @@ interface IinitialState {
     message: string;
     statusCode?: number | null;
   };
+   generatePaymentDetails: {
+    error: boolean;
+    loading: boolean;
+    data: Record<string, any>;
+    message: string;
+    statusCode?: number | null;
+  };
+   confirmPayment: {
+    error: boolean;
+    loading: boolean;
+    data: Record<string, any>;
+    message: string;
+    statusCode?: number | null;
+  };
+  editAddress: {
+  error: boolean;
+  loading: boolean;
+  data: Record<string, any>;
+  message: string;
+  statusCode?: number | null;
+};
+  deleteAddress: {
+  error: boolean;
+  loading: boolean;
+  data: Record<string, any>;
+  message: string;
+  statusCode?: number | null;
+};
 }
 const initialState: IinitialState = {
+    formData: {},
+
    error: false,
     loading: false,
     data: {},
@@ -86,13 +118,47 @@ const initialState: IinitialState = {
     message: "",
     statusCode: null,
   },
+    confirmPayment: {
+    error: false,
+    loading: false,
+    data: {},
+    message: "",
+    statusCode: null,
+  },
+    generatePaymentDetails: {
+    error: false,
+    loading: false,
+    data: {},
+    message: "",
+    statusCode: null,
+  },
+     editAddress: {
+    error: false,
+    loading: false,
+    data: {},
+    message: "",
+    statusCode: null,
+  },
+      deleteAddress: {
+    error: false,
+    loading: false,
+    data: {},
+    message: "",
+    statusCode: null,
+  },
+
 };
 
 const orderManagementSlice = createSlice({
   name: "order_management",
   initialState,
   reducers: {
-   
+    updateFormData(state, action) {
+      state.formData = action.payload;
+    },
+    clearFormData(state) {
+      state.formData = {};
+    },
      resetState: (state) => {
       state.error = initialState.error;
       state.message = initialState.message;
@@ -263,8 +329,112 @@ const orderManagementSlice = createSlice({
             (action.payload as any)?.status_code || 400;
         });
 
+                 // GENERATE PAYMENT DETAILS
+        builder.addCase(triggerGeneratePaymentDetails.pending, (state) => {
+          state.generatePaymentDetails.loading = true;
+          state.generatePaymentDetails.error = false;
+          state.generatePaymentDetails.data = {};
+          state.generatePaymentDetails.message = "";
+        });
+        builder.addCase(triggerGeneratePaymentDetails.fulfilled, (state, action) => {
+          state.generatePaymentDetails.loading = false;
+          state.generatePaymentDetails.data = action.payload as any;
+          state.generatePaymentDetails.error = false;
+          state.generatePaymentDetails.message = action.payload
+            ?.message as unknown as string;
+          state.generatePaymentDetails.statusCode = action.payload
+            ?.status_code as unknown as number;
+        });
+        builder.addCase(triggerGeneratePaymentDetails.rejected, (state, action) => {
+          state.generatePaymentDetails.loading = false;
+          state.generatePaymentDetails.error = true;
+          state.generatePaymentDetails.data = (action.payload as any) || {};
+          state.generatePaymentDetails.message =
+            (action.payload as any)?.message || "Unknown error";
+          state.generatePaymentDetails.statusCode =
+            (action.payload as any)?.status_code || 400;
+        });
+
+                    // GENERATE CONFIRM PAYMENT
+        builder.addCase(triggerConfirmPayment.pending, (state) => {
+          state.confirmPayment.loading = true;
+          state.confirmPayment.error = false;
+          state.confirmPayment.data = {};
+          state.confirmPayment.message = "";
+        });
+        builder.addCase(triggerConfirmPayment.fulfilled, (state, action) => {
+          state.confirmPayment.loading = false;
+          state.confirmPayment.data = action.payload as any;
+          state.confirmPayment.error = false;
+          state.confirmPayment.message = action.payload
+            ?.message as unknown as string;
+          state.confirmPayment.statusCode = action.payload
+            ?.status_code as unknown as number;
+        });
+        builder.addCase(triggerConfirmPayment.rejected, (state, action) => {
+          state.confirmPayment.loading = false;
+          state.confirmPayment.error = true;
+          state.confirmPayment.data = (action.payload as any) || {};
+          state.confirmPayment.message =
+            (action.payload as any)?.message || "Unknown error";
+          state.confirmPayment.statusCode =
+            (action.payload as any)?.status_code || 400;
+        });
+
+        // In addressSlice.ts
+builder.addCase(triggerEditAddress.pending, (state) => {
+  state.editAddress.loading = true;
+  state.editAddress.error = false;
+  state.editAddress.data = {};
+  state.editAddress.message = "";
+});
+
+builder.addCase(triggerEditAddress.fulfilled, (state, action) => {
+  state.editAddress.loading = false;
+  state.editAddress.data = action.payload as any;
+  state.editAddress.error = false;
+  state.editAddress.message = action.payload?.message as string;
+  state.editAddress.statusCode = action.payload?.status_code as number;
+});
+
+builder.addCase(triggerEditAddress.rejected, (state, action) => {
+  state.editAddress.loading = false;
+  state.editAddress.error = true;
+  state.editAddress.data = (action.payload as any) || {};
+  state.editAddress.message =
+    (action.payload as any)?.message || "Unknown error";
+  state.editAddress.statusCode =
+    (action.payload as any)?.status_code || 400;
+});
+
+        // delete address
+builder.addCase(triggerDeleteAddress.pending, (state) => {
+  state.deleteAddress.loading = true;
+  state.deleteAddress.error = false;
+  state.deleteAddress.data = {};
+  state.deleteAddress.message = "";
+});
+
+builder.addCase(triggerDeleteAddress.fulfilled, (state, action) => {
+  state.deleteAddress.loading = false;
+  state.deleteAddress.data = action.payload as any;
+  state.deleteAddress.error = false;
+  state.deleteAddress.message = action.payload?.message as string;
+  state.deleteAddress.statusCode = action.payload?.status_code as number;
+});
+
+builder.addCase(triggerDeleteAddress.rejected, (state, action) => {
+  state.deleteAddress.loading = false;
+  state.deleteAddress.error = true;
+  state.deleteAddress.data = (action.payload as any) || {};
+  state.deleteAddress.message =
+    (action.payload as any)?.message || "Unknown error";
+  state.deleteAddress.statusCode =
+    (action.payload as any)?.status_code || 400;
+});
+
   },
 });
-export const {resetCreateOrderState,resetState,resetMakeDefaultState} = orderManagementSlice.actions
+export const {resetCreateOrderState,resetState,resetMakeDefaultState,updateFormData,clearFormData} = orderManagementSlice.actions
 
 export default orderManagementSlice.reducer;

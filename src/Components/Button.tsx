@@ -44,7 +44,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const sizes = {
       sm: "h-8 px-3 text-sm",
-      md: "h-10 px-4 text-sm",
+  md: "h-10 px-4 text-sm w-full sm:w-auto", // 👈 full width on mobile
       lg: "h-12 px-6 text-base",
     };
 

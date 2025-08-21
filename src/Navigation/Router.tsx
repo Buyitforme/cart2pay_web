@@ -62,6 +62,8 @@ const routes: RouteObject[] = [
           { path: "notifications", element: <Notifications /> },
           { path: "settings", element: <>Settings</> },
           { path: "new-order/address", element: <Address /> },
+                    { path: "profile/address", element: <Address /> },
+
         ],
       },
     ],

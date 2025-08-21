@@ -50,6 +50,19 @@ const navLinks = [
     ],
   },
 
+   {
+  // label: "Profile",
+  to: "/dashboard/profile",
+  icon: <User className="w-5 h-5" />,
+  children: [
+    {
+      label: "Address",
+      to: "/dashboard/profile/address",
+      icon: <CreditCard className="w-5 h-5" />,
+    },
+  ],
+}
+
 ];
 
 const UserHubNav = () => {
@@ -107,7 +120,7 @@ const UserHubNav = () => {
 
           {/* Right Icons - Desktop only */}
           <div className="hidden md:flex items-center space-x-6">
-            <NavLink
+            {/* <NavLink
               to="/dashboard/notifications"
               className={({ isActive }) =>
                 `hover:text-primary ${
@@ -116,7 +129,7 @@ const UserHubNav = () => {
               }
             >
               <Bell className="w-5 h-5" />
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/dashboard/profile"
@@ -128,6 +141,7 @@ const UserHubNav = () => {
             >
               <User className="w-5 h-5" />
             </NavLink>
+
           </div>
 
           {/* Hamburger Menu - Mobile only */}
@@ -181,35 +195,14 @@ const UserHubNav = () => {
                     <span>{link.label}</span>
                   </NavLink>
 
-                  {/* Render child navigation items if they exist */}
-                  {/* {link.children && (
-                    <div className="ml-6 mt-2 space-y-2">
-                      {link.children.map((child) => (
-                        <NavLink
-                          key={child.to}
-                          to={child.to}
-                          onClick={() => setOpen(false)}
-                          className={({ isActive }) =>
-                            `flex items-center space-x-2 text-xs font-medium ${
-                              isActive
-                                ? "text-primary font-bold"
-                                : "text-gray-600 hover:text-primary"
-                            }`
-                          }
-                        >
-                          {child.icon}
-                          <span>{child.label}</span>
-                        </NavLink>
-                      ))}
-                    </div>
-                  )} */}
+             
                 </div>
               );
             })}
 
             <div className="mt-auto pt-24 border-t border-gray-200">
               <div className="flex flex-col gap-3">
-                <NavLink
+                {/* <NavLink
                   to="/dashboard/notifications"
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
@@ -222,9 +215,9 @@ const UserHubNav = () => {
                 >
                   <Settings className="w-5 h-5" />
                   <span>Notifications</span>
-                </NavLink>
+                </NavLink> */}
 
-                <NavLink
+                {/* <NavLink
                   to="/dashboard/profile"
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
@@ -237,7 +230,7 @@ const UserHubNav = () => {
                 >
                   <User className="w-5 h-5" />
                   <span>Profile</span>
-                </NavLink>
+                </NavLink> */}
               </div>
             </div>
           </div>
