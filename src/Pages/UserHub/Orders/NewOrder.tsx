@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { Formik, Form, FieldArray, useFormikContext } from "formik";
+import { useEffect,useState } from "react";
+import { Formik, Form, FieldArray} from "formik";
 import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { colorOptions, sizeOptions, storeOptions } from "./ordersHelpers";
 import Select from "../../../Components/Select";
 import Modal from "../../../Components/Modal";
@@ -158,12 +158,6 @@ export const NewOrder = () => {
         Personal shopper
       </Heading>
       <Formik
-        // initialValues={{
-        //   store: "",
-        //   items: [initialItem],
-        //   ...deliveryFields,
-        //   ...persistedData,
-        // }}
         initialValues={{
           store: persistedData.store || "",
           items: persistedData.items || [initialItem],
