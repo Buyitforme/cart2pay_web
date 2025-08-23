@@ -28,8 +28,8 @@ const Quote = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const order = orderDetails?.data?.results;
+  const status = orderDetails?.data?.status?.toLowerCase().trim();
 
-  const [loading, setsLoading] = useState(false);
   const [paymentConfirmed, setPaymentComfirmed] = useState(false);
   const COUNTDOWN_KEY = "cart2pay_quote_start";
   const COUNTDOWN_DURATION = 2 * 60; // 1 hour in seconds
@@ -50,16 +50,6 @@ const Quote = () => {
   // 👇 Set initial countdown right when useState runs
   const [countdown, setCountdown] = useState(getInitialCountdown);
 
-  const accountDetails = {
-    name: "Cart2pay Ltd",
-    number: "0123456789",
-    bank: "Access Bank",
-  };
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(accountDetails.number);
-    alert("Account number copied!");
-  };
   const handlePay = () => {
     if (!selectedPaymentMethod) {
       alert("Please select a payment method.");
@@ -93,7 +83,6 @@ const Quote = () => {
       return;
     }
     dispatch(triggerConfirmPayment(orderId!));
-
   };
   useEffect(() => {
     dispatch(triggerOrderDetails(orderId!));
@@ -113,7 +102,7 @@ const Quote = () => {
     generatePaymentDetails.message,
     generatePaymentDetails.statusCode,
   ]);
-
+  console.log("order staus", orderDetails?.data?.results?.status);
   useEffect(() => {
     if (!confirmPayment.error && confirmPayment.statusCode === 200) {
       setPaymentComfirmed(true);
@@ -139,8 +128,8 @@ const Quote = () => {
             Order Received!
           </Heading>
           <Text size="sm" color="subtle">
-           
-           We’re reviewing your order and will get your quote ready shortly. You’ll receive an email and an in-app notification once it’s ready.
+            We’re reviewing your order and will get your quote ready shortly.
+            You’ll receive an email and an in-app notification once it’s ready.
           </Text>
 
           {/* <div className="text-3xl font-bold text-accent">
@@ -284,52 +273,63 @@ const Quote = () => {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Heading size="md" weight="semibold">
-              Payment Method
-            </Heading>
-            <Select
-              options={[{ label: "Bank Transfer", value: "bank" }]}
-              value={selectedPaymentMethod}
-              onChange={(e) => setSelectedPaymentMethod(e.target.value)}
-              placeholder="Select payment method"
-              name={""}
-            />
-          </div>
+          {["approved", "pending"].includes(
+            orderDetails?.data?.results?.status ?? ""
+          ) && (
+            <div className="flex flex-col gap-6 pt-4">
+              <div className="space-y-2">
+                <Heading size="md" weight="semibold">
+                  Payment Method
+                </Heading>
+                <Select
+                  options={[{ label: "Bank Transfer", value: "bank" }]}
+                  value={selectedPaymentMethod}
+                  onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+                  placeholder="Select payment method"
+                  name={""}
+                />
+              </div>
+              {/* Left button */}
+              <div>
+                {" "}
+                <Button
+                  variant="primary"
+                  onClick={handlePay}
+                  loading={generatePaymentDetails.loading}
+                  disabled={
+                    !["approved", "pending"].includes(
+                      orderDetails?.data?.results?.status ?? ""
+                    )
+                  }
+                >
+                  Get payment details
+                </Button>
+              </div>
 
- <div className="flex flex-col gap-6 pt-4">
-  {/* Left button */}
-  <div>  <Button
-    variant="primary"
-    onClick={handlePay}
-    loading={generatePaymentDetails.loading}
-  >
-    Get Payment Details
-  </Button></div>
+              {/* Right section */}
+              <div className="f">
+                <p className="text-sm text-gray-500 mb-1">
+                  Once you’ve completed your bank transfer, tap below so we can
+                  verify your payment.
+                </p>
+                <Button
+                  variant="secondary"
+                  onClick={handlePaymentConfirmation}
+                  className="font-bold "
+                  loading={confirmPayment.loading}
+                  disabled={
+                    !["approved", "pending"].includes(
+                      orderDetails?.data?.results?.status ?? ""
+                    )
+                  }
+                >
+                  Confirm I’ve Paid
+                </Button>
+              </div>
+            </div>
+          )}
 
-
-  {/* Right section */}
-  <div className="f">
-    <p className="text-sm text-gray-500 mb-1">
-      Once you’ve completed your bank transfer, tap below so we can verify your payment.
-    </p>
-    <Button
-      variant="secondary"
-      onClick={handlePaymentConfirmation}
-    className="font-bold "
-      loading={confirmPayment.loading}
-    >
-      Confirm I’ve Paid
-    </Button>
-  </div>
-</div>
-
-
-
-          <Modal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-          >
+          <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
             <div className="py-2 w-full flex flex-col items-center justify-center">
               <Lottie
                 animationData={success}
@@ -352,7 +352,6 @@ const Quote = () => {
                     setIsModalOpen(false);
                   }}
                   className="w-full"
-                  loading={loading}
                 >
                   Ok
                 </Button>
@@ -360,43 +359,42 @@ const Quote = () => {
             </div>
           </Modal>
 
-         <Modal
-  isOpen={paymentConfirmed}
-  onClose={() => setPaymentComfirmed(false)}
->
-  <div className="flex flex-col items-center justify-center space-y-6 p-6">
-    {/* Title */}
-    <h2 className="text-lg font-semibold text-gray-800 text-center">
-      Payment Confirmation Submitted
-    </h2>
+          <Modal
+            isOpen={paymentConfirmed}
+            onClose={() => setPaymentComfirmed(false)}
+          >
+            <div className="flex flex-col items-center justify-center space-y-6 p-6">
+              {/* Title */}
+              <h2 className="text-lg font-semibold text-gray-800 text-center">
+                Payment Confirmation Submitted
+              </h2>
 
-    {/* Body text */}
-    <Text size="sm" className="text-center text-gray-500">
-      Great! We’ve received your payment confirmation.  
-      You’ll be notified via email once the payment is verified.
-    </Text>
+              {/* Body text */}
+              <Text size="sm" className="text-center text-gray-500">
+                Great! We’ve received your payment confirmation. You’ll be
+                notified via email once the payment is verified.
+              </Text>
 
-    {/* Actions */}
-    <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-4">
-      <Button
-        variant="primary"
-        className="w-full"
-        onClick={() => setPaymentComfirmed(false)}
-      >
-        Ok
-      </Button>
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-4">
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  onClick={() => setPaymentComfirmed(false)}
+                >
+                  Ok
+                </Button>
 
-      <Button
-        variant="outline"
-        className="w-full"
-        onClick={() => navigate("/dashboard/new-order")}
-      >
-        Start New Order
-      </Button>
-    </div>
-  </div>
-</Modal>
-
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate("/dashboard/new-order")}
+                >
+                  Start New Order
+                </Button>
+              </div>
+            </div>
+          </Modal>
         </div>
       )}
     </div>

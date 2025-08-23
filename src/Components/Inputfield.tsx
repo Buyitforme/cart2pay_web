@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const { name, ...restProps } = props;
     const [field, meta] = useField(name);
-    const { setFieldValue, setFieldTouched } = useFormikContext();
+    const { setFieldValue, setFieldTouched} = useFormikContext();
 
     const hasError = meta.touched && meta.error;
     const baseStyles =
@@ -71,6 +71,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             name={field.name}
             value={field.value}
+  onBlur={() => setFieldTouched(field.name, true, false)}
+
             type={type === "password" && showPassword ? "text" : type}
             onChange={(e) => {
               setFieldValue(field.name, e.target.value);

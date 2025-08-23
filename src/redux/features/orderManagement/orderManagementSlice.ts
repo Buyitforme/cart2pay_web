@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { triggerConfirmPayment, triggerCreateAddress, triggerCreateOrder, triggerDeleteAddress, triggerEditAddress, triggerGeneratePaymentDetails, triggerGetAddreses, TriggerMakeDefaultAddress, triggerOrderDetails, triggerOrderHistory } from "./orderManagementThunk";
 
 interface IinitialState {
-    formData: Record<string,string>,
+    formDataInState: any,
 
    error: boolean;
     loading: boolean;
@@ -75,7 +75,7 @@ interface IinitialState {
 };
 }
 const initialState: IinitialState = {
-    formData: {},
+    formDataInState: {},
 
    error: false,
     loading: false,
@@ -154,10 +154,10 @@ const orderManagementSlice = createSlice({
   initialState,
   reducers: {
     updateFormData(state, action) {
-      state.formData = action.payload;
+      state.formDataInState = action.payload;
     },
     clearFormData(state) {
-      state.formData = {};
+      state.formDataInState = {};
     },
      resetState: (state) => {
       state.error = initialState.error;

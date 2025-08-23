@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { Formik, Form, FieldArray } from "formik";
+import { useEffect, useRef, useState } from "react";
+import { Formik, Form, FieldArray, useFormikContext } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { colorOptions, sizeOptions, storeOptions } from "./ordersHelpers";
 import Select from "../../../Components/Select";
 import Modal from "../../../Components/Modal";
@@ -16,7 +16,11 @@ import {
   triggerGetAddreses,
 } from "../../../redux/features/orderManagement/orderManagementThunk";
 import toast from "react-hot-toast";
-import { resetCreateOrderState, updateFormData } from "../../../redux/features/orderManagement/orderManagementSlice";
+import {
+  clearFormData,
+  resetCreateOrderState,
+  updateFormData,
+} from "../../../redux/features/orderManagement/orderManagementSlice";
 import TextLoader from "../../../Components/TextLoader";
 import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
 import { capitalizeFirstLetter } from "../../../utils";
@@ -29,16 +33,6 @@ const initialItem = {
   quantity: "",
   customSize: "",
   customColor: "",
-};
-
-const deliveryFields = {
-  useSavedAddress: true,
-  fullName: "",
-  phone: "",
-  email: "",
-  state: "",
-  lga: "",
-  address: "",
 };
 
 const validationSchema = Yup.object({
@@ -66,63 +60,39 @@ const validationSchema = Yup.object({
               );
             }
           ),
-        size: Yup.string().required("Size is required"),
-        color: Yup.string().required("Color is required"),
         quantity: Yup.number()
           .required("Quantity is required")
           .min(1, "Must be at least 1"),
       })
     )
     .min(1, "At least one item is required"),
-  useSavedAddress: Yup.boolean(),
-  firstName: Yup.string().when("useSavedAddress", {
-    is: false,
-    then: (schema) => schema.required("Enter full name"),
-  }),
-  lastName: Yup.string().when("useSavedAddress", {
-    is: false,
-    then: (schema) => schema.required("Enter full name"),
-  }),
-  phone: Yup.string().when("useSavedAddress", {
-    is: false,
-    then: (schema) => schema.required("Enter phone number"),
-  }),
-  email: Yup.string()
-    .email("Invalid email")
-    .when("useSavedAddress", {
-      is: false,
-      then: (schema) => schema.required("Enter email"),
-    }),
-  state: Yup.string().when("useSavedAddress", {
-    is: false,
-    then: (schema) => schema.required("Select state"),
-  }),
-  lga: Yup.string().when("useSavedAddress", {
-    is: false,
-    then: (schema) => schema.required("Select LGA"),
-  }),
-  address: Yup.string().when("useSavedAddress", {
-    is: false,
-    then: (schema) => schema.required("Enter address"),
-  }),
 });
 
 export const NewOrder = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { createOrder, addresses, formData } = useSelector(
+  const { createOrder, addresses, formDataInState } = useSelector(
     (state: RootState) => state.order_management
   );
+
   const { getUserProfileData } = useSelector(
     (state: RootState) => state.user_account_management
   );
   const dispatch: AppDispatch = useDispatch();
-
-
-  const userData = getUserProfileData.data?.results?.data;
   const selectedAddress = addresses?.data?.results?.find(
     (addr: any) => addr.isDefault === true
   );
+  const deliveryFields = {
+    fullName:
+      `${selectedAddress?.firstName} ${selectedAddress?.lastName}` || "",
+    phone: selectedAddress?.phone || "",
+    email: selectedAddress?.email || "",
+    state: selectedAddress?.state || "",
+    lga: selectedAddress?.lga || "",
+    address: selectedAddress?.street || "",
+  };
+
+  const userData = getUserProfileData.data?.results?.data;
 
   const handleCreateOrder = (values: any) => {
     const payload: CreateOrderPayload = {
@@ -155,6 +125,7 @@ export const NewOrder = () => {
   useEffect(() => {
     if (!createOrder.error && createOrder.statusCode === 201) {
       toast.success(createOrder.message);
+      dispatch(clearFormData());
       setTimeout(() => {
         localStorage.removeItem("cart2pay_quote_start");
         navigate("/dashboard/orders");
@@ -172,23 +143,40 @@ export const NewOrder = () => {
     dispatch,
     navigate,
   ]);
+
+  const handleNavigation = (formValues: any) => {
+    dispatch(updateFormData(formValues));
+    navigate("address");
+  };
+
+  const persistedData = formDataInState;
+  console.log("pd", persistedData);
+
   return (
     <div className="px-0 md:px-20">
       <Heading size="md" weight="semibold">
-               Personal shopper
-              </Heading>
+        Personal shopper
+      </Heading>
       <Formik
+        // initialValues={{
+        //   store: "",
+        //   items: [initialItem],
+        //   ...deliveryFields,
+        //   ...persistedData,
+        // }}
         initialValues={{
-          store: "",
-          items: [initialItem],
-
+          store: persistedData.store || "",
+          items: persistedData.items || [initialItem],
           ...deliveryFields,
+          ...persistedData,
         }}
         validationSchema={validationSchema}
         onSubmit={handleCreateOrder}
-        enableReinitialize
+        enableReinitialize={true}
+  validateOnChange={true}
+  validateOnBlur={true}
       >
-        {({ values, setFieldValue, isValid, dirty }) => (
+        {({ values, setFieldValue, isValid }: any) => (
           <Form>
             <div className="space-y-2 mb-3 pt-8">
               <Heading size="md" weight="light">
@@ -208,7 +196,7 @@ export const NewOrder = () => {
               {({ remove, push }) => (
                 <>
                   <div className="mb-8 bg-white rounded-xl shadow p-6 space-y-10 text-accent">
-                    {values.items.map((item, index) => (
+                    {values.items.map((item: any, index: any) => (
                       <div className="space-y-2" key={index}>
                         <Heading size="md" weight="semibold">
                           {index + 1}. Product details
@@ -408,7 +396,11 @@ export const NewOrder = () => {
 
               {addresses?.data?.results?.length === 0 && !addresses.loading ? (
                 // First-time user — no addresses yet
-                <Button variant="primary" onClick={() => navigate("address")}>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  onClick={() => handleNavigation(values)}
+                >
                   Add Address
                 </Button>
               ) : (
@@ -484,7 +476,7 @@ export const NewOrder = () => {
                   <button
                     type="button"
                     className="text-xs text-blue-500 underline"
-                    onClick={() => navigate("address")}
+                    onClick={() => handleNavigation(values)}
                   >
                     Change Address
                   </button>
@@ -497,7 +489,22 @@ export const NewOrder = () => {
               <Button
                 type="submit"
                 variant="primary"
-                disabled={!(isValid && dirty) || createOrder.loading}
+                disabled={
+                  !isValid ||
+                  !values.store ||
+                  !deliveryFields.address ||
+                  !deliveryFields.fullName ||
+                  !deliveryFields.state ||
+                  !deliveryFields.lga ||
+                  !deliveryFields.phone ||
+                  !values.items.every(
+                    (item: { itemLink: string }) => item.itemLink
+                  )
+                  //  ||
+                  // !values.items.every(
+                  //   (item: { quantity: number }) => item.quantity
+                  // )
+                }
                 loading={createOrder.loading}
               >
                 Proceed
