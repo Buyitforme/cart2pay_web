@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Cookies from "js-cookie";
+
 
 interface IAjax {
   method: string
@@ -32,9 +34,12 @@ const requestInterceptorSuccessCB = async (successfulReq: any) => {
     const JSONData = JSON.stringify(successfulReq.data)
     successfulReq.data = JSONData
   }
-  const authToken = JSON.parse(
-    localStorage.getItem('cart2pay_user_token') as string
-  )
+  // const authToken = JSON.parse(
+  //   localStorage.getItem('cart2pay_user_token') as string
+  // )
+  //get token
+    const authToken = Cookies.get("cart2pay_user_token");
+
 
   if (authToken) {
     successfulReq.headers.Authorization = `Bearer ${authToken as string}`

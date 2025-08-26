@@ -1,5 +1,7 @@
 import apiRoutes from "../../../config";
 import { post } from "../../network/https";
+import Cookies from "js-cookie";
+
 
 export class AuthService {
   static async signup(data: Record<string, string>) {
@@ -42,11 +44,26 @@ export class AuthService {
       return response;
     }
   }
-  static _saveToken(data: string) {
-    localStorage.setItem("cart2pay_user_token", JSON.stringify(data));
+  // static _saveToken(data: string) {
+  //   localStorage.setItem("cart2pay_user_token", JSON.stringify(data));
+  // }
+   static _saveToken(token: string) {
+    Cookies.set("cart2pay_user_token", token, {
+      expires: 7, // days
+      secure: true, // only HTTPS
+      sameSite: "Strict", // prevent CSRF
+    });
   }
-  static _deleteToken() {
-    localStorage.removeItem("nssf_user_token");
+  //get token
+  static _getToken() {
+    return Cookies.get("cart2pay_user_token");
+  }
+  // static _deleteToken() {
+  //   localStorage.removeItem("nssf_user_token");
+  // }
+  //delete token
+   static _deleteToken() {
+    Cookies.remove("cart2pay_user_token");
   }
 
    static async forgot_paassword(data: Record<string, string>) {
