@@ -39,7 +39,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
             size="lg"
             weight="medium"
             color="default"
-            className="w-full pt-3"
+            className="w-2/3 pt-3"
           >
             Experience seamless international shopping from anywhere in the
             world. We help you access global products with local payment
