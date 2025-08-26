@@ -10,7 +10,6 @@ function App() {
       <Toaster position="top-center" reverseOrder={false} />
       <Provider store={store}>
         <Router />
-        <CookieConsent />
       </Provider>
     </div>
   );

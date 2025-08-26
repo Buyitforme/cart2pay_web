@@ -45,7 +45,7 @@ animation: {
         input: "B0BEC5",
         card: "B0BEC5",
         sub_primary: "#8FAC6A",
-        white: "#FAFAFA",
+        white: "#f0f6fc",
         muted_white: "#DCDCDC",
         error_red: "#c81828",
       },

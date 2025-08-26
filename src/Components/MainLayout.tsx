@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import { Outlet, useLocation } from "react-router-dom";
+import CookieConsent from "../services/CookiesConscent";
 
  
 const MainLayout = () => {
@@ -15,6 +16,7 @@ const MainLayout = () => {
       <Nav />
       <main className="flex-grow">
         <Outlet />
+        <CookieConsent />
       </main>
       <Footer />
     </div>

@@ -11,6 +11,7 @@ const routeNames = {
   verificationService: "/verification",
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password",
+  cookiePolicy:"/cookie-policy",
   notFound: "*",
 };
 

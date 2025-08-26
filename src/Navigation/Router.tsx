@@ -26,6 +26,7 @@ import ResetPassword from "../Pages/ResetPassword";
 import ProtectedRoutes from "./ProtectedRoutes";
 import OrderDetails from "../Pages/UserHub/Orders/OrderDetails";
 import Address from "../Pages/UserHub/Orders/Address";
+import CookiePolicyPage from "../services/CookiesPolicy";
 
 const routes: RouteObject[] = [
   {
@@ -38,6 +39,7 @@ const routes: RouteObject[] = [
       { path: routeNames.howItWorks, element: <HowItWorks /> },
       { path: routeNames.stories, element: <Stories /> },
       { path: routeNames.share_story, element: <ShareYourStory /> },
+      { path: routeNames.cookiePolicy, element: <CookiePolicyPage /> },
     ],
   },
   { path: routeNames.signIn, element: <Login /> },
@@ -62,8 +64,7 @@ const routes: RouteObject[] = [
           { path: "notifications", element: <Notifications /> },
           { path: "settings", element: <>Settings</> },
           { path: "new-order/address", element: <Address /> },
-                    { path: "profile/address", element: <Address /> },
-
+          { path: "profile/address", element: <Address /> },
         ],
       },
     ],
