@@ -34,7 +34,7 @@ const ThirstTraps: React.FC<Props> = ({ onExploreClick }) => {
             Let’s make things simple. You focus on discovering and the products
             you love, and we’ll take care of the rest ensuring you get them
             without stress. From seamleslessly sharing your product url to
-            geeting it delivered right to your door step. Shopping has never
+            geting it delivered right to your door step. Shopping has never
             been this easy.
           </Text>
 
