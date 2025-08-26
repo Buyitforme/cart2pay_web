@@ -31,9 +31,9 @@ const ThirstTraps: React.FC<Props> = ({ onExploreClick }) => {
             color="default"
             className="text-base sm:text-lg md:text-lg lg:text-xl leading-relaxed text-center lg:text-start"
           >
-            Let’s make things simple. You focus on discovering and the products
+            Let’s make things simple. You focus on discovering the products
             you love, and we’ll take care of the rest ensuring you get them
-            without stress. From seamleslessly sharing your product url to
+            without stress. From seamlessly sharing your product url to
             geting it delivered right to your door step. Shopping has never
             been this easy.
           </Text>
