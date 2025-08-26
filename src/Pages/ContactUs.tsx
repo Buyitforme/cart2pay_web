@@ -1,4 +1,3 @@
-
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { Input } from "../Components/Inputfield";
@@ -22,16 +21,6 @@ const ContactUs = () => {
     message: Yup.string().required("Message cannot be empty"),
   });
 
-  const handleSubmit = async (
-    values: typeof initialValues,
-    { resetForm }: any
-  ) => {
-    await new Promise((res) => setTimeout(res, 1500));
-    console.log("Submitted:", values);
-    resetForm();
-    toast.success("THANK YOU!, Your story has been sent! Redirecting...");
-  };
-
   return (
     <>
       <AnimatedSection>
@@ -50,7 +39,34 @@ const ContactUs = () => {
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
-              onSubmit={handleSubmit}
+              onSubmit={async (values, { setSubmitting, resetForm }) => {
+                try {
+                  const response = await fetch(
+                    "https://formspree.io/f/mqadkkre",
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                      },
+                      body: JSON.stringify(values),
+                    }
+                  );
+
+                  if (response.ok) {
+                    toast.success("Message sent successfully!");
+
+                    resetForm();
+                  } else {
+                    toast.error("Something went wrong. Please try again.");
+                  }
+                } catch (error) {
+                  console.error(error);
+                  alert("Error sending message.");
+                } finally {
+                  setSubmitting(false);
+                }
+              }}
             >
               {({ isSubmitting }) => (
                 <Form className="space-y-4">
@@ -75,27 +91,27 @@ const ContactUs = () => {
                   <Button
                     type="submit"
                     variant="primary"
-                    className=" mt-4"
+                    className="mt-4"
                     loading={isSubmitting}
                   >
                     Send Message
                   </Button>
 
                   <Text size="sm" color="subtle" className="text-center">
-                    Prefer to call or email? Reach us at{" "}
+                    Prefer to call? Reach us at{" "}
                     <a
-                      href="tel:+2348000000000"
+                      href="tel:+2347039379012"
                       className="text-primary font-medium"
                     >
-                      +234 800 000 0000
+                      +234 703 937 9012
                     </a>{" "}
-                    or{" "}
+                    {/* or{" "}
                     <a
                       href="mailto:hello@cart2pay.com"
                       className="text-primary font-medium"
                     >
                       hello@cart2pay.com
-                    </a>
+                    </a> */}
                     .
                   </Text>
                 </Form>

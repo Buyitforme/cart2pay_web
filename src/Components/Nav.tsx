@@ -11,7 +11,7 @@ const isActive = (path: string) => location.pathname === path;
 
 return (
   <nav className="w-full">
-    <div className="px-6 md:px-0 max-w-7xl mx-auto flex items-center justify-between py-3">
+    <div className="px-3 sm:px-4 lg:px-6 max-w-[95%] mx-auto flex items-center justify-between py-3">
       {/* Logo */}
       <div className="flex-shrink-0 h-auto">
         <Link to="/" className="flex">
@@ -19,7 +19,7 @@ return (
             size="xl"
             weight="bold"
             color="default"
-            className="cursor-pointer text-2xl"
+            className="cursor-pointer text-xl sm:text-2xl"
           >
             Cart2
           </Heading>
@@ -27,20 +27,21 @@ return (
             size="xl"
             weight="bold"
             color="primary"
-            className="cursor-pointer text-2xl"
+            className="cursor-pointer text-xl sm:text-2xl"
           >
             PAY
           </Heading>
         </Link>
       </div>
 
-      {/* Hamburger Menu */}
+      {/* Hamburger Menu - Hidden on large screens */}
       <button
-        className="md:hidden flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full"
+        className="lg:hidden flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gray-100 rounded-full transition-colors hover:bg-gray-200"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle menu"
       >
         <svg
-          className="w-5 h-5"
+          className="w-5 h-5 sm:w-6 sm:h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -55,14 +56,14 @@ return (
         </svg>
       </button>
 
-      {/* Desktop Links */}
-      <div className="hidden md:flex items-center space-x-10">
+      {/* Desktop/Tablet Links - Hidden on mobile, shown on large screens */}
+      <div className="hidden lg:flex items-center space-x-8 xl:space-x-10">
         <Link to="/">
           <Text
             size="lg"
             weight="semibold"
             color="default"
-            className={`cursor-pointer duration-300 ease-in-out ${
+            className={`cursor-pointer duration-300 ease-in-out transition-colors ${
               isActive("/") ? "text-primary font-bold" : "hover:text-primary"
             }`}
           >
@@ -74,7 +75,7 @@ return (
             size="lg"
             weight="semibold"
             color="default"
-            className={`cursor-pointer duration-300 ease-in-out ${
+            className={`cursor-pointer duration-300 ease-in-out transition-colors ${
               isActive("/about")
                 ? "text-primary font-bold"
                 : "hover:text-primary"
@@ -89,7 +90,7 @@ return (
             size="lg"
             weight="medium"
             color="default"
-            className={`cursor-pointer duration-300 ease-in-out ${
+            className={`cursor-pointer duration-300 ease-in-out transition-colors ${
               isActive("/how-it-works")
                 ? "text-primary font-bold"
                 : "hover:text-primary"
@@ -104,7 +105,7 @@ return (
             size="lg"
             weight="medium"
             color="default"
-            className={`cursor-pointer duration-300 ease-in-out ${
+            className={`cursor-pointer duration-300 ease-in-out transition-colors ${
               isActive("/stories") || isActive("/share-your-story")
                 ? "text-primary font-bold"
                 : "hover:text-primary"
@@ -119,7 +120,7 @@ return (
             size="lg"
             weight="medium"
             color="default"
-            className={`cursor-pointer duration-300 ease-in-out ${
+            className={`cursor-pointer duration-300 ease-in-out transition-colors ${
               isActive("/contact-us")
                 ? "text-primary font-bold"
                 : "hover:text-primary"
@@ -130,14 +131,14 @@ return (
         </Link>
       </div>
 
-      {/* Desktop Right Side: Login / Signup */}
-      <div className="hidden md:flex items-center space-x-6">
+      {/* Desktop Right Side: Login / Signup - Hidden on mobile and tablet */}
+      <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
         <Link to="/signin">
           <Text
             size="lg"
             weight="medium"
             color="default"
-            className={`cursor-pointer duration-300 ease-in-out ${
+            className={`cursor-pointer duration-300 ease-in-out transition-colors ${
               isActive("/signin")
                 ? "text-primary font-bold"
                 : "hover:text-primary"
@@ -147,27 +148,29 @@ return (
           </Text>
         </Link>
         <Link to="/signup">
-          <Button variant="primary">Create account</Button>
+          <Button variant="primary" className="whitespace-nowrap">
+            Create account
+          </Button>
         </Link>
       </div>
 
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Mobile Side Drawer */}
+      {/* Mobile/Tablet Side Drawer */}
       <div
-        className={`md:hidden fixed top-0 left-0 h-full w-80 bg-white z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed top-0 left-0 h-full w-72 sm:w-80 bg-white z-50 shadow-xl transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="px-6 py-4 flex flex-col h-full">
+        <div className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col h-full">
           {/* Top Row */}
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-6 sm:mb-8">
             <Link
               to="/"
               className="flex items-center"
@@ -177,7 +180,7 @@ return (
                 size="xl"
                 weight="bold"
                 color="default"
-                className="text-2xl"
+                className="text-xl sm:text-2xl"
               >
                 Cart2
               </Heading>
@@ -185,7 +188,7 @@ return (
                 size="xl"
                 weight="bold"
                 color="primary"
-                className="text-2xl"
+                className="text-xl sm:text-2xl"
               >
                 PAY
               </Heading>
@@ -193,11 +196,12 @@ return (
 
             {/* Close Button */}
             <button
-              className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center"
+              className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 transition-colors"
               onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
             >
               <svg
-                className="w-5 h-5"
+                className="w-5 h-5 sm:w-6 sm:h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -214,10 +218,10 @@ return (
           </div>
 
           {/* Mobile Links */}
-          <div className="flex flex-col items-start space-y-6 mb-8">
-            <Link to="/" onClick={() => setIsOpen(false)}>
+          <div className="flex flex-col items-start space-y-4 sm:space-y-6 mb-6 sm:mb-8 flex-1">
+            <Link to="/" onClick={() => setIsOpen(false)} className="w-full">
               <Text
-                className={`text-lg font-medium duration-300 ${
+                className={`text-base sm:text-lg font-medium duration-300 transition-colors py-2 block ${
                   isActive("/")
                     ? "text-primary font-bold"
                     : "hover:text-primary"
@@ -226,9 +230,9 @@ return (
                 Home
               </Text>
             </Link>
-            <Link to="/about" onClick={() => setIsOpen(false)}>
+            <Link to="/about" onClick={() => setIsOpen(false)} className="w-full">
               <Text
-                className={`text-lg font-medium duration-300 ${
+                className={`text-base sm:text-lg font-medium duration-300 transition-colors py-2 block ${
                   isActive("/about")
                     ? "text-primary font-bold"
                     : "hover:text-primary"
@@ -237,9 +241,9 @@ return (
                 About
               </Text>
             </Link>
-            <Link to="/how-it-works" onClick={() => setIsOpen(false)}>
+            <Link to="/how-it-works" onClick={() => setIsOpen(false)} className="w-full">
               <Text
-                className={`text-lg font-medium duration-300 ${
+                className={`text-base sm:text-lg font-medium duration-300 transition-colors py-2 block ${
                   isActive("/how-it-works")
                     ? "text-primary font-bold"
                     : "hover:text-primary"
@@ -248,13 +252,10 @@ return (
                 How It Works
               </Text>
             </Link>
-            <Link to="/stories" onClick={() => setIsOpen(false)}>
+            <Link to="/stories" onClick={() => setIsOpen(false)} className="w-full">
               <Text
-                size="lg"
-                weight="medium"
-                color="default"
-                className={`cursor-pointer duration-300 ease-in-out ${
-                  isActive("/stories")
+                className={`text-base sm:text-lg font-medium duration-300 transition-colors py-2 block ${
+                  isActive("/stories") || isActive("/share-your-story")
                     ? "text-primary font-bold"
                     : "hover:text-primary"
                 }`}
@@ -262,9 +263,9 @@ return (
                 Stories
               </Text>
             </Link>
-            <Link to="/contact-us" onClick={() => setIsOpen(false)}>
+            <Link to="/contact-us" onClick={() => setIsOpen(false)} className="w-full">
               <Text
-                className={`text-lg font-medium duration-300 ${
+                className={`text-base sm:text-lg font-medium duration-300 transition-colors py-2 block ${
                   isActive("/contact-us")
                     ? "text-primary font-bold"
                     : "hover:text-primary"
@@ -273,23 +274,27 @@ return (
                 Contact Us
               </Text>
             </Link>
-            <Link to="/signin" onClick={() => setIsOpen(false)}>
-              <Text
-                className={`text-lg font-medium duration-300 ${
-                  isActive("/signin")
-                    ? "text-primary font-bold"
-                    : "hover:text-primary"
-                }`}
-              >
-                Login
-              </Text>
-            </Link>
+            
+            {/* Divider */}
+            <div className="w-full border-t border-gray-200 pt-4 sm:pt-6">
+              <Link to="/signin" onClick={() => setIsOpen(false)} className="w-full">
+                <Text
+                  className={`text-base sm:text-lg font-medium duration-300 transition-colors py-2 block ${
+                    isActive("/signin")
+                      ? "text-primary font-bold"
+                      : "hover:text-primary"
+                  }`}
+                >
+                  Login
+                </Text>
+              </Link>
+            </div>
           </div>
 
-          {/* Create Account Button */}
-          <div className="">
+          {/* Create Account Button - Sticky at bottom */}
+          <div className="mt-auto">
             <Link to="/signup" onClick={() => setIsOpen(false)}>
-              <Button variant="primary" className="w-full">
+              <Button variant="primary" className="w-full text-sm sm:text-base py-2 sm:py-3">
                 Create account
               </Button>
             </Link>

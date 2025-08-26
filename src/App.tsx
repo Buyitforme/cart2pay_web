@@ -6,8 +6,7 @@ import store from "./redux/state";
 function App() {
   return (
     <div className="bg-white">
-      <Toaster position="top-right" reverseOrder={false} />
-
+      <Toaster position="top-center" reverseOrder={false} />
       <Provider store={store}>
         <Router />
       </Provider>

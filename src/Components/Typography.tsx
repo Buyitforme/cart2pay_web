@@ -144,6 +144,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       success: "text-green-600",
       warning: "text-amber-600",
       error: "text-red-600",
+      white:"text-decoration-sky-500"
     };
 
     const isPredefinedColor = color in predefinedColors;

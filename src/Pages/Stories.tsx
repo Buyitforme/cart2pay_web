@@ -9,6 +9,7 @@ import { AnimatedSection } from "./LandingPage/LandingPageMain";
 
 const ShareStoryLanding = () => {
   const navigate = useNavigate();
+  
 
   return (
     <>
@@ -36,23 +37,23 @@ const ShareStoryLanding = () => {
                 <span className="font-semibold text-[#1E2A47]">
                   Shein, Zara, Fashion Nova
                 </span>
-                , and more — all using our platform.
+                , and more — all using cart2pay.
                 <br />
                 <br />
-                And guess what?{" "}
+                {/* And guess what?{" "}
                 <span className="font-medium text-[#1E2A47]">
                   We’d love to hear yours too.
-                </span>
+                </span> */}
               </Text>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  localStorage.setItem("redirectAfterLogin", "share-story");
-                  navigate("/signin", { state: { from: "/share-your-story" } });
-                }}
-              >
-                Share Your Story
-              </Button>
+           <Button
+  variant="primary"
+  onClick={() => {
+    const section = document.getElementById("testimonials");
+    section?.scrollIntoView({ behavior: "smooth" });
+  }}
+>
+  See reviews
+</Button>
             </div>
 
             {/* Right Image */}
@@ -66,8 +67,9 @@ const ShareStoryLanding = () => {
           </div>
         </AnimatedSection>
       </div>
-      <TestimonialSection />
-    </>
+<div id="testimonials">
+  <TestimonialSection />
+</div>    </>
   );
 };
 

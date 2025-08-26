@@ -34,28 +34,30 @@ const LandingPageMain = () => {
   }, []);
 
   return (
-    <>
-      <div className="px-5 md:px-20">
-        <AnimatedSection>
-          <HeroSection onExploreClick={scrollToStoreMarquee} />
-        </AnimatedSection>
-      </div>
-
-      <AnimatedSection ref={storeMarqueeRef}>
-        <StoreMarquee />
-      </AnimatedSection>
-
+  <>
+    <div className="px-3 sm:px-4 lg:px-6 max-w-[95%] mx-auto">
+      
       <AnimatedSection>
-        <Cart2payEssentials />
+        <HeroSection onExploreClick={scrollToStoreMarquee} />
       </AnimatedSection>
-
-      <AnimatedSection>
-        <TestimonialSection onExploreClick={scrollToStoreMarquee} />
-        <ThirstTraps onExploreClick={scrollToStoreMarquee} />
-        <Faq />
-      </AnimatedSection>
-    </>
-  );
+    </div>
+    
+    <AnimatedSection ref={storeMarqueeRef}>
+      <StoreMarquee />
+    </AnimatedSection>
+    
+    <AnimatedSection>
+      <Cart2payEssentials />
+    </AnimatedSection>
+    
+    <AnimatedSection>
+      <div></div>
+      <TestimonialSection onExploreClick={scrollToStoreMarquee} />
+      <ThirstTraps onExploreClick={scrollToStoreMarquee} />
+      <Faq />
+    </AnimatedSection>
+  </>
+);
 };
 
 export const AnimatedSection = React.forwardRef<

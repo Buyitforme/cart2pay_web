@@ -22,7 +22,7 @@ const StoreMarquee = () => {
     };
   return (
     <section className="w-full bg-background py-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto text-center">
+      <div className="text-center">
         <Heading
           size="xl"
           weight="bold"
