@@ -101,7 +101,6 @@ const Quote = () => {
     generatePaymentDetails.message,
     generatePaymentDetails.statusCode,
   ]);
-  console.log("order staus", orderDetails?.data?.results?.status);
   useEffect(() => {
     if (!confirmPayment.error && confirmPayment.statusCode === 200) {
       setPaymentComfirmed(true);

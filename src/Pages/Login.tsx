@@ -40,13 +40,11 @@ const Login = () => {
       email: values.email,
       password: values.password,
     };
-    console.log(payload);
     dispatch(triggerSignin(payload));
   };
 
   useEffect(() => {
     if (!error && statusCode === 200) {
-            console.log("success full object", data?.results?.fullName);
             localStorage.setItem('user_full_name',data?.results?.fullName)
       formikRef.current?.resetForm();
       navigate(from);
@@ -54,7 +52,6 @@ const Login = () => {
       setModalOpen(true);
     } else if (error && message === "Invalid credentials") {
       toast.error(message);
-      console.log("error full object", data);
     } 
     dispatch(resetState());
   }, [error, statusCode, message, navigate, dispatch, data, from]);

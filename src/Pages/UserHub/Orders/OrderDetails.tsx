@@ -20,7 +20,6 @@ const OrderDetails = () => {
   const parsedDetails = order?.details ? JSON.parse(order.details) : [];
 
   useEffect(() => {
-    console.log("id", orderId);
     dispatch(triggerOrderDetails(orderId!));
   }, [dispatch, orderId]);
   useEffect(() => {

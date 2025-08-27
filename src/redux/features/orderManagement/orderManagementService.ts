@@ -16,7 +16,6 @@ export class orderManagementService {
       throw response;
     }
     if (response.status === "success") {
-      console.log("ORDERS", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -29,7 +28,6 @@ export class orderManagementService {
       throw response;
     }
     if (response.status === "success") {
-      console.log("ORDER DETAILS", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -50,7 +48,6 @@ export class orderManagementService {
     }
 
     if (response.status === "success") {
-      console.log("ORDER CREATED", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -63,7 +60,6 @@ export class orderManagementService {
       throw response;
     }
     if (response.status === "success") {
-      console.log("PAYMENT DETAILS", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -76,7 +72,6 @@ export class orderManagementService {
       throw response;
     }
     if (response.status === "success") {
-      console.log("CONFIRM PAYMENT DETAILS", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -92,7 +87,6 @@ export class addressManagementService {
       throw response;
     }
     if (response.status === "success") {
-      console.log("ORDERS", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -107,7 +101,6 @@ export class addressManagementService {
     }
 
     if (response.status === "success") {
-      console.log("ORDERS", JSON.stringify(response, null, 2));
       return response;
     }
   }
@@ -137,7 +130,6 @@ export class addressManagementService {
     }
 
     if (response.status === "success") {
-        console.log("Ad****", JSON.stringify(response, null, 2));
 
       return response;
     }
@@ -152,7 +144,6 @@ export class addressManagementService {
     }
 
     if (response.status === "success") {
-        console.log("Ad****", JSON.stringify(response, null, 2));
 
       return response;
     }

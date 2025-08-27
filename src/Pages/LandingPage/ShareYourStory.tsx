@@ -36,7 +36,6 @@ useEffect(() => {
     { resetForm }: any
   ) => {
     await new Promise((res) => setTimeout(res, 2000));
-    console.log("Story submitted:", values);
     resetForm();
    toast.success("THANK YOU!, Your story has been sent! Redirecting...");
    setTimeout(() => {

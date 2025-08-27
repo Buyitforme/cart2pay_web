@@ -132,7 +132,6 @@ export const NewOrder = () => {
       }, 2000);
     } else if (createOrder.error) {
       toast.error(createOrder.message);
-      console.log("order", createOrder.data);
     }
     dispatch(resetCreateOrderState());
   }, [
@@ -150,7 +149,6 @@ export const NewOrder = () => {
   };
 
   const persistedData = formDataInState;
-  console.log("pd", persistedData);
 
   return (
     <div className="px-0 md:px-20">

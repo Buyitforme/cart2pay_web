@@ -87,7 +87,6 @@ const userAccountManagementSlice = createSlice({
       state.editUserProfileData.error = false;
       state.editUserProfileData.message = action.payload
         ?.message as unknown as string;
-        console.log('Message in state',state.editUserProfileData.message)
       state.editUserProfileData.statusCode = action.payload.status_code as unknown as number;
     });
     builder.addCase(triggerEditUserProfile.rejected, (state, action) => {

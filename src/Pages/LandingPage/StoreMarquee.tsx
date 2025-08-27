@@ -15,7 +15,6 @@ const storeLogos = [
 const StoreMarquee = () => {
     const handleStoreClick = (url: string, storeName: string) => {
       // Optional: Add analytics tracking here
-      console.log(`Clicking on ${storeName}`);
 
       // Open in new tab
       window.open(url, "_blank", "noopener,noreferrer");

@@ -70,7 +70,6 @@ const Signup = () => {
       setModalOpen(true);
     } else if (error) {
       toast.error(data?.results?.message);
-      console.log("error full object", data);
     }
     dispatch(resetState());
   }, [error, statusCode, message, navigate, dispatch, data]);

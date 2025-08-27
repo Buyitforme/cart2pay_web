@@ -89,7 +89,6 @@ const Address = () => {
  
 
   const handleMakeDefaultAddress = (id: string) => {
-    console.log("Clicked ID:", id);
     dispatch(TriggerMakeDefaultAddress(id));
   };
   useEffect(() => {
