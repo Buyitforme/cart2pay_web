@@ -4,7 +4,6 @@ import { Input } from "../Components/Inputfield";
 import { Textarea } from "../Components/Textarea";
 import { Button } from "../Components/Button";
 import { Heading, Text } from "../Components/Typography";
-import MainLayout from "../Components/MainLayout";
 import toast from "react-hot-toast";
 import { AnimatedSection } from "./LandingPage/LandingPageMain";
 

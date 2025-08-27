@@ -28,7 +28,6 @@ const Quote = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const order = orderDetails?.data?.results;
-  const status = orderDetails?.data?.status?.toLowerCase().trim();
 
   const [paymentConfirmed, setPaymentComfirmed] = useState(false);
   const COUNTDOWN_KEY = "cart2pay_quote_start";
@@ -102,7 +101,6 @@ const Quote = () => {
     generatePaymentDetails.message,
     generatePaymentDetails.statusCode,
   ]);
-  console.log("order staus", orderDetails?.data?.results?.status);
   useEffect(() => {
     if (!confirmPayment.error && confirmPayment.statusCode === 200) {
       setPaymentComfirmed(true);

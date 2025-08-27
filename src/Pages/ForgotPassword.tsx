@@ -38,7 +38,6 @@ const ForgotPassword = () => {
       }, 2000);
     } else if (error) {
       toast.error(message);
-      console.log("error full object", data);
     }
     dispatch(resetState());
   }, [error, statusCode, message, navigate, dispatch, data]);

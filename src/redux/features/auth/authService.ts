@@ -23,7 +23,6 @@ export class AuthService {
       data: { ...data },
     });
     if (response.status === "error") {
-      console.log("OTP RESPONSE FROM SERVICE", response);
       throw response;
     }
     if (response.status === "success") {

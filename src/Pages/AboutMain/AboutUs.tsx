@@ -6,10 +6,8 @@ import happyShopper from "../../Assets/svg_images/happy girl.jpg";
 import { ChevronDown, ChevronRight, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import paymentCards from "../../Assets/svg_images/payment_cards.svg";
-import MainLayout from "../../Components/MainLayout";
 import { ImageRenderer } from "../../Components/ImageRenderer";
 import { useNavigate } from "react-router-dom";
-import { AnimatedSection } from "../LandingPage/LandingPageMain";
 
 const faqItems = [
   {

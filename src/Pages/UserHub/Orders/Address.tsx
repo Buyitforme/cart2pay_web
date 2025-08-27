@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { ArrowLeft, PencilIcon } from "lucide-react";
 import { AppDispatch, RootState } from "../../../redux/state";
 import {
   TriggerMakeDefaultAddress,
@@ -12,11 +11,11 @@ import GoBack from "../../../Components/GoBack";
 import { Input } from "../../../Components/Inputfield";
 import Select from "../../../Components/Select";
 import { Button } from "../../../Components/Button";
-import { Heading, Text } from "../../../Components/Typography";
+import { Text } from "../../../Components/Typography";
 import { Form, Formik } from "formik";
 import { lgaOptions, stateOptions } from "./ordersHelpers";
 import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import {
   resetMakeDefaultState,
   resetState,
@@ -58,7 +57,6 @@ export const validationSchema = Yup.object().shape({
 });
 const Address = () => {
   const navigate = useNavigate();
-    const location = useLocation();
 
   const { addresses, makeDefault, error, loading, message, statusCode } =
     useSelector((state: RootState) => state.order_management);
@@ -83,7 +81,6 @@ const Address = () => {
       // explicitly show the list view
       setShowForm(false);
     } else {
-      // no addresses, show the form
       setShowForm(true);
     }
   }, [addresses]);
@@ -91,7 +88,6 @@ const Address = () => {
  
 
   const handleMakeDefaultAddress = (id: string) => {
-    console.log("Clicked ID:", id);
     dispatch(TriggerMakeDefaultAddress(id));
   };
   useEffect(() => {

@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { triggerOrderDetails } from "../../../redux/features/orderManagement/orderManagementThunk";
 import toast from "react-hot-toast";
-import { BarLoader, BeatLoader, SyncLoader } from "react-spinners";
 import GoBack from "../../../Components/GoBack";
-import SkeletonLoader from "../../../Components/SkeletonLoader";
-import { Text } from "../../../Components/Typography";
 import ContentLoader from "../../../Components/ContentLoader";
 import TextLoader from "../../../Components/TextLoader";
 
@@ -23,7 +20,6 @@ const OrderDetails = () => {
   const parsedDetails = order?.details ? JSON.parse(order.details) : [];
 
   useEffect(() => {
-    console.log("id", orderId);
     dispatch(triggerOrderDetails(orderId!));
   }, [dispatch, orderId]);
   useEffect(() => {

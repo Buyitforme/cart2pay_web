@@ -85,7 +85,6 @@ const UserProfile = () => {
   });
 
   const handleSave = async (values: any) => {
-    console.log("handleSave called with:", values);
     const payload = {
       fullName: values.fullName,
       email: values.email,
@@ -102,7 +101,6 @@ const UserProfile = () => {
       }, 2000);
     } else if (editUserProfileData.error) {
       toast.error(editUserProfileData.message);
-      console.log("error full object", editUserProfileData.data);
     }
   }, [
     editUserProfileData.error,
@@ -127,9 +125,7 @@ const UserProfile = () => {
     dispatch(triggerGetAddreses({}));
   }, [dispatch]);
 
-  console.log("Addresses", JSON.stringify(editAddress.data, null, 2));
   const handleEditAddress = (values: any) => {
-    console.log('payload')
     const payload: EditAddressPayload = {
       firstName: values.firstName,
       lastName: values.lastName,
@@ -138,7 +134,6 @@ const UserProfile = () => {
       lga: values.lga,
       street: values.street,
     };
-    console.log('payload')
 
     dispatch(triggerEditAddress({ payload, addressId: editingAddress._id }));
   };
@@ -185,7 +180,6 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
       </div>
     );
   }
-  // console.log("Ad", JSON.stringify(addresses, null, 2));
   return (
     <div className=" px-4">
       <div className="w-full  shadow-lg bg-white rounded-xl p-8 space-y-6">
@@ -235,7 +229,6 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
                 initialValues={initialValues}
                 validationSchema={ProfileSchema}
                 onSubmit={(values) => {
-                  console.log("🚀 Formik onSubmit triggered with:", values);
                   handleSave(values);
                 }}
               >

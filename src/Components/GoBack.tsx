@@ -1,5 +1,4 @@
 import React from 'react'
-import { HiOutlineArrowSmallLeft } from 'react-icons/hi2'
 import { useNavigate } from 'react-router'
 import { Heading } from './Typography'
 import { ArrowLeft } from 'lucide-react'

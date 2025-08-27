@@ -1,14 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { Heading, Text } from "../Components/Typography";
 import { Button } from "../Components/Button";
 import StoryImage from "../Assets/svg_images/happy_ladies.jpg"; 
 import TestimonialSection from "./LandingPage/Testimonials";
-import MainLayout from "../Components/MainLayout";
 import { ImageRenderer } from "../Components/ImageRenderer";
 import { AnimatedSection } from "./LandingPage/LandingPageMain";
 
 const ShareStoryLanding = () => {
-  const navigate = useNavigate();
   
 
   return (

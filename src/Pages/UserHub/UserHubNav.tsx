@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   X,
   Menu,
-  Bell,
-  Settings,
   User,
   LayoutDashboard,
   ShoppingBag,
   CreditCard,
-  User as UserIcon,
 } from "lucide-react";
 import { Heading } from "../../Components/Typography";
 
