@@ -81,7 +81,6 @@ const Address = () => {
       // explicitly show the list view
       setShowForm(false);
     } else {
-      // no addresses, show the form
       setShowForm(true);
     }
   }, [addresses]);
