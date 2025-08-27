@@ -1,5 +1,5 @@
 // src/layouts/MainLayout.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import { Outlet, useLocation } from "react-router-dom";

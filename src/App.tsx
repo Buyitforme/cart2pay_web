@@ -2,7 +2,6 @@ import { Toaster } from "react-hot-toast";
 import Router from "./Navigation/Router";
 import { Provider } from "react-redux";
 import store from "./redux/state";
-import CookieConsent from "./services/CookiesConscent";
 
 function App() {
   return (
