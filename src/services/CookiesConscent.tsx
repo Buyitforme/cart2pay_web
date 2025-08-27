@@ -8,7 +8,6 @@ const CookieConsent = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Check if user already accepted cookies
     const consent = Cookies.get("cookie_consent");
     if (!consent) {
       setVisible(true);
@@ -16,7 +15,7 @@ const CookieConsent = () => {
   }, []);
 
   const handleAccept = () => {
-    Cookies.set("cookie_consent", "true", { expires: 365 }); // store for 1 year
+    Cookies.set("cookie_consent", "true", { expires: 365 }); 
     setVisible(false);
   };
 
