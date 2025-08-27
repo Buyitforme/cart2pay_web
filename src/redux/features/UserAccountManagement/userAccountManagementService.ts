@@ -1,6 +1,6 @@
 import apiRoutes from "../../../config";
 import { get, put} from "../../network/https";
-import { EditUserProfilePayload, EditUserProfileResponse } from "./types";
+import { EditUserProfilePayload} from "./types";
 
 
 

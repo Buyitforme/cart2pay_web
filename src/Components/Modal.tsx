@@ -1,6 +1,5 @@
 // Components/ConfirmModal.tsx
-import React, { useState } from "react";
-import { Dialog } from "@headlessui/react";
+import React from "react";
 
 interface ModalProps {
   isOpen: boolean;

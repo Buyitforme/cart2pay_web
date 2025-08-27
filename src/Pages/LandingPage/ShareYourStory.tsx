@@ -6,11 +6,7 @@ import { Heading, Text } from "../../Components/Typography";
 import { Input } from "../../Components/Inputfield";
 import { Textarea } from "../../Components/Textarea";
 import { Button } from "../../Components/Button";
-import AuthLayout from "../../Components/AuthLayout";
-import Nav from "../../Components/Nav";
-import { Toaster } from "react-hot-toast";
 import toast from "react-hot-toast";
-import MainLayout from "../../Components/MainLayout";
 
 
 

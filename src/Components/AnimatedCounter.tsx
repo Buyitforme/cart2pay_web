@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Heading, Text } from "../Components/Typography";
+import {Text } from "../Components/Typography";
 
 interface AnimatedCounterProps {
   end: number;
