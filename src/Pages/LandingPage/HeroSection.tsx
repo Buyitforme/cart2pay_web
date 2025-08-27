@@ -22,7 +22,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
             size="xl"
             weight="bold"
             color="default"
-            className="text-4xl md:text-6xl"
+            className="text-4xl md:text-6xl text-center md:text-start"
           >
             Shop Globally
           </Heading>
@@ -30,7 +30,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
             size="xl"
             weight="bold"
             color="primary"
-            className="text-3xl md:text-5xl pt-2 animate-pulse"
+            className="text-3xl md:text-5xl pt-2 animate-pulse text-center md:text-start"
           >
             Pay Locally
           </Heading>
@@ -39,7 +39,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
             size="lg"
             weight="medium"
             color="default"
-            className="w-2/3 pt-3"
+            className="w-full md:w-2/3 pt-3 text-center md:text-start"
           >
             Experience seamless international shopping from anywhere in the
             world. We help you access global products with local payment
