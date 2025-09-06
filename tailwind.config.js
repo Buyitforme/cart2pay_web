@@ -38,7 +38,7 @@ animation: {
       },
       colors: {
         accent: "#1E2A47",
-        primary: "#708238",
+        primary: "#F38C05",
         highlight: "#f4f7ee",
 
         background: "#F5F7FA",

@@ -25,7 +25,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          "bg-white border border-gray-200",
+          "bg-white border border-gray-200 w-full",
           shadow && "shadow-md",
           padding && "p-4",
           rounded && "rounded-xl",

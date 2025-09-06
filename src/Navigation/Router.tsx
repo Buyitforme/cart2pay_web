@@ -27,6 +27,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import OrderDetails from "../Pages/UserHub/Orders/OrderDetails";
 import Address from "../Pages/UserHub/Orders/Address";
 import CookiePolicyPage from "../services/CookiesPolicy";
+import PaymentDeatails from "../Pages/UserHub/Quote/PaymentDeatails";
 
 const routes: RouteObject[] = [
   {
@@ -59,6 +60,10 @@ const routes: RouteObject[] = [
           { path: "orders", element: <Orders /> },
           { path: "new-order", element: <NewOrder /> },
           { path: "orders/quote/:orderId", element: <Quote /> },
+          {
+            path: "orders/payment-details/:orderId",
+            element: <PaymentDeatails />,
+          },
           { path: "orders/order-details/:orderId", element: <OrderDetails /> },
           { path: "profile", element: <UserProfile /> },
           { path: "notifications", element: <Notifications /> },

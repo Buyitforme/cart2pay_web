@@ -11,8 +11,6 @@ import GoBack from "../../../Components/GoBack";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import {
-  triggerConfirmPayment,
-  triggerGeneratePaymentDetails,
   triggerOrderDetails,
 } from "../../../redux/features/orderManagement/orderManagementThunk";
 import { PageLoader } from "../../../Components/PageLoader";
@@ -22,14 +20,13 @@ const Quote = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { orderId } = useParams();
-  const { orderDetails, generatePaymentDetails, confirmPayment } = useSelector(
+  const { orderDetails, generatePaymentDetails} = useSelector(
     (state: RootState) => state.order_management
   );
   const dispatch: AppDispatch = useDispatch();
 
   const order = orderDetails?.data?.results;
 
-  const [paymentConfirmed, setPaymentComfirmed] = useState(false);
   const COUNTDOWN_KEY = "cart2pay_quote_start";
   const COUNTDOWN_DURATION = 2 * 60; // 1 hour in seconds
 
@@ -49,15 +46,7 @@ const Quote = () => {
   // 👇 Set initial countdown right when useState runs
   const [countdown, setCountdown] = useState(getInitialCountdown);
 
-  const handlePay = () => {
-    if (!selectedPaymentMethod) {
-      alert("Please select a payment method.");
-      return;
-    }
 
-    // proceed with payment logic
-    dispatch(triggerGeneratePaymentDetails(orderId!));
-  };
 
   useEffect(() => {
     if (countdown <= 0) return;
@@ -77,12 +66,6 @@ const Quote = () => {
     return () => clearInterval(interval);
   }, [countdown]);
 
-  const handlePaymentConfirmation = () => {
-    if (!orderId) {
-      return;
-    }
-    dispatch(triggerConfirmPayment(orderId!));
-  };
   useEffect(() => {
     dispatch(triggerOrderDetails(orderId!));
   }, [dispatch, orderId]);
@@ -101,13 +84,7 @@ const Quote = () => {
     generatePaymentDetails.message,
     generatePaymentDetails.statusCode,
   ]);
-  useEffect(() => {
-    if (!confirmPayment.error && confirmPayment.statusCode === 200) {
-      setPaymentComfirmed(true);
-    } else if (confirmPayment.error) {
-      toast.error(confirmPayment.message);
-    }
-  }, [confirmPayment.error, confirmPayment.message, confirmPayment.statusCode]);
+ 
 
   if (orderDetails.loading || !orderDetails.data) {
     return (
@@ -292,8 +269,10 @@ const Quote = () => {
                 {" "}
                 <Button
                   variant="primary"
-                  onClick={handlePay}
-                  loading={generatePaymentDetails.loading}
+                  // onClick={handlePay}
+                  onClick={() => navigate(`/dashboard/orders/payment-details/${order._id}`)}
+
+                  // loading={generatePaymentDetails.loading}
                   disabled={
                     !["approved", "pending"].includes(
                       orderDetails?.data?.results?.status ?? ""
@@ -304,26 +283,6 @@ const Quote = () => {
                 </Button>
               </div>
 
-              {/* Right section */}
-              <div className="f">
-                <p className="text-sm text-gray-500 mb-1">
-                  Once you’ve completed your bank transfer, tap below so we can
-                  verify your payment.
-                </p>
-                <Button
-                  variant="secondary"
-                  onClick={handlePaymentConfirmation}
-                  className="font-bold "
-                  loading={confirmPayment.loading}
-                  disabled={
-                    !["approved", "pending"].includes(
-                      orderDetails?.data?.results?.status ?? ""
-                    )
-                  }
-                >
-                  Confirm I’ve Paid
-                </Button>
-              </div>
             </div>
           )}
 
@@ -357,42 +316,7 @@ const Quote = () => {
             </div>
           </Modal>
 
-          <Modal
-            isOpen={paymentConfirmed}
-            onClose={() => setPaymentComfirmed(false)}
-          >
-            <div className="flex flex-col items-center justify-center space-y-6 p-6">
-              {/* Title */}
-              <h2 className="text-lg font-semibold text-gray-800 text-center">
-                Payment Confirmation Submitted
-              </h2>
-
-              {/* Body text */}
-              <Text size="sm" className="text-center text-gray-500">
-                Great! We’ve received your payment confirmation. You’ll be
-                notified via email once the payment is verified.
-              </Text>
-
-              {/* Actions */}
-              <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm mt-4">
-                <Button
-                  variant="primary"
-                  className="w-full"
-                  onClick={() => setPaymentComfirmed(false)}
-                >
-                  Ok
-                </Button>
-
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={() => navigate("/dashboard/new-order")}
-                >
-                  Start New Order
-                </Button>
-              </div>
-            </div>
-          </Modal>
+         
         </div>
       )}
     </div>

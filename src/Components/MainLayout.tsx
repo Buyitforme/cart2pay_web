@@ -17,6 +17,7 @@ const MainLayout = () => {
       <main className="flex-grow">
         <Outlet />
         <CookieConsent />
+
       </main>
       <Footer />
     </div>

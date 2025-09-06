@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Heading, Text } from "./Typography";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./Button";
+import logo from '../Assets/svg_images/Logo2.svg'
 
 const Nav = () => {
 const [isOpen, setIsOpen] = useState(false);
@@ -13,26 +14,9 @@ return (
   <nav className="w-full">
     <div className="px-3 sm:px-4 lg:px-6 max-w-[95%] mx-auto flex items-center justify-between py-3">
       {/* Logo */}
-      <div className="flex-shrink-0 h-auto">
         <Link to="/" className="flex">
-          <Heading
-            size="xl"
-            weight="bold"
-            color="default"
-            className="cursor-pointer text-xl sm:text-2xl"
-          >
-            Cart2
-          </Heading>
-          <Heading
-            size="xl"
-            weight="bold"
-            color="primary"
-            className="cursor-pointer text-xl sm:text-2xl"
-          >
-            PAY
-          </Heading>
+          <img src={logo} alt='logo' />
         </Link>
-      </div>
 
       {/* Hamburger Menu - Hidden on large screens */}
       <button

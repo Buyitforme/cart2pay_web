@@ -1,3 +1,5 @@
+import TextLoader from "../../../Components/TextLoader";
+
 export const stateOptions = [
   { label: "Lagos", value: "lagos" },
   { label: "Abuja", value: "abuja" },
@@ -88,3 +90,4 @@ export const colorOptions = [
   { label: "Multicolor", value: "multicolor" },
   { label: "Other", value: "other" },
 ];
+

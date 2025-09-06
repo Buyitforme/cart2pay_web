@@ -174,6 +174,11 @@ const orderManagementSlice = createSlice({
       state.makeDefault.message = initialState.makeDefault.message;
       state.makeDefault.statusCode = initialState.makeDefault.statusCode;
     },
+     resetConfirmPaymentState: (state) => {
+      state.confirmPayment.error = initialState.confirmPayment.error;
+      state.confirmPayment.message = initialState.confirmPayment.message;
+      state.confirmPayment.statusCode = initialState.confirmPayment.statusCode;
+    },
   },
   extraReducers: (builder) => {
      // GET USER PROFILE
@@ -435,6 +440,6 @@ builder.addCase(triggerDeleteAddress.rejected, (state, action) => {
 
   },
 });
-export const {resetCreateOrderState,resetState,resetMakeDefaultState,updateFormData,clearFormData} = orderManagementSlice.actions
+export const {resetCreateOrderState,resetState,resetMakeDefaultState,updateFormData,clearFormData,resetConfirmPaymentState} = orderManagementSlice.actions
 
 export default orderManagementSlice.reducer;

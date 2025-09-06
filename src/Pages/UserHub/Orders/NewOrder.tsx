@@ -1,5 +1,5 @@
-import { useEffect,useState } from "react";
-import { Formik, Form, FieldArray} from "formik";
+import { useEffect, useState } from "react";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
@@ -24,6 +24,8 @@ import {
 import TextLoader from "../../../Components/TextLoader";
 import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
 import { capitalizeFirstLetter } from "../../../utils";
+import Lottie from "lottie-react";
+import success from "../../../Animations/success.json";
 
 const initialItem = {
   store: "",
@@ -71,6 +73,8 @@ const validationSchema = Yup.object({
 export const NewOrder = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCreateOrderModalOpen, setIsCreateOrderModalOpen] = useState(false);
+
   const { createOrder, addresses, formDataInState } = useSelector(
     (state: RootState) => state.order_management
   );
@@ -124,12 +128,9 @@ export const NewOrder = () => {
   }, [dispatch]);
   useEffect(() => {
     if (!createOrder.error && createOrder.statusCode === 201) {
-      toast.success(createOrder.message);
+      setIsCreateOrderModalOpen(true);
       dispatch(clearFormData());
-      setTimeout(() => {
-        localStorage.removeItem("cart2pay_quote_start");
-        navigate("/dashboard/orders");
-      }, 2000);
+     
     } else if (createOrder.error) {
       toast.error(createOrder.message);
     }
@@ -165,8 +166,8 @@ export const NewOrder = () => {
         validationSchema={validationSchema}
         onSubmit={handleCreateOrder}
         enableReinitialize={true}
-  validateOnChange={true}
-  validateOnBlur={true}
+        validateOnChange={true}
+        validateOnBlur={true}
       >
         {({ values, setFieldValue, isValid }: any) => (
           <Form>
@@ -361,6 +362,42 @@ export const NewOrder = () => {
                             >
                               Yes
                             </Button>
+                          </div>
+                        </Modal>
+                        <Modal
+                          isOpen={isCreateOrderModalOpen}
+                          onClose={() => setIsCreateOrderModalOpen(false)}
+                        >
+                          <div className="flex flex-col items-center justify-center text-center p-4">
+                            <Lottie
+                              animationData={success}
+                              loop={true}
+                              style={{ width: 80, height: 80 }}
+                            />
+
+                            <Text size="lg" weight="bold" className="mt-2">
+                              Order successfully created
+                            </Text>
+
+                            <div className="flex justify-center gap-4 mt-6">
+                              <Button
+                                variant="primary"
+                                onClick={() => setIsCreateOrderModalOpen(false)}
+                              >
+                                Ok
+                              </Button>
+                              <Button
+                                variant="outline"
+                                onClick={() => {
+                                  remove(index);
+                                  setIsModalOpen(false);
+                                  navigate("/dashboard/orders");
+                                }}
+                              >
+                                View order
+                              </Button>
+                             
+                            </div>
                           </div>
                         </Modal>
                       </div>

@@ -28,7 +28,12 @@ const navLinks = [
       },
         {
         label: "Quote",
-        to: "/dashboard/orders/quote/:orderId", // <-- corrected
+        to: "/dashboard/orders/quote/:orderId", 
+        icon: <CreditCard className="w-5 h-5" />,
+      },
+        {
+        label: "Payment Details",
+        to: "/dashboard/orders/payment-details/:orderId", 
         icon: <CreditCard className="w-5 h-5" />,
       },
     ],
