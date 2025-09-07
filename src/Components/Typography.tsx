@@ -96,11 +96,11 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
     };
 
     const predefinedColors = {
-      default: "text-gray-900",
-      muted: "text-slate-600", 
+      default: "text-text-primary",
+      muted: "text-slate-600",
       subtle: "text-slate-500",
-      primary: "text-blue-600",
-      secondary: "text-purple-600",
+      primary: "text-text-primary",
+      secondary: "text-text-secondary",
       success: "text-green-600",
       warning: "text-amber-600",
       error: "text-red-600",
@@ -172,8 +172,8 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
     };
 
     const fontWeights = {
-      extra_light: 200,
-      light:300,
+      extra_light: 300,
+      light:400,
       normal: 400,
       medium: 500,
       semibold: 600,

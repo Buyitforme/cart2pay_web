@@ -1,148 +1,155 @@
-import React from "react";
-import exampleImage from "../../Assets/svg_images/payment_cards.svg";
-import { Button } from "../../Components/Button";
+import frame1 from "../../Assets/svg_images/Frame 44 (1).svg";
+import frame2 from "../../Assets/svg_images/Frame 44.svg";
+import frame3 from "../../Assets/svg_images/Frame 45 (1).svg";
+import frame4 from "../../Assets/svg_images/Frame 45.svg";
 import { Heading, Text } from "../../Components/Typography";
-import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 
-const essentials = [
-  {
-    title: "Local Payment Options",
-    description:
-      "Pay in your local currency using familiar payment methods. No need for international bank accounts.",
-    image: exampleImage,
-    color: "#469EBD",
-  },
-  {
-    title: "Global Store Access",
-    description:
-      "Shop from top international stores without restrictions. We bridge the gap between global brands and local buyers.",
-    image: exampleImage,
-    color: "#8FAC6A",
-  },
-  {
-    title: "Fast & Reliable Delivery",
-    description:
-      "Your orders delivered quickly and securely to your doorstep. No more long delays or missing parcels.",
-    image: exampleImage,
-    color: "#D96F2D",
-  },
-  {
-    title: "Transparent Pricing",
-    description:
-      "No hidden fees or surprises. What you see is what you pay, with clear breakdowns on every order.",
-    image: exampleImage,
-    color: "#1E2A47",
-  },
-];
-
-const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
-
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.2,
-  });
-
-  return (
-    <div
-      ref={ref}
-      className={`group relative bg-white shadow-lg rounded-lg p-6 overflow-hidden h-80 transition duration-500 ${
-        inView ? "force-hover" : ""
-      }`}
-      style={{ "--card-color": item.color } as React.CSSProperties}
-    >
-      {/* Background hover overlay */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 force-hover:opacity-100 transition duration-500 z-0"
-        style={{ backgroundColor: item.color }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 transition duration-500 group-hover:text-white force-hover:text-white h-full flex flex-col justify-between">
-        <div>
-          <h1 className="text-xl font-semibold mb-2">{item.title}</h1>
-          <p className="text-gray-600 group-hover:text-blue-100 force-hover:text-blue-100 mb-4">
-            {item.description}
-          </p>
-        </div>
-
-        <div className="mt-2 w-fit">
-          <Button
-            variant="outline"
-            className={`
-              transition 
-              border 
-              text-[color:var(--card-color)] 
-              border-[color:var(--card-color)] 
-              group-hover:text-white 
-              group-hover:border-white 
-              group-hover:bg-[color:var(--card-color)]
-              force-hover:text-white 
-              force-hover:border-white 
-              force-hover:bg-[color:var(--card-color)]
-            `}
-          >
-            Get Started
-          </Button>
-        </div>
-      </div>
-
-      {/* Hover image animation */}
-      <img
-        src={item.image}
-        alt={item.title}
-        className="absolute bottom-[-80px] right-4 w-28 opacity-0 group-hover:bottom-4 group-hover:opacity-100 force-hover:bottom-4 force-hover:opacity-100 transition-all duration-500 ease-out z-10"
-      />
-    </div>
-  );
-};
-
 const Cart2payEssentials = () => {
-      const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
-    <section className="w-full bg-white py-20 px-3 md:px-12">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex gap-2 items-center justify-center">
-          <Heading
-            size="xl"
-            weight="bold"
-            color="default"
-            className="text-2xl md:text-4xl text-center"
-          >
-            Cart2Pay
-          </Heading>
-          <Heading
-            size="xl"
-            weight="bold"
-            color="primary"
-            className="text-2xl md:text-4xl text-center"
-          >
-            Essentials
-          </Heading>
+    <div className="min-h-screen bg-white py-8 md:py-11 lg:py-16 ">
+      <div className="max-w-[85%] mx-auto">
+        {/* Header with dotted border */}
+        <div className="relative lg:mb-16">
+          {/* Main dotted border container */}
+          <div className=" rounded-none p-8 md:p-12 bg-transparent relative">
+            <div className="text-start md: mb-6 lg:mb-8">
+              <Heading
+                as="h1"
+                size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
+                weight="semibold"
+                className="md:leading-tight text-center"
+              >
+                Our Unique Benefits
+              </Heading>
+
+              <Text
+                size="lg"
+                weight="light"
+                className="pt-2 text-[#6B7280] text-center"
+              >
+                Designed to remove friction at every step.{" "}
+              </Text>
+            </div>
+          </div>
         </div>
 
-        <Text
-          size="lg"
-          weight="medium"
-          color="default"
-          className="text-center max-w-3xl mx-auto py-6"
-        >
-          Cart2Pay simplifies the international shopping experience by giving
-          you local access to global stores. Here’s what makes us essential to
-          every modern shopper.
-        </Text>
+        {/* Benefits Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-16">
+          {/* Easy to use */}
+          <div className="text-center  ">
+            <div className="mb-8 flex justify-center lg:border-r-2  lg:border-primary_light">
+              <img src={frame4} alt="image" />
+            </div>
 
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-6 md:mx-20"
-          onClick={() => navigate("/signup")}
-        >
-          {essentials.map((item, index) => (
-            <CardItem key={index} item={item} />
-          ))}
+            <Text
+              size="xl"
+              weight="semibold"
+              color="primary"
+              className="pt-2  text-center"
+            >
+              Easy to use
+            </Text>
+
+            <Text
+              size="lg"
+              weight="light"
+              color="secondary"
+              className="pt-2  text-center"
+            >
+              Paste a link and confirm.
+              <br />
+              That's it.
+            </Text>
+          </div>
+
+          {/* Admin-handled checkout */}
+          <div className="text-center">
+            <div className="mb-8 flex justify-center lg:border-r-2  lg:border-primary_light">
+              <img src={frame3} alt="image" />
+            </div>
+
+            <Text
+              size="xl"
+              weight="semibold"
+              color="primary"
+              className="pt-2  text-center"
+            >
+              Admin-handled checkout
+            </Text>
+
+            <Text
+              size="lg"
+              weight="light"
+              color="secondary"
+              className="pt-2  text-center"
+            >
+              Real people complete
+              <br />
+              checkout accurately.
+            </Text>
+          </div>
+
+          {/* Secure payments */}
+          <div className="text-center">
+            <div className="mb-8 flex justify-center lg:border-r-2  lg:border-primary_light">
+              <img src={frame2} alt="image" />
+            </div>
+
+            <Text
+              size="xl"
+              weight="semibold"
+              color="primary"
+              className="pt-2  text-center"
+            >
+              Secure payments
+            </Text>
+
+            <Text
+              size="lg"
+              weight="light"
+              color="secondary"
+              className="pt-2  text-center"
+            >
+              Protected transactions
+              <br />
+              with trusted providers.
+            </Text>
+          </div>
+
+          {/* Fast delivery */}
+          <div className="text-center">
+            <div className="mb-8 flex justify-center">
+              <img src={frame1} alt="image" />
+            </div>
+
+            <Text
+              size="xl"
+              weight="semibold"
+              color="primary"
+              className="pt-2  text-center"
+            >
+              Fast delivery
+            </Text>
+
+            <Text
+              size="lg"
+              weight="light"
+              color="secondary"
+              className="pt-2  text-center"
+            >
+              Expedited shipping
+              <br />
+              options
+              <br />
+              available.
+            </Text>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
