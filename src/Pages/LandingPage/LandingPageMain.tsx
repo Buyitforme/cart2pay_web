@@ -8,6 +8,8 @@ import ThirstTraps from "./ThirstTraps";
 import TestimonialSection from "./Testimonials";
 import { ReactNode, useEffect, useRef } from "react";
 import React from "react";
+import { Heading, Text } from "../../Components/Typography";
+
 
 const variants = {
   hidden: { opacity: 0, y: 100 },
@@ -35,12 +37,10 @@ const LandingPageMain = () => {
 
   return (
   <>
-    <div className="px-3 sm:px-4 lg:px-6 max-w-[95%] mx-auto">
       
       <AnimatedSection>
         <HeroSection onExploreClick={scrollToStoreMarquee} />
       </AnimatedSection>
-    </div>
     
     <AnimatedSection ref={storeMarqueeRef}>
       <StoreMarquee />

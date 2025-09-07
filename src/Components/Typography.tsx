@@ -5,7 +5,7 @@ import { cn } from "../lib/utils";
 export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
-  weight?: "light" |"normal" | "medium" | "semibold" | "bold";
+  weight?: "light" | "normal" | "medium" | "semibold" | "bold";
   color?:
     | "default"
     | "muted"
@@ -40,11 +40,11 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
       xl: "text-xl",
       "2xl": "text-2xl",
       "3xl": "text-3xl",
-      "4xl": "text-4xl",
+      "4xl": "text-6xl",
     };
 
     const weights = {
-      light : "font-extralightt",
+      light: "font-extralight",
       normal: "font-normal",
       medium: "font-medium",
       semibold: "font-semibold",
@@ -55,15 +55,17 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
       default: "text-accent",
       muted: "text-slate-600",
       subtle: "text-slate-500",
-      primary: "text-primary",
-      secondary: "text-purple-600",
+      primary: "text-text-primary",
+      secondary: "text-text-secondary",
       success: "text-green-600",
       warning: "text-amber-600",
       error: "text-red-600",
     };
 
     const isPredefinedColor = color in predefinedColors;
-    const colorClass = isPredefinedColor ? predefinedColors[color as keyof typeof predefinedColors] : "";
+    const colorClass = isPredefinedColor
+      ? predefinedColors[color as keyof typeof predefinedColors]
+      : "";
 
     return (
       <Component
@@ -93,7 +95,7 @@ Heading.displayName = "Heading";
 export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   as?: "p" | "span" | "div";
   size?: "xs" | "sm" | "md" | "lg" | "xl";
-  weight?: "normal" | "medium" | "semibold" | "bold";
+  weight?: "light" | "normal" | "medium" | "semibold" | "bold"; // 👈 added light
   color?:
     | "default"
     | "muted"
@@ -113,7 +115,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       className,
       as: Component = "p",
       size = "md",
-      weight = "normal",
+      weight = "light",
       color = "default",
       children,
       ...props
@@ -129,6 +131,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
     };
 
     const weights = {
+      light: "font-thin",
       normal: "font-normal",
       medium: "font-medium",
       semibold: "font-semibold",
@@ -139,16 +142,18 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
       default: "text-accent",
       muted: "text-slate-600",
       subtle: "text-slate-500",
-      primary: "text-primary",
-      secondary: "text-purple-600",
+      primary: "text-text-primary",
+      secondary: "text-text-secondary",
       success: "text-green-600",
       warning: "text-amber-600",
       error: "text-red-600",
-      white:"text-decoration-sky-500"
+      white: "text-decoration-sky-500",
     };
 
     const isPredefinedColor = color in predefinedColors;
-    const colorClass = isPredefinedColor ? predefinedColors[color as keyof typeof predefinedColors] : "";
+    const colorClass = isPredefinedColor
+      ? predefinedColors[color as keyof typeof predefinedColors]
+      : "";
 
     return (
       <Component
@@ -156,9 +161,9 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
         className={cn(
           "font-body",
           sizes[size],
-          weights[weight],
           colorClass,
-          className
+          className,
+          weights[weight] // ✅ always applied last so it wins
         )}
         style={{
           ...(isPredefinedColor ? {} : { color }),
@@ -171,6 +176,7 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
     );
   }
 );
+
 
 Text.displayName = "Text";
 
@@ -191,15 +197,17 @@ const Code = React.forwardRef<HTMLElement, CodeProps>(
   ({ className, color = "default", children, ...props }, ref) => {
     const predefinedColors = {
       default: "text-accent bg-slate-100",
-      primary: "text-primary",
-      secondary: "text-purple-900 bg-purple-100",
+      primary: "text-text-primary",
+      secondary: "text-text-secondary",
       success: "text-green-900 bg-green-100",
       warning: "text-amber-900 bg-amber-100",
       error: "text-red-900 bg-red-100",
     };
 
     const isPredefinedColor = color in predefinedColors;
-    const colorClass = isPredefinedColor ? predefinedColors[color as keyof typeof predefinedColors] : "";
+    const colorClass = isPredefinedColor
+      ? predefinedColors[color as keyof typeof predefinedColors]
+      : "";
 
     return (
       <code
@@ -210,7 +218,9 @@ const Code = React.forwardRef<HTMLElement, CodeProps>(
           className
         )}
         style={{
-          ...(isPredefinedColor ? {} : { color, backgroundColor: `${color}20` }),
+          ...(isPredefinedColor
+            ? {}
+            : { color, backgroundColor: `${color}20` }),
           ...props.style,
         }}
         {...props}

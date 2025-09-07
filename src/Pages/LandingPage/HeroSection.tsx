@@ -6,66 +6,76 @@ import paymentCards from "../../Assets/svg_images/payment_cards.svg";
 import ImageSlider from "../../Components/Slider";
 import { Heading, Text } from "../../Components/Typography";
 import { useNavigate } from "react-router-dom";
+import { Play, Rocket } from "lucide-react";
 
 const images = [unhappyShopper, paymentCards, happyShopper];
-  interface HeroSectionProps {
-    onExploreClick?: () => void;
-  }
+interface HeroSectionProps {
+  onExploreClick?: () => void;
+}
 const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
-  const navigate = useNavigate()
-  return (
-    <section className="w-full bg-white pt-6 md:pt-0 ">
-      <div className=" flex flex-col md:flex-row items-center gap-2 md:gap-4">
-        {/* Left content */}
-        <div className="w-full md:w-[65%] text-left">
+  const navigate = useNavigate();
+return (
+  <div className="bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 py-16">
+    <div className="max-w-[85%] mx-auto grid lg:grid-cols-2 gap-12 items-start lg:items-center">
+      {/* Left Content */}
+      <div className="space-y-8">
+        <div>
           <Heading
-            size="xl"
-            weight="bold"
-            color="default"
-            className="text-4xl md:text-6xl text-center md:text-start"
+            as="h1"
+            size="4xl"
+            weight="light"
+            className="leading-tight"
           >
-            Shop Globally
+            Skip the hassle of online{" "}
+            <span className="text-secondary_light">checkout</span>
           </Heading>
-          <Heading
-            size="xl"
-            weight="bold"
-            color="primary"
-            className="text-3xl md:text-5xl pt-2 animate-pulse text-center md:text-start"
-          >
-            Pay Locally
-          </Heading>
-
-          <Text
-            size="lg"
-            weight="medium"
-            color="default"
-            className="w-full md:w-2/3 pt-3 text-center md:text-start"
-          >
-            Experience seamless international shopping from anywhere in the
-            world. We help you access global products with local payment
-            options.
-          </Text>
-          <div className="flex md:flex-row gap-4 pt-6 items-center md:items-start">
-            <Button variant="primary" className="w-full md:w-auto" onClick={()=>navigate('/signup')}>
-              Create account
-            </Button>
-            <Button
-              variant="outline"
-              className="w-full md:w-auto"
-              onClick={onExploreClick}
-            >
-              Explore stores
-            </Button>
-          </div>
         </div>
 
-        {/* Right content (Slider) */}
-        <div className="w-full md:w-[35%] pt-4 md:pt-8">
-          <ImageSlider images={images} />
+        <Text
+          size="lg"
+          color="secondary"
+          weight="light"
+          className="leading-relaxed max-w-lg "
+        >
+          Simply paste the link to the item you want, and we'll take care of
+          the purchasing and delivery process for you, ensuring it arrives
+          right at your doorstep.
+        </Text>
+
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button
+            variant="primary"
+            icon={<Rocket className="w-5 h-5" />}
+            className="w-full text-sm sm:text-base py-2 sm:py-3"
+            onClick={() => navigate("/signin")}
+          >
+            Get Started
+          </Button>
+
+          <Button
+            variant="secondary"
+            icon={<Play className="w-5 h-5" />}
+            className="w-full text-sm sm:text-base py-2 sm:py-3"
+            onClick={() => navigate("/how-it-works")}
+          >
+            See how it works
+          </Button>
         </div>
       </div>
-    </section>
-  );
+
+      {/* Right Image */}
+      <div className="relative flex justify-center">
+        <div className="relative z-10">
+          <img
+            src={paymentCards} 
+            alt="Happy woman with shopping bags giving thumbs up"
+            className="rounded-2xl w-full h-auto object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+);
 };
 
 export default HeroSection;
