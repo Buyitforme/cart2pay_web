@@ -57,7 +57,7 @@ const Nav = () => {
           <Link to="/how-it-works">
             <Text
               size="md"
-              weight="semibold"
+              weight="normal"
               color="default"
               className={`cursor-pointer duration-300 ease-in-out text-secondary  ${
                 isActive("/how-it-works")
@@ -72,7 +72,7 @@ const Nav = () => {
           <Link to="/about">
             <Text
               size="md"
-              weight="medium"
+              weight="normal"
               color="default"
               className={`cursor-pointer duration-300 ease-in-out text-secondary ${
                 isActive("/about")
@@ -102,7 +102,7 @@ const Nav = () => {
           <Link to="/contact-us">
             <Text
               size="md"
-              weight="medium"
+              weight="normal"
               color="default"
               className={`cursor-pointer duration-300 ease-in-out text-secondary ${
                 isActive("/contact-us")
@@ -117,7 +117,7 @@ const Nav = () => {
             <Link to="/signin">
               <Text
                 size="md"
-                weight="medium"
+                weight="normal"
                 color="default"
                 className={`cursor-pointer duration-300 ease-in-out text-secondary ${
                   isActive("/signin")
@@ -202,13 +202,14 @@ const Nav = () => {
               >
                 <Text
                   size="md"
+                  weight="normal"
                   className={`text-base sm:text-lg font-medium duration-300 text-secondary py-2 block ${
                     isActive("/about")
                       ? "text-secondary_light font-[500]"
                       : "hover:text-secondary_light"
                   }`}
                 >
-                  About
+                  About Us
                 </Text>
               </Link>
               <Link
@@ -218,6 +219,7 @@ const Nav = () => {
               >
                 <Text
                   size="md"
+                  weight="normal"
                   className={`text-base sm:text-lg font-medium duration-300 text-secondary py-2 block ${
                     isActive("/how-it-works")
                       ? "text-secondary_light font-[500]"
@@ -245,6 +247,7 @@ const Nav = () => {
               >
                 <Text
                   size="md"
+                  weight="normal"
                   className={`text-base sm:text-lg font-medium duration-300 text-secondary py-2 block ${
                     isActive("/contact-us")
                       ? "text-secondary_light font-[500]"
@@ -264,6 +267,7 @@ const Nav = () => {
                 >
                   <Text
                     size="md"
+                    weight="normal"
                     className={`text-base sm:text-lg font-medium duration-300 text-secondary py-2 block ${
                       isActive("/signin")
                         ? "text-secondary_light font-[500]"

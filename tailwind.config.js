@@ -1,6 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx,html}"],
+   safelist: [
+    // All text sizes including large ones
+    'text-5xl', 'text-6xl', 'text-7xl', 'text-8xl', 'text-9xl',
+    // Responsive variants
+    'sm:text-5xl', 'sm:text-6xl', 'sm:text-7xl', 'sm:text-8xl', 'sm:text-9xl',
+    'md:text-5xl', 'md:text-6xl', 'md:text-7xl', 'md:text-8xl', 'md:text-9xl',
+    'lg:text-5xl', 'lg:text-6xl', 'lg:text-7xl', 'lg:text-8xl', 'lg:text-9xl',
+    'xl:text-5xl', 'xl:text-6xl', 'xl:text-7xl', 'xl:text-8xl', 'xl:text-9xl',
+    
+    // Or use pattern matching (more efficient)
+    {
+      pattern: /text-(xs|sm|base|lg|xl|2xl|3xl|4xl|5xl|6xl|7xl|8xl|9xl)/,
+      variants: ['sm', 'md', 'lg', 'xl']
+    }
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -32,13 +47,13 @@ module.exports = {
       },
 
       fontFamily: {
-        heading: ["Montserrat", "ui-sans-serif", "system-ui"],
-        body: ["Poppins", "ui-sans-serif", "system-ui"],
+        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+        body: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {
         primary: "#F38C05",
         primary_lightt: "#FFB547",
-        primary_dark: "#C26F04",
+        primary_dark: "#dd8006ff",
         secondary: "#054B2F",
         secondary_light: "#099f63ff",
         secondary_dark: "#043B26",
