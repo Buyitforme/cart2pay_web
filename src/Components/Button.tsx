@@ -7,6 +7,8 @@ export interface ButtonProps
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   children: React.ReactNode;
+  icon?:React.ReactNode;
+  iconPosition?:string
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -18,33 +20,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       loading = false,
       disabled,
       children,
+      icon,
+      iconPosition = "left",
       ...props
     },
     ref
   ) => {
-    const baseStyles =
-      "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
+const baseStyles =
+  "inline-flex items-center justify-center rounded-xl font-medium transition-colors transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 shadow-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.25)]";
 
     const variants = {
       primary:
-        "bg-primary text-white hover:bg-sub_primary transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-900",
+        "bg-primary text-white hover:bg-primary_dark transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-900",
 
       secondary:
-        "bg-accent text-white hover:bg-slate-200 hover:text-accent transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-500",
+        "bg-secondary text-white hover:bg-secondary_dark hover:text-white transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-500",
 
       outline:
-        "border border-slate-300 bg-transparent text-slate-900 hover:bg-slate-100 transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-500",
+        "border border-border bg-transparent text-slate-900 hover:bg-slate-100 transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-500",
 
       ghost:
         "bg-transparent text-slate-900 hover:bg-slate-100 transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-500",
 
       destructive:
-        "bg-red-600 text-white hover:bg-red-700 transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-red-600",
+        "bg-error text-white hover:bg-error_light transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-red-600",
     };
 
     const sizes = {
       sm: "h-8 px-3 text-sm",
-  md: "h-10 px-4 text-sm w-full sm:w-auto", // 👈 full width on mobile
+      md: "h-10 px-4 text-sm w-full sm:w-auto", // full width on mobile
       lg: "h-12 px-6 text-base",
     };
 
@@ -77,7 +81,18 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             />
           </svg>
         )}
+
+        {/* Icon Left */}
+        {icon && iconPosition === "left" && (
+          <span className={cn(children ? "mr-2" : "")}>{icon}</span>
+        )}
+
         {children}
+
+        {/* Icon Right */}
+        {icon && iconPosition === "right" && (
+          <span className={cn(children ? "ml-2" : "")}>{icon}</span>
+        )}
       </button>
     );
   }
