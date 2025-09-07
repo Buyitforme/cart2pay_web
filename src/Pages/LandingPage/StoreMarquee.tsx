@@ -13,33 +13,33 @@ const storeLogos = [
 ];
 
 const StoreMarquee = () => {
-    const handleStoreClick = (url: string, storeName: string) => {
-      // Optional: Add analytics tracking here
+  const handleStoreClick = (url: string, storeName: string) => {
+    // Optional: Add analytics tracking here
 
-      // Open in new tab
-      window.open(url, "_blank", "noopener,noreferrer");
-    };
+    // Open in new tab
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
   return (
-    <section className="w-full bg-background py-16 overflow-hidden">
-      <div className="text-center">
-        <Heading
-          size="xl"
-          weight="bold"
-          color="default"
-          className="text-2xl md:text-4xl"
-        >
-          Shop from Your Favorite Stores
-        </Heading>
-        <Text
-          size="lg"
-          weight="medium"
-          color="default"
-          className="w-full px-3 pt-3 max-w-2xl mx-auto mb-10"
-        >
-          Discover the latest trends and timeless essentials from the brands you
-          love all in one place. Shop global fashion and lifestyle stores while
-          paying with ease locally.
-        </Text>
+    <section className="w-full bg-background py-16 pt-24 overflow-hidden">
+      <div className="text-center px-4 md:px-0">
+        <div className="text-start mb-16">
+          <Heading
+            as="h1"
+            size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
+            weight="semibold"
+            className="md:leading-tight text-center"
+          >
+            Stores we support
+          </Heading>
+
+          <Text
+            size="lg"
+            weight="light"
+            className="pt-2 text-[#6B7280] text-center"
+          >
+            Order items from any of the shops we support{" "}
+          </Text>
+        </div>
 
         {/* Scrolling marquee */}
         <div className="relative overflow-hidden">

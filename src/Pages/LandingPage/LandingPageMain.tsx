@@ -4,11 +4,12 @@ import HeroSection from "./HeroSection";
 import StoreMarquee from "./StoreMarquee";
 import Cart2payEssentials from "./Cart2payEssentials";
 import Faq from "./FAQ";
-import ThirstTraps from "./ThirstTraps";
+import ThirstTraps from "./WhyChooseUs";
 import TestimonialSection from "./Testimonials";
 import { ReactNode, useEffect, useRef } from "react";
 import React from "react";
 import { Heading, Text } from "../../Components/Typography";
+import HowItWorks from "./HowItWorks";
 
 
 const variants = {
@@ -36,28 +37,30 @@ const LandingPageMain = () => {
   }, []);
 
   return (
-  <>
-      
+    <>
       <AnimatedSection>
         <HeroSection onExploreClick={scrollToStoreMarquee} />
       </AnimatedSection>
-    
-    <AnimatedSection ref={storeMarqueeRef}>
-      <StoreMarquee />
-    </AnimatedSection>
-    
-    <AnimatedSection>
-      <Cart2payEssentials />
-    </AnimatedSection>
-    
-    <AnimatedSection>
-      <div></div>
-      <TestimonialSection onExploreClick={scrollToStoreMarquee} />
-      <ThirstTraps onExploreClick={scrollToStoreMarquee} />
-      <Faq />
-    </AnimatedSection>
-  </>
-);
+      <AnimatedSection>
+        <HowItWorks />
+      </AnimatedSection>
+
+        <AnimatedSection ref={storeMarqueeRef}>
+          <StoreMarquee />
+        </AnimatedSection>
+
+      <AnimatedSection>
+        <Cart2payEssentials />
+      </AnimatedSection>
+
+      <AnimatedSection>
+        <div></div>
+        <TestimonialSection onExploreClick={scrollToStoreMarquee} />
+        <ThirstTraps  />
+        <Faq />
+      </AnimatedSection>
+    </>
+  );
 };
 
 export const AnimatedSection = React.forwardRef<
