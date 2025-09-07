@@ -58,7 +58,8 @@ const Home = () => {
   return (
     <div className="py-6 space-y-6 text-[#1E2A47]">
       {/* Greeting */}
-          <Heading size="xl">
+      <div>
+           <Heading size="xl">
             {greeting}, {userData?.fullName}
           </Heading>
        
@@ -66,6 +67,8 @@ const Home = () => {
       <Text size="lg" className="text-gray-600 ">
         Here’s a quick overview of your activity.
       </Text>
+      </div>
+       
 
       {/* Quick Stats */}
       <Heading size="lg" weight="semibold">
