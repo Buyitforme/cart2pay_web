@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Heading, Text } from "./Typography";
+import { Text } from "./Typography";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./Button";
 import logo from "../Assets/svg_images/Logo2.svg";

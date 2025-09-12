@@ -76,7 +76,7 @@ module.exports = {
         primary_dark: "#dd8006ff",
         secondary: "#054B2F",
         secondary_light: "#099f63ff",
-        secondary_dark: "#043B26",
+        secondary_dark: "#1C4A3F",
         highlight: "#E8F7F0",
         text: {
           primary: "#0F1724",
