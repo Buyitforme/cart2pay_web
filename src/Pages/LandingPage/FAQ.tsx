@@ -5,15 +5,15 @@ import { Heading, Text } from "../../Components/Typography";
 
 const faqs = [
   {
-    question: "How does Cart2Pay work?",
+    question: "How does ShopViaCal work?",
     answer:
-      "See something you like from an international store? Send us your cart details, pay the local currency equivalent, and we’ll handle the currency conversion and complete the international checkout for you. Simple, secure, and fast.",
+      "See something you like from an international store? Send us your the item(s), the admin reviews the items avalaibility and let you know all cost applied, You securely pay for the sum the sum total and we’ll handle the purchase for you. Simple, secure, and fast.",
   },
 
   {
-    question: "Is Cart2Pay available in my country?",
+    question: "Is ShopViaCal available in my country?",
     answer:
-      "Cart2Pay is expanding fast! Currently, we only cover Nigeria, More locations coming soon!.",
+      "ShopViaCal is expanding fast! Currently, we only cover Nigeria, More locations coming soon!.",
   },
   {
     question: "Are my payments secure?",
@@ -23,7 +23,7 @@ const faqs = [
   {
     question: "Can I track my orders?",
     answer:
-      "Currently, Cart2Pay focuses exclusively on handling your payment securely. Once your payment is completed, you’ll receive a receipt via email. All orders are fulfilled using the shipping address you provided during checkout.",
+      "Currently, ShopViaCal focuses exclusively on handling your payment securely. Once your payment is completed, you’ll receive a receipt via email. All orders are fulfilled using the shipping address you provided during checkout.",
   },
 ];
 
@@ -35,44 +35,42 @@ const Faq = () => {
   };
 
   return (
-    <section className="w-full bg-background py-16 px-6 md:px-12">
-      <div>
-    
-      </div>
+    <section className="w-full bg-white py-16 px-6 md:px-12">
+      <div></div>
       <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
+        <div className="text-start mb-16">
           <Heading
-            size="xl"
-            weight="bold"
-            color="default"
-            className=" text-2xl md:text-4xl text-center "
+            as="h1"
+            size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
+            weight="semibold"
+            className="md:leading-tight text-center"
           >
-            {" "}
-            Got Questions? We’ve Got Answers.
+            FAQ
           </Heading>
 
           <Text
-            size="md"
-            weight="medium"
-            color="subtle"
-            className=" text-center max-w-3xl mx-auto py-6"
+            size="lg"
+            weight="light"
+            className="pt-2 text-[#6B7280] text-center"
           >
-            {" "}
-            Find quick answers to the most common questions about how Cart2Pay
-            works and how we keep your shopping experience smooth and secure
+            Find quick answers to common questions about how our service works,
+            from orders to delivery{" "}
           </Text>
         </div>
 
-        <div className="space-y-8">
+        <div className="space-y-8  ">
           {faqs.map((faq, index) => (
-            <div key={index} className="border-b border-gray-200 pb-4">
+            <div key={index} className="border border-border py-4 px-6 rounded-full bg-background">
               <button
                 className="flex items-center justify-between w-full text-left"
                 onClick={() => toggleOpen(index)}
               >
-                <span className="text-lg font-medium text-gray-800">
+                <Text size="md"
+                color="primary"
+            weight="light"
+            className="">
                   {faq.question}
-                </span>
+                </Text>
                 <span className="bg-gray-100 rounded-full p-2 transition">
                   {openIndex === index ? (
                     <Minus size={18} className="text-gray-700" />
