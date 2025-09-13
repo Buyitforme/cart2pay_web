@@ -165,7 +165,7 @@ const Home = () => {
       </div>
 
       {/* Helpful Tip */}
-      <div className="bg-[#708238] text-white rounded-xl p-6 shadow space-y-4">
+      <div className="bg-secondary text-white rounded-xl p-6 shadow space-y-4">
         <Text size="sm" weight="medium">
           Tip:
         </Text>
@@ -231,29 +231,7 @@ const Home = () => {
         </div>
       )}
 
-      {/* Support Section */}
-      <div className="bg-white rounded-xl shadow p-4 space-y-3">
-        <Heading size="md" weight="bold">
-          Need Help?
-        </Heading>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Link to="/" className="flex-1">
-            <div className="bg-gray-100 rounded-lg p-4 text-center hover:bg-gray-200 transition">
-              <Text weight="bold">FAQs</Text>
-            </div>
-          </Link>
-          <Link to="/contact-us" className="flex-1">
-            <div className="bg-gray-100 rounded-lg p-4 text-center hover:bg-gray-200 transition">
-              <Text weight="bold">Contact Support</Text>
-            </div>
-          </Link>
-          <Link to="/dashboard/orders" className="flex-1">
-            <div className="bg-gray-100 rounded-lg p-4 text-center hover:bg-gray-200 transition">
-              <Text weight="bold">Track Orders</Text>
-            </div>
-          </Link>
-        </div>
-      </div>
+    
     </div>
   );
 };

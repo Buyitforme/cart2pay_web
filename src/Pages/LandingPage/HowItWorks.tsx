@@ -25,7 +25,8 @@ const HowItWorks = () => {
             weight="normal"
             className="pt-2 text-[#6B7280] text-center md:text-start"
           >
-            Three simple steps from link to delivery.
+            From sharing a link to receiving your order — shopping made
+            effortless in 3 steps.
           </Text>
         </div>
 
@@ -64,10 +65,10 @@ const HowItWorks = () => {
                 weight="normal"
                 className="pt-3 text-center md:text-start"
               >
-                Simply copy the product URL from any major store, whether it's
-                Amazon, Walmart, eBay, or another trusted retailer, and send it
-                to us. No complicated forms, no endless checkout processes. Just
-                share the link, and you're good to go.
+                Copy the product URL from any store Zara, Shein, Fashionva or
+                your favorite retailer and send it to us. No complicated forms
+                or confusing checkout. Just share the link, and we’ll take it
+                from there.
               </Text>
             </div>
           </div>
@@ -107,11 +108,11 @@ const HowItWorks = () => {
                 weight="normal"
                 className="pt-3 text-center md:text-start"
               >
-                Once you've shared the product link, our trusted admins step in
-                to make the purchase securely on your behalf. You don't have to
-                worry about payment gateways, international cards, or hidden
-                fees — we handle it all with guaranteed protection and
-                transparency.
+                After receiving your link, our team reviews the order, checks
+                items availability, and provides you with a clear cost summary.
+                Once you confirm and make payment, we securely complete the
+                purchase on your behalf no restrictions, no hidden fees, just
+                full transparency from start to finish.
               </Text>
             </div>
           </div>
@@ -153,11 +154,9 @@ const HowItWorks = () => {
                 weight="normal"
                 className="pt-3 text-center md:text-start"
               >
-                After purchase, your item is shipped directly to you with
-                end-to-end delivery tracking. From the moment your order is
-                placed until it arrives at your door, you'll know exactly where
-                your product is. Fast, reliable, and stress-free delivery — just
-                the way shopping should be.
+                Your order ships straight to your door with full tracking. From
+                purchase to delivery, you’ll receive real-time updates every
+                step of the way  fast, reliable, and completely stress-free.
               </Text>
             </div>
           </div>

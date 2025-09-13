@@ -1,4 +1,3 @@
-import React from "react";
 import star from "../../Assets/svg_images/Background.svg";
 import { Heading, Text } from "../../Components/Typography";
 import { useInView } from "react-intersection-observer";
@@ -9,32 +8,34 @@ const essentials = [
   {
     title: "Local Payment Options",
     description:
-      "Pay in your local currency using familiar payment methods. No need for international bank accounts.",
+      "Pay in your own currency with familiar methods bank transfer, mobile wallet, or debit card. Shop globally, pay locally, no stress.",
     image: star,
     color: "#469EBD",
   },
   {
     title: "Global Store Access",
     description:
-      "Shop from top international stores without restrictions. We bridge the gap between global brands and local buyers.",
+      "Shop from Zara, Shein, Fashionova, and more  without borders or restrictions. The world’s top retailers are now within reach.",
     image: star,
     color: "#8FAC6A",
   },
   {
     title: "Fast & Reliable Delivery",
     description:
-      "Your orders delivered quickly and securely to your doorstep. No more long delays or missing parcels.",
+      "Your orders ship quickly and safely with trusted partners. Track every step from dispatch to doorstep, no delays, no worries.",
     image: star,
     color: "#D96F2D",
   },
   {
     title: "Transparent Pricing",
     description:
-      "No hidden fees or surprises. What you see is what you pay, with clear breakdowns on every order.",
+      "No hidden charges. See a clear cost breakdown for product, fees, and delivery. With us, what you see is what you pay.",
     image: star,
     color: "#1E2A47",
   },
 ];
+
+
 
 const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
   const navigate = useNavigate();
@@ -76,8 +77,8 @@ const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
         </div>
 
         <Text
-          size={{ sm: "sm", md: "lg" }}
-          weight={{ sm: "normal", md: "semibold" }}
+          size={{ sm: "sm", md: 'md'}}
+          weight={{ sm: "light", md: "light" }}
           className="text-[#6B7280] group-hover:text-white transition duration-300"
         >
           {item.description}

@@ -1,15 +1,14 @@
 import React from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import { Input } from "./Inputfield";
 import { Text } from "./Typography";
-import { Facebook, Twitter, Instagram, Rocket } from "lucide-react";
+import { Facebook, Twitter, Instagram} from "lucide-react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
 import axios from "axios";
 import logo from "../Assets/svg_images/logoWhite.svg";
-import { BiLink } from "react-icons/bi";
 interface FooterProps {
   onExploreClick?: () => void;
 }
@@ -60,7 +59,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
             size={{ base: "md", md: "lg", lg: "2xl" }}
             weight={{ base: "semibold", md: "bold" }}
           >
-            Ready to skip checkout?
+            Shop easier. Shop smarter. Shop your way.
           </Text>
 
           <Text
@@ -68,14 +67,14 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
             weight={{ sm: "normal", md: "semibold" }}
             className="text-[#6B7280] group-hover:text-white transition duration-300"
           >
-            Paste your first link and let us handle the rest.
+           Share your first product link and we’ll handle the rest simple, safe, and fast.
           </Text>
           <div>
             <Button
               variant="primary"
               // icon={<BiLink className="w-5 h-5" />}
               className="w-full text-sm sm:text-base py-2 sm:py-3"
-              onClick={() => navigate("/signin")}
+              onClick={() => navigate("/dashboard/new-order")}
             >
               Get Started
             </Button>
@@ -151,14 +150,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
                       </Text>
                     </button>
 
-                    <button
-                      className="hover:text-secondary_light"
-                      onClick={onExploreClick}
-                    >
-                      <Text size="sm" weight="normal">
-                        Stores we support
-                      </Text>
-                    </button>
+                   
                   </div>
                 </div>
 

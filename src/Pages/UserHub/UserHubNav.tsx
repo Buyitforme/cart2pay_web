@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import logo from "../../Assets/svg_images/Logo2.svg";
+
 import {
   X,
   Menu,
@@ -20,20 +22,20 @@ const navLinks = [
     label: "Orders",
     to: "/dashboard/orders",
     icon: <ShoppingBag className="w-5 h-5" />,
-      children: [
+    children: [
       {
         label: "Order details",
-        to: "/dashboard/orders/order-details/:orderId", 
+        to: "/dashboard/orders/order-details/:orderId",
         icon: <CreditCard className="w-5 h-5" />,
       },
-        {
+      {
         label: "Quote",
-        to: "/dashboard/orders/quote/:orderId", 
+        to: "/dashboard/orders/quote/:orderId",
         icon: <CreditCard className="w-5 h-5" />,
       },
-        {
+      {
         label: "Payment Details",
-        to: "/dashboard/orders/payment-details/:orderId", 
+        to: "/dashboard/orders/payment-details/:orderId",
         icon: <CreditCard className="w-5 h-5" />,
       },
     ],
@@ -42,29 +44,27 @@ const navLinks = [
     label: "Shop for me",
     to: "/dashboard/new-order",
     icon: <ShoppingBag className="w-5 h-5" />,
-      children: [
+    children: [
       {
         label: "Address",
-        to: "/dashboard/new-order/address", 
+        to: "/dashboard/new-order/address",
         icon: <CreditCard className="w-5 h-5" />,
       },
-      
     ],
   },
 
-   {
-  // label: "Profile",
-  to: "/dashboard/profile",
-  icon: <User className="w-5 h-5" />,
-  children: [
-    {
-      label: "Address",
-      to: "/dashboard/profile/address",
-      icon: <CreditCard className="w-5 h-5" />,
-    },
-  ],
-}
-
+  {
+    // label: "Profile",
+    to: "/dashboard/profile",
+    icon: <User className="w-5 h-5" />,
+    children: [
+      {
+        label: "Address",
+        to: "/dashboard/profile/address",
+        icon: <CreditCard className="w-5 h-5" />,
+      },
+    ],
+  },
 ];
 
 const UserHubNav = () => {
@@ -85,15 +85,12 @@ const UserHubNav = () => {
       <nav className="bg-white border-b border-gray-200 py-3 px-4 md:px-16">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center" onClick={()=>navigate('/dashboard')}>
-            <Heading size="lg" weight="bold" color="default">
-              Cart2
-            </Heading>
-            <Heading size="lg" weight="bold" color="primary">
-              PAY
-            </Heading>
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => navigate("/dashboard")}
+          >
+            <img src={logo} alt="logo" />
           </div>
-
           {/* Center Nav - Desktop only */}
           <div className="hidden md:flex flex-1 justify-center space-x-8">
             {navLinks.map((link) => {
@@ -109,8 +106,8 @@ const UserHubNav = () => {
 
                     return `text-sm font-medium ${
                       active
-                        ? "text-primary font-bold"
-                        : "text-gray-600 hover:text-primary"
+                        ? "text-secondary_light font-bold"
+                        : "text-gray-600 hover:text-secondary_light"
                     }`;
                   }}
                 >
@@ -122,28 +119,18 @@ const UserHubNav = () => {
 
           {/* Right Icons - Desktop only */}
           <div className="hidden md:flex items-center space-x-6">
-            {/* <NavLink
-              to="/dashboard/notifications"
-              className={({ isActive }) =>
-                `hover:text-primary ${
-                  isActive ? "text-primary" : "text-gray-500"
-                }`
-              }
-            >
-              <Bell className="w-5 h-5" />
-            </NavLink> */}
+          
 
             <NavLink
               to="/dashboard/profile"
               className={({ isActive }) =>
                 `hover:text-primary ${
-                  isActive ? "text-primary" : "text-gray-500"
+                  isActive ? "text-secondary_light" : "text-secondary"
                 }`
               }
             >
               <User className="w-5 h-5" />
             </NavLink>
-
           </div>
 
           {/* Hamburger Menu - Mobile only */}
@@ -196,8 +183,6 @@ const UserHubNav = () => {
                     {link.icon}
                     <span>{link.label}</span>
                   </NavLink>
-
-             
                 </div>
               );
             })}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../Components/Button";
-import happyShopper from "../../Assets/happy_shopper.png";
+import happyShopper from "../../Assets/svg_images/Whisk_19879cdfd 8.svg";
 import { Heading, Text } from "../../Components/Typography";
 import { useNavigate } from "react-router-dom";
 import { Play, Rocket } from "lucide-react";
@@ -30,9 +30,9 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
          </div>
 
          <Text size="lg" color="secondary" weight="extra_light" className=" ">
-           Your personal shopping assistant at your fingertips, Simply share the
-           url to the item you want, and we'll take care of the purchasing and
-           delivery process for you, ensuring it arrives right at your doorstep.
+           Your personal shopping assistant at your fingertips. From rare finds to everyday essentials, we make shopping simple, 
+fast, and stress-free, so you shop more and  worry less.
+
          </Text>
 
          <div className="flex flex-col sm:flex-row gap-4 pt-4">

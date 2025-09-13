@@ -85,7 +85,7 @@ return (
             variant="primary"
             onClick={() => (window.location.href = "/dashboard/new-order")}
           >
-            Let's shop for you
+            Shop for me
           </Button>
         </div>
       ) : (
@@ -102,7 +102,7 @@ return (
           <Heading className="text-sm sm:text-base lg:text-lg font-semibold text-gray-800 leading-tight">
             <span className="text-gray-600 font-medium">Order ID:</span>
           </Heading>
-          <div className="font-mono text-xs sm:text-sm text-gray-700 bg-gray-50 px-2 py-1 rounded border break-all">
+              <div className="text-xs text-gray-500 font-mono bg-gray-50 px-2 py-1 rounded border w-fit">
             {order?._id?.slice(-8) || 'Loading...'}
           </div>
         </div>

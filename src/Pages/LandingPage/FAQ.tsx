@@ -7,7 +7,7 @@ const faqs = [
   {
     question: "How does ShopViaCal work?",
     answer:
-      "See something you like from an international store? Send us your the item(s), the admin reviews the items avalaibility and let you know all cost applied, You securely pay for the sum the sum total and we’ll handle the purchase for you. Simple, secure, and fast.",
+      "Found something you love?  Just send us the product link. Our team reviews the item’s availability and provides you with a clear cost breakdown. Once you confirm and make a secure payment, we’ll complete the purchase on your behalf. Simple, transparent, and hassle-free.",
   },
 
   {
@@ -23,7 +23,7 @@ const faqs = [
   {
     question: "Can I track my orders?",
     answer:
-      "Currently, ShopViaCal focuses exclusively on handling your payment securely. Once your payment is completed, you’ll receive a receipt via email. All orders are fulfilled using the shipping address you provided during checkout.",
+      "Yes! Every order you place with ShopViaCal comes with full tracking. From purchase to delivery, you’ll receive regular updates so you always know where your package is and when it will arrive.",
   },
 ];
 
@@ -59,48 +59,52 @@ const Faq = () => {
         </div>
 
         <div className="space-y-8">
-  {faqs.map((faq, index) => (
-    <div
-      key={index}
-      className="border border-border py-4 px-6 rounded-xl bg-background w-full"
-    >
-      <button
-        className="flex items-center justify-between w-full text-left"
-        onClick={() => toggleOpen(index)}
-      >
-        <Text
-          size="md"
-          color="primary"
-          weight="normal"
-          className="break-words"
-        >
-          {faq.question}
-        </Text>
-        <span className="bg-gray-100 rounded-full p-2 transition">
-          {openIndex === index ? (
-            <Minus size={18} className="text-gray-700" />
-          ) : (
-            <Plus size={18} className="text-gray-700" />
-          )}
-        </span>
-      </button>
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="border border-border py-4 px-6 rounded-xl bg-background w-full"
+            >
+              <button
+                className="flex items-center justify-between w-full text-left"
+                onClick={() => toggleOpen(index)}
+              >
+                <Text
+                  size="md"
+                  color="primary"
+                  weight="normal"
+                  className="break-words"
+                >
+                  {faq.question}
+                </Text>
+                <span className="bg-gray-100 rounded-full p-2 transition">
+                  {openIndex === index ? (
+                    <Minus size={18} className="text-gray-700" />
+                  ) : (
+                    <Plus size={18} className="text-gray-700" />
+                  )}
+                </span>
+              </button>
 
-      <div
-        className={cn(
-          "mt-2 text-gray-600 text-sm transition-all duration-300 ease-in-out w-full break-words",
-          openIndex === index
-            ? "max-h-screen opacity-100"
-            : "max-h-0 overflow-hidden opacity-0"
-        )}
-      >
-        <Text size="sm" weight="light" color="subtle" className="break-words">
-          {faq.answer}
-        </Text>
-      </div>
-    </div>
-  ))}
-</div>
-
+              <div
+                className={cn(
+                  "mt-2 text-gray-600 text-sm transition-all duration-300 ease-in-out w-full break-words",
+                  openIndex === index
+                    ? "max-h-screen opacity-100"
+                    : "max-h-0 overflow-hidden opacity-0"
+                )}
+              >
+                <Text
+                  size="sm"
+                  weight="light"
+                  color="subtle"
+                  className="break-words"
+                >
+                  {faq.answer}
+                </Text>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

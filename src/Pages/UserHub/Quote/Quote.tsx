@@ -102,7 +102,7 @@ const Quote = () => {
           <Heading size="lg" weight="bold">
             Order Received!
           </Heading>
-          <Text size="sm" color="subtle">
+          <Text size='md' color="secondary" weight='normal'>
             We’re reviewing your order and will get your quote ready shortly.
             You’ll receive an email and an in-app notification once it’s ready.
           </Text>
@@ -129,10 +129,11 @@ const Quote = () => {
             <Heading size="lg" weight="bold" color="default">
               🎉 Your Quote Is Ready!
             </Heading>
-            <Text className="text-gray-600 text-base" color="subtle">
+            <Text className="text-gray-600 text-base" color="subtle"  size='md' weight='normal'>
               Review your order summary below, including all costs and fees.
             </Text>
-            <Text className="text-sm text-orange-600" color="warning">
+                        <Text size='md' color="warning" weight='normal'>
+
               Quick tip! To avoid stockouts, please complete your payment as
               soon as possible because items are selling out fast.
             </Text>
@@ -151,7 +152,7 @@ const Quote = () => {
             </Heading>
 
             <div>
-              <Text className="text-sm text-muted-foreground">Store</Text>
+              <Text  size='md' weight='normal' color="secondary">Store</Text>
               <Heading size="sm" weight="semibold">
                 {order?.store}
               </Heading>
@@ -187,48 +188,48 @@ const Quote = () => {
               Cost Breakdown
             </Heading>
             <div className="flex justify-between">
-              <Text>Item(s) cost </Text>
-              <Text>$ {order?.items_total.toLocaleString()}</Text>
+              <Text  size='md' weight='normal' color="secondary">Item(s) cost </Text>
+              <Text  size='md' weight='normal' color="secondary">$ {order?.items_total.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between">
-              <Text>Shipping Fee </Text>
-              <Text>$ {order?.shipping_fee.toLocaleString()}</Text>
+              <Text  size='md' weight='normal' color="secondary">Shipping Fee </Text>
+              <Text  size='md' weight='normal' color="secondary">$ {order?.shipping_fee.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between">
-              <Text>Tax</Text>
-              <Text>$ {order?.tax.toLocaleString()}</Text>
+              <Text  size='md' weight='normal' color="secondary">Tax</Text>
+              <Text  size='md' weight='normal' color="secondary">$ {order?.tax.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between">
-              <Text>Duties</Text>
-              <Text>$ {order?.duties.toLocaleString()}</Text>
+              <Text  size='md' weight='normal' color="secondary">Duties</Text>
+              <Text  size='md' weight='normal' color="secondary">$ {order?.duties.toLocaleString()}</Text>
             </div>
             <div className="flex justify-between">
-              <Text>Exchange Rate</Text>
-              <Text>₦{order?.exchange_rate.toLocaleString()} / $1</Text>
+              <Text  size='md' weight='normal' color="secondary">Exchange Rate</Text>
+              <Text  size='md' weight='normal' color="secondary">₦{order?.exchange_rate.toLocaleString()} / $1</Text>
             </div>
 
             <div className="flex justify-between items-start gap-4">
-              <Text className="min-w-0 break-words">
+              <Text className="min-w-0 break-words"  size='md' weight='normal' color="secondary">
                 Surcharge (0.5% Items + Shipping + Tax + Duties)
               </Text>
-              <Text className="text-right whitespace-nowrap font-medium">
+              <Text className="text-right whitespace-nowrap"  size='md' weight='normal' color="secondary">
                 ₦{order?.surcharge.toLocaleString()}
               </Text>
             </div>
             <div className="flex justify-between text-gray-700">
-              <Text>Cart2pay fee (Flat rate) </Text>
+              <Text  size='md' weight='normal' color="secondary">Cart2pay fee (Flat rate) </Text>
               <Text className="font-medium">
                 ₦{order?.service_fee.toLocaleString()}
               </Text>
             </div>
             <div className="flex justify-between text-gray-700">
-              <Text>Local delivery </Text>
-              <Text className="font-medium">
+              <Text  size='md' weight='normal' color="secondary">Local delivery </Text>
+              <Text className="font-medium"  size='md' weight='normal' color="secondary">
                 ₦{order?.local_delivery_fee.toLocaleString()}
               </Text>
             </div>
             <div className="flex justify-between font-bold text-lg pt-2">
-              <Text>Total to Pay (₦)</Text>
+              <Text  size='md' weight='normal' color="secondary">Total to Pay (₦)</Text>
               <div className="py-2 px-3 bg-highlight rounded">
                 <Text size="lg" color="" weight="bold" className="font-black ">
                   ₦{order?.sum_total.toLocaleString()}
