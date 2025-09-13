@@ -5,19 +5,96 @@ import { cn } from "../lib/utils";
 
 export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  size?: 
-    | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl"
+  size?:
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | "5xl"
+    | "6xl"
+    | "7xl"
+    | "8xl"
+    | "9xl"
     | {
-        base?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
-        sm?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
-        md?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
-        lg?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
-        xl?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl";
+        base?:
+          | "xs"
+          | "sm"
+          | "md"
+          | "lg"
+          | "xl"
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "5xl"
+          | "6xl"
+          | "7xl"
+          | "8xl"
+          | "9xl";
+        sm?:
+          | "xs"
+          | "sm"
+          | "md"
+          | "lg"
+          | "xl"
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "5xl"
+          | "6xl"
+          | "7xl"
+          | "8xl"
+          | "9xl";
+        md?:
+          | "xs"
+          | "sm"
+          | "md"
+          | "lg"
+          | "xl"
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "5xl"
+          | "6xl"
+          | "7xl"
+          | "8xl"
+          | "9xl";
+        lg?:
+          | "xs"
+          | "sm"
+          | "md"
+          | "lg"
+          | "xl"
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "5xl"
+          | "6xl"
+          | "7xl"
+          | "8xl"
+          | "9xl";
+        xl?:
+          | "xs"
+          | "sm"
+          | "md"
+          | "lg"
+          | "xl"
+          | "2xl"
+          | "3xl"
+          | "4xl"
+          | "5xl"
+          | "6xl"
+          | "7xl"
+          | "8xl"
+          | "9xl";
       };
   weight?: "light" | "extra_light" | "normal" | "medium" | "semibold" | "bold";
   color?:
     | "default"
-    | "muted" 
+    | "muted"
     | "subtle"
     | "primary"
     | "secondary"
@@ -29,16 +106,18 @@ export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
 }
 
 const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
-  ({
-    className,
-    as: Component = "h1",
-    size = "lg",
-    weight = "semibold", 
-    color = "default",
-    children,
-    ...props
-  }, ref) => {
-    
+  (
+    {
+      className,
+      as: Component = "h1",
+      size = "lg",
+      weight = "semibold",
+      color = "default",
+      children,
+      ...props
+    },
+    ref
+  ) => {
     const sizeMap = {
       xs: "text-xs",
       sm: "text-sm",
@@ -57,18 +136,18 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 
     // Handle responsive sizes
     const getSizeClasses = () => {
-      if (typeof size === 'string') {
+      if (typeof size === "string") {
         return sizeMap[size];
       }
-      
+
       // Object-based responsive sizes
       const responsiveClasses = [];
-      
+
       // Base size (mobile-first)
       if (size.base) {
         responsiveClasses.push(sizeMap[size.base]);
       }
-      
+
       // Responsive breakpoints
       if (size.sm) {
         responsiveClasses.push(`sm:${sizeMap[size.sm]}`);
@@ -82,8 +161,8 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
       if (size.xl) {
         responsiveClasses.push(`xl:${sizeMap[size.xl]}`);
       }
-      
-      return responsiveClasses.join(' ');
+
+      return responsiveClasses.join(" ");
     };
 
     const fontWeights = {
@@ -115,8 +194,6 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
 
     return (
       <div className="space-y-4">
-      
-
         {/* Actual heading */}
         <Component
           ref={ref}
@@ -139,15 +216,31 @@ const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(
   }
 );
 
-
-
 Heading.displayName = "Heading";
 
 // Text Component
 export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   as?: "p" | "span" | "div";
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  weight?: "light" | "extra_light"| "normal" | "medium" | "semibold" | "bold"; // 👈 added light
+  size?:
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl"
+    | "4xl"
+    | ResponsiveValue<"xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl">;
+  weight?:
+    | "light"
+    | "extra_light"
+    | "normal"
+    | "medium"
+    | "semibold"
+    | "bold"
+    | ResponsiveValue<
+        "light" | "extra_light" | "normal" | "medium" | "semibold" | "bold"
+      >;
   color?:
     | "default"
     | "muted"
@@ -161,52 +254,91 @@ export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
   children: React.ReactNode;
 }
 
+type ResponsiveValue<T> = {
+  base?: T;
+  sm?: T;
+  md?: T;
+  lg?: T;
+  xl?: T;
+  [key: string]: T | undefined;
+};
+
 const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
-  ({ className, as: Component = "p", size = "md", weight = "light", color = "default", children, ...props }, ref) => {
+  (
+    {
+      className,
+      as: Component = "p",
+      size = "md",
+      weight = "light",
+      color = "default",
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const getResponsiveClass = <T extends string>(
+      prop: T | ResponsiveValue<T>,
+      mapping: Record<T, string>
+    ): string => {
+      if (typeof prop === "string") {
+        return mapping[prop];
+      } else {
+        return Object.keys(prop)
+          .map((breakpoint) => {
+            const value = prop[breakpoint as keyof typeof prop];
+            return breakpoint === "base"
+              ? mapping[value as T]
+              : `${breakpoint}:${mapping[value as T]}`;
+          })
+          .join(" ");
+      }
+    };
+
     const sizes = {
       xs: "text-xs",
       sm: "text-sm",
-      md: "text-base", 
+      md: "text-base",
       lg: "text-lg",
-      xl: "text-2xl",
+      xl: "text-xl",
+      "2xl": "text-2xl",
+      "3xl": "text-3xl",
+      "4xl": "text-4xl",
     };
 
+  
     const fontWeights = {
-      extra_light: 300,
-      light:400,
-      normal: 400,
-      medium: 500,
-      semibold: 600,
-      bold: 700,
+      extra_light: "font-extralight",
+      light: "font-light",
+      normal: "font-normal",
+      medium: "font-medium",
+      semibold: "font-semibold",
+      bold: "font-bold",
     };
 
-    // ... rest of your color logic
-     const predefinedColors = {
+    const predefinedColors = {
       default: "text-accent",
       muted: "text-slate-600",
       subtle: "text-slate-500",
       primary: "text-text-primary",
-      secondary: "text-text-secondary", 
+      secondary: "text-text-secondary",
       success: "text-green-600",
       warning: "text-amber-600",
       error: "text-red-600",
       white: "text-decoration-sky-500",
     };
- const isPredefinedColor = color in predefinedColors;
-    const colorClass = isPredefinedColor 
-      ? predefinedColors[color as keyof typeof predefinedColors] 
+    const sizeClass = getResponsiveClass(size, sizes);
+    const weightStyle = getResponsiveClass(weight, fontWeights);
+
+    const isPredefinedColor = color in predefinedColors;
+    const colorClass = isPredefinedColor
+      ? predefinedColors[color as keyof typeof predefinedColors]
       : "";
 
     return (
       <Component
         ref={ref}
-        className={cn(
-          sizes[size],
-          colorClass,
-          className
-        )}
+        className={cn(sizeClass, weightStyle, colorClass, className)}
         style={{
-          fontWeight: fontWeights[weight],
           ...(isPredefinedColor ? {} : { color }),
           ...props.style,
         }}
@@ -217,7 +349,6 @@ const Text = React.forwardRef<HTMLParagraphElement, TextProps>(
     );
   }
 );
-
 
 Text.displayName = "Text";
 

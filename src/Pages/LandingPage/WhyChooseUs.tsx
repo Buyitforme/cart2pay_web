@@ -1,10 +1,9 @@
 import React from "react";
 import star from "../../Assets/svg_images/Background.svg";
-import { Button } from "../../Components/Button";
 import { Heading, Text } from "../../Components/Typography";
 import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 
 const essentials = [
   {
@@ -45,62 +44,62 @@ const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
     threshold: 0.2,
   });
 
-return (
-  <div
-    ref={ref}
-    className={`group relative bg-white shadow-lg rounded-lg p-6 overflow-hidden h-80 transition duration-500 ${
-      inView ? "force-hover" : ""
-    }`}
-  >
-    {/* Sliding gradient background */}
+  return (
     <div
-      className="absolute inset-0 z-0 w-full h-full transform -translate-y-full group-hover:translate-y-0 force-hover:translate-y-0 transition-transform duration-700 ease-in-out"
-      style={{
-        backgroundImage:
-          "linear-gradient(to right, #34C759, #FFA500)",
-      }}
-    ></div>
-
-    {/* Content */}
-    <div className="relative z-10 transition duration-500 group-hover:text-white force-hover:text-white h-full flex flex-col justify-between">
-      <div className="flex gap-2 items-start justify-start">
-        <img src={star} alt="" className="filter group-hover:brightness-0 group-hover:invert-0 group-hover:sepia group-hover:saturate-[500%] group-hover:hue-rotate-[30deg]" />
-        <Text
-          size="xl"
-          weight="bold"
-          className="text-[#4A4A4A] group-hover:text-white"
-        >
-          {item.title}
-        </Text>
-      </div>
-
-      <Text
-        size="lg"
-        weight="light"
-        className="text-[#6B7280] group-hover:text-white"
-      >
-        {item.description}
-      </Text>
-
+      ref={ref}
+      className={`group relative bg-white shadow-lg rounded-lg p-6 overflow-hidden h-80 transition duration-500 ${
+        inView ? "force-hover" : ""
+      }`}
+    >
+      {/* Sliding gradient background */}
       <div
-        className="flex justify-between items-center mt-2 cursor-pointer"
-        onClick={() => navigate("/signup")}
-      >
+        className="absolute inset-0 z-0 w-full h-full transform -translate-x-full group-hover:translate-x-0 force-hover:translate-x-0 transition-transform duration-700 ease-in-out"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, #054B2F 80%, #F38C05 120%)",
+        }}
+      ></div>
+
+      {/* Content */}
+      <div className="relative z-10 transition duration-500 group-hover:text-white force-hover:text-white h-full flex flex-col justify-between">
+        <div className="flex gap-4 items-center justify-start">
+          <div className="h-10 w-10 bg-gray-200 group-hover:bg-orange-500 rounded-xl flex justify-center items-center transition duration-300">
+            <Star className="w-[20px] h-[20px] text-gray-500 group-hover:text-white transition duration-300" />
+          </div>
+          <Text
+            size={{ base: "md", md: "lg", lg: "xl" }}
+            weight={{ base: "semibold", md: "bold" }}
+            className="text-[#4A4A4A] group-hover:text-white transition duration-300"
+          >
+            {item.title}
+          </Text>
+        </div>
+
         <Text
-          size="lg"
-          weight="light"
-          color="secondary"
-          className="text-primary group-hover:text-white"
+          size={{ sm: "sm", md: "lg" }}
+          weight={{ sm: "normal", md: "semibold" }}
+          className="text-[#6B7280] group-hover:text-white transition duration-300"
         >
-          Get started
+          {item.description}
         </Text>
-        <ArrowRight className="w-5 group-hover:text-white" />
+
+        <div
+          className="flex justify-between items-center mt-2 cursor-pointer"
+          onClick={() => navigate("/signup")}
+        >
+          <Text
+            size="lg"
+            weight="normal"
+            color="secondary"
+            className="text-primary group-hover:text-white transition duration-300"
+          >
+            Get started
+          </Text>
+          <ArrowRight className="w-5 group-hover:text-white transition duration-300" />
+        </div>
       </div>
     </div>
-  </div>
-);
-
-
+  );
 };
 
 const WhyChooseUs = () => {
@@ -119,7 +118,7 @@ const WhyChooseUs = () => {
 
           <Text
             size="lg"
-            weight="light"
+            weight="normal"
             className="pt-2 text-[#6B7280] text-center"
           >
             Convenience without the checkout stress.{" "}

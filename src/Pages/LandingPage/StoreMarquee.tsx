@@ -34,7 +34,7 @@ const StoreMarquee = () => {
 
           <Text
             size="lg"
-            weight="light"
+            weight="normal"
             className="pt-2 text-[#6B7280] text-center"
           >
             Order items from any of the shops we support{" "}

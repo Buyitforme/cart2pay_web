@@ -22,7 +22,7 @@ const HowItWorks = () => {
 
           <Text
             size="lg"
-            weight="light"
+            weight="normal"
             className="pt-2 text-[#6B7280] text-center md:text-start"
           >
             Three simple steps from link to delivery.

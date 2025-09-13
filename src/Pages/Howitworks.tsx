@@ -1,70 +1,262 @@
-import React, { useState } from "react";
-import { PlayCircle } from "lucide-react";
-import { Heading, Text } from "../Components/Typography";
-import previewImage from "../Assets/svg_images/happy girl.jpg";
-import { AnimatedSection } from "./LandingPage/LandingPageMain";
+import React, { useState } from 'react';
+import { Link, Clock, Shield, CreditCard, Truck, Package, Bell, Zap, Headphones, X } from 'lucide-react';
+import { Button } from '../Components/Button';
+import { stores } from './data';
+import { Heading } from '../Components/Typography';
 
-const HowItWorks: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+interface SupportedStoresProps {
+  isOpen:boolean,
+  onClose :any
+}
+const SupportedStoresModal = ({ isOpen, onClose }:SupportedStoresProps) => {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Modal Content */}
+        <div className=" m-4 rounded-lg p-6">
+          {/* Header */}
+          <div className="flex justify-between items-start mb-6">
+            <div>
+              <Heading size="2xl" weight="bold" className="text-gray-900 mb-2">
+                Store we support
+              </Heading>
+              <Heading size="md" weight="normal" className="text-gray-600">
+                We support the following stores listed
+              </Heading>
+            </div>
+            <button
+              onClick={onClose}
+              className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors"
+            >
+              <X className="w-4 h-4 text-gray-600" />
+            </button>
+          </div>
+
+          {/* Stores Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {stores.map((store, index) => (
+              <div key={index} className="flex items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                <div className={`w-12 h-12 ${store.bgColor} rounded-lg flex items-center justify-center text-xl`}>
+                  {store.icon}
+                </div>
+                <div>
+                  <Heading size="lg" weight="semibold" className="text-gray-900">
+                    {store.name}
+                  </Heading>
+                  <Heading size="sm" weight="normal" className="text-gray-600">
+                    {store.category}
+                  </Heading>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className=" mx-4 mb-4 rounded-lg p-6">
+          <div className="flex justify-between items-center">
+            <Heading size="lg" weight="normal" className="text-gray-600">
+              Do you have questions?
+            </Heading>
+            <Button 
+              variant="primary" 
+              className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+            >
+              <Headphones className="w-4 h-4" />
+              Contact us
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const HowItWorksSection = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <>
-      <AnimatedSection>
-        <section className=" px-6 bg-white relative bg-background">
-          <div className="max-w-5xl mx-auto text-center py-4">
-            <Heading size="2xl" weight="bold" className="mb-2">
-              How It Works
+    <section className="bg-gradient-to-br from-emerald-50 via-slate-50 to-indigo-100 py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-12">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-gray-500"></span>
+            <Heading size="sm" weight="medium" className="text-gray-600">
+              How it works
             </Heading>
-            <Text
-              size="md"
-              color="subtle"
-              className="mb-4 text-center max-w-4xl mx-auto leading-7 tracking-wide"
-            >
-              Watch this quick 1-minute guide on how to seamlessly transfer your
-              cart items from any international store to our platform and make
-              payment with your local card.
-            </Text>
+          </div>
+          
+          <Heading size="3xl" weight="bold" className="text-gray-900 mb-4">
+            From link to delivery in three simple steps
+          </Heading>
+          
+          <Heading size="lg" weight="normal" className="text-gray-600">
+            Follow this quick flow to understand exactly what happens after you paste a link.
+          </Heading>
+        </div>
 
-            {/* Video Preview Area */}
-            <div className="relative w-full max-w-3xl mx-auto cursor-pointer">
-              <img
-                src={previewImage}
-                alt="How it works"
-                className="rounded-xl shadow-lg w-full object-cover"
-                onClick={() => setIsPlaying(true)}
-              />
-              <div
-                className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl hover:bg-black/60 transition"
-                onClick={() => setIsPlaying(true)}
-              >
-                <PlayCircle className="text-white w-16 h-16 drop-shadow-lg" />
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Left Column - Service Details */}
+          <div className="space-y-8">
+            {/* Average Time Card */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <Heading size="lg" weight="semibold" className="text-gray-900">
+                    Average time
+                  </Heading>
+                  <Heading size="sm" weight="normal" className="text-gray-600">
+                    5-10 minutes to confirm
+                  </Heading>
+                </div>
+              </div>
+              <Button variant="primary" size="sm">
+                Get Started
+              </Button>
+            </div>
+
+            {/* Security Badge */}
+            <div className="flex items-center gap-3">
+              <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                <Shield className="w-4 h-4 text-white" />
+              </div>
+              <Heading size="sm" weight="medium" className="text-gray-700">
+                Payments secured by trusted providers
+              </Heading>
+            </div>
+
+            {/* Pricing Table */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <Heading size="md" weight="medium" className="text-gray-900">
+                    Service fee
+                  </Heading>
+                  <Heading size="md" weight="semibold" className="text-gray-900">
+                    Flat rate
+                  </Heading>
+                </div>
+                
+                <div className="flex justify-between items-center">
+                  <Heading size="md" weight="medium" className="text-gray-900">
+                    Delivery
+                  </Heading>
+                  <Heading size="md" weight="semibold" className="text-gray-900">
+                    At carrier rates
+                  </Heading>
+                </div>
+                
+                <div className="pt-4 border-t">
+                  <Heading size="sm" weight="normal" className="text-gray-600">
+                    Final price shown before you confirm.
+                  </Heading>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Video Modal Overlay */}
-          {isPlaying && (
-            <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center">
-              <div className="w-[90%] max-w-4xl">
-                <video
-                  src="demovideo.mp4"
-                  controls
-                  autoPlay
-                  className="w-full rounded-xl shadow-lg"
-                />
-                <button
-                  onClick={() => setIsPlaying(false)}
-                  className="mt-4 text-white text-sm hover:underline block text-center"
-                >
-                  Close Video
-                </button>
+          {/* Right Column - Steps */}
+          <div className="space-y-8">
+            {/* Step 1 */}
+            <div className="flex gap-4">
+              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Link className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <Heading size="xl" weight="semibold" className="text-gray-900 mb-2">
+                  1 — Paste the product link
+                </Heading>
+                <Heading size="md" weight="normal" className="text-gray-600 mb-4">
+                  Copy the URL from any major store (Amazon, Walmart, Etsy, etc.) and paste it below.
+                </Heading>
+                
+                <div className="flex justify-between items-center mb-4">
+                  <Heading size="sm" weight="normal" className="text-gray-600">
+                    Works with most retailers
+                  </Heading>
+                  <button className="text-green-600 text-sm font-medium hover:underline"         onClick={() => setIsModalOpen(true)}
+>
+                    See supported sites
+                  </button>
+                </div>
+                
+                <div className="bg-gray-50 rounded-lg p-3 flex items-center gap-2">
+                  <Link className="w-4 h-4 text-gray-400" />
+                  <Heading size="sm" weight="normal" className="text-gray-500">
+                    https://store.com/product/your-item
+                  </Heading>
+                </div>
               </div>
             </div>
-          )}
-        </section>
-    </AnimatedSection>
-   </>
+
+            {/* Step 2 */}
+            <div className="flex gap-4">
+              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <CreditCard className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <Heading size="xl" weight="semibold" className="text-gray-900 mb-2">
+                  2 — We purchase on your behalf
+                </Heading>
+                <Heading size="md" weight="normal" className="text-gray-600">
+                  An admin confirms stock, applies discounts if available, and completes checkout securely.
+                </Heading>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex gap-4">
+              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Package className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <Heading size="xl" weight="semibold" className="text-gray-900 mb-2">
+                  3 — Tracked delivery to your door
+                </Heading>
+                <Heading size="md" weight="normal" className="text-gray-600 mb-4">
+                  We provide tracking and updates. You'll receive your order fast, with support if needed.
+                </Heading>
+                
+                <div className="flex justify-between items-center mb-4">
+                  <Heading size="sm" weight="normal" className="text-gray-600">
+                    Support that actually responds
+                  </Heading>
+                  <Button variant="outline" size="sm">
+                    Contact support
+                  </Button>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Truck className="w-4 h-4 text-gray-500" />
+                    <Heading size="sm" weight="medium" className="text-gray-700">
+                      Expedited options available
+                    </Heading>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Bell className="w-4 h-4 text-gray-500" />
+                    <Heading size="sm" weight="medium" className="text-gray-700">
+                      Notifications for each milestone
+                    </Heading>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <SupportedStoresModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
+    </section>
   );
 };
 
-export default HowItWorks;
+export default HowItWorksSection;

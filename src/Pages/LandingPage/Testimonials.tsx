@@ -41,7 +41,6 @@ interface TestimonialProps {
   onExploreClick?: () => void;
 }
 const TestimonialSection: React.FC<TestimonialProps> = ({ onExploreClick }) => {
-  const navigate = useNavigate();
 
   return (
     <div className="max-w-[85%] mx-auto bg-white py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
@@ -57,7 +56,7 @@ const TestimonialSection: React.FC<TestimonialProps> = ({ onExploreClick }) => {
 
         <Text
           size="lg"
-          weight="light"
+            weight="normal"
           className="pt-2 text-[#6B7280] text-center"
         >
           Real reviews from people who switched to link-based purchasing.

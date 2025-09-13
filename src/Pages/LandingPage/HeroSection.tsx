@@ -1,13 +1,10 @@
 import React from "react";
 import { Button } from "../../Components/Button";
-import unhappyShopper from "../../Assets/svg_images/unhappy_shopper.svg";
 import happyShopper from "../../Assets/happy_shopper.png";
-import paymentCards from "../../Assets/svg_images/payment_cards.svg";
 import { Heading, Text } from "../../Components/Typography";
 import { useNavigate } from "react-router-dom";
 import { Play, Rocket } from "lucide-react";
 
-const images = [unhappyShopper, paymentCards, happyShopper];
 interface HeroSectionProps {
   onExploreClick?: () => void;
 }

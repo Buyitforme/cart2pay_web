@@ -127,9 +127,9 @@ const Signup = () => {
       </p>
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-        <h2 className="text-2xl font-bold">🎉 Congratulations!</h2>
-        <p>You've taken the first step on clearing your cart.</p>
-        <Button onClick={() => navigate("/verification")}>Continue</Button>
+        <h2 className="text-2xl font-bold">🎉 Sign up successful!</h2>
+        <p>An otp has been sent to your email, kindly proceed to verify your account</p>
+        <Button onClick={() => navigate("/verification")}>Proceed</Button>
       </Modal>
     </AuthLayout>
   );

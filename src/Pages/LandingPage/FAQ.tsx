@@ -50,7 +50,7 @@ const Faq = () => {
 
           <Text
             size="lg"
-            weight="light"
+            weight="normal"
             className="pt-2 text-[#6B7280] text-center"
           >
             Find quick answers to common questions about how our service works,
@@ -58,43 +58,49 @@ const Faq = () => {
           </Text>
         </div>
 
-        <div className="space-y-8  ">
-          {faqs.map((faq, index) => (
-            <div key={index} className="border border-border py-4 px-6 rounded-full bg-background">
-              <button
-                className="flex items-center justify-between w-full text-left"
-                onClick={() => toggleOpen(index)}
-              >
-                <Text size="md"
-                color="primary"
-            weight="light"
-            className="">
-                  {faq.question}
-                </Text>
-                <span className="bg-gray-100 rounded-full p-2 transition">
-                  {openIndex === index ? (
-                    <Minus size={18} className="text-gray-700" />
-                  ) : (
-                    <Plus size={18} className="text-gray-700" />
-                  )}
-                </span>
-              </button>
+        <div className="space-y-8">
+  {faqs.map((faq, index) => (
+    <div
+      key={index}
+      className="border border-border py-4 px-6 rounded-xl bg-background w-full"
+    >
+      <button
+        className="flex items-center justify-between w-full text-left"
+        onClick={() => toggleOpen(index)}
+      >
+        <Text
+          size="md"
+          color="primary"
+          weight="normal"
+          className="break-words"
+        >
+          {faq.question}
+        </Text>
+        <span className="bg-gray-100 rounded-full p-2 transition">
+          {openIndex === index ? (
+            <Minus size={18} className="text-gray-700" />
+          ) : (
+            <Plus size={18} className="text-gray-700" />
+          )}
+        </span>
+      </button>
 
-              <div
-                className={cn(
-                  "mt-2 text-gray-600 text-sm transition-all duration-300 ease-in-out",
-                  openIndex === index
-                    ? "max-h-screen opacity-100"
-                    : "max-h-0 overflow-hidden opacity-0"
-                )}
-              >
-                <Text size="sm" weight="normal" color="subtle">
-                  {faq.answer}
-                </Text>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div
+        className={cn(
+          "mt-2 text-gray-600 text-sm transition-all duration-300 ease-in-out w-full break-words",
+          openIndex === index
+            ? "max-h-screen opacity-100"
+            : "max-h-0 overflow-hidden opacity-0"
+        )}
+      >
+        <Text size="sm" weight="light" color="subtle" className="break-words">
+          {faq.answer}
+        </Text>
+      </div>
+    </div>
+  ))}
+</div>
+
       </div>
     </section>
   );

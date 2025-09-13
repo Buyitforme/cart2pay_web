@@ -9,7 +9,7 @@ const Cart2payEssentials = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white py-8 md:py-11 lg:py-16 ">
+    <div className=" bg-white py-8 md:py-11 lg:py-16 ">
       <div className="max-w-[85%] mx-auto">
         {/* Header with dotted border */}
         <div className="relative lg:mb-16">
@@ -27,7 +27,7 @@ const Cart2payEssentials = () => {
 
               <Text
                 size="lg"
-                weight="light"
+            weight="normal"
                 className="pt-2 text-[#6B7280] text-center"
               >
                 Designed to remove friction at every step.{" "}
