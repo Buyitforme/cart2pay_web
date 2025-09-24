@@ -1,32 +1,34 @@
-
-import "keen-slider/keen-slider.min.css";
-import { useKeenSlider } from "keen-slider/react";
+// components/ImageSlider.tsx
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 interface ImageSliderProps {
   images: string[];
 }
 
-export const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
-  const [sliderRef] = useKeenSlider<HTMLDivElement>({
-    loop: true,
-    mode: "free-snap",
-    slides: {
-      perView: 1,
-    },
-  });
-
+const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
   return (
-    <div ref={sliderRef} className="keen-slider">
-      {images.map((src, idx) => (
-        <div key={idx} className="keen-slider__slide">
+    <Swiper
+      modules={[Autoplay]}
+      autoplay={{ delay: 3000, disableOnInteraction: false }}
+      loop={true}
+      slidesPerView={1}
+      spaceBetween={20}
+      className="w-full"
+    >
+      {images.map((src, index) => (
+        <SwiperSlide key={index}>
           <img
             src={src}
-            alt={`Slide ${idx}`}
-            className="w-full h-64 object-cover rounded-lg"
+            alt={`Slide ${index}`}
+            className="w-full md:h-auto object-cover rounded-lg"
           />
-        </div>
+        </SwiperSlide>
       ))}
-    </div>
+    </Swiper>
   );
 };
+
+export default ImageSlider;

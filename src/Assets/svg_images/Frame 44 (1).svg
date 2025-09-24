@@ -1,0 +1,11 @@
+<svg width="81" height="80" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.75" width="80" height="80" rx="40" fill="#66A5A4"/>
+<path d="M40.75 43.3334H42.4167C44.25 43.3334 45.75 41.8334 45.75 40V23.3334H30.75C28.25 23.3334 26.0667 24.7167 24.9333 26.75" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24.0833 48.3334C24.0833 51.1 26.3166 53.3334 29.0833 53.3334H30.7499C30.7499 51.5 32.2499 50 34.0833 50C35.9166 50 37.4166 51.5 37.4166 53.3334H44.0833C44.0833 51.5 45.5833 50 47.4166 50C49.2499 50 50.7499 51.5 50.7499 53.3334H52.4166C55.1833 53.3334 57.4166 51.1 57.4166 48.3334V43.3334H52.4166C51.4999 43.3334 50.7499 42.5834 50.7499 41.6667V36.6667C50.7499 35.75 51.4999 35 52.4166 35H54.5666L51.7166 30.0167C51.1166 28.9834 50.0166 28.3334 48.8166 28.3334H45.7499V40C45.7499 41.8334 44.2499 43.3334 42.4166 43.3334H40.7499" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M34.0833 56.6667C35.9243 56.6667 37.4167 55.1743 37.4167 53.3333C37.4167 51.4924 35.9243 50 34.0833 50C32.2424 50 30.75 51.4924 30.75 53.3333C30.75 55.1743 32.2424 56.6667 34.0833 56.6667Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M47.4166 56.6667C49.2575 56.6667 50.7499 55.1743 50.7499 53.3333C50.7499 51.4924 49.2575 50 47.4166 50C45.5756 50 44.0833 51.4924 44.0833 53.3333C44.0833 55.1743 45.5756 56.6667 47.4166 56.6667Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M57.4167 40V43.3333H52.4167C51.5 43.3333 50.75 42.5833 50.75 41.6667V36.6667C50.75 35.75 51.5 35 52.4167 35H54.5666L57.4167 40Z" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24.0833 33.3334H34.0833" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24.0833 38.3334H30.7499" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M24.0833 43.3334H27.4166" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

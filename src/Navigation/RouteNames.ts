@@ -6,7 +6,12 @@ const routeNames = {
   dashboard: "/dashboard",
   signIn: "/signin",
   signUp: "/signup",
-
+  stories: "/stories",
+  share_story: "/share-your-story",
+  verificationService: "/verification",
+  forgotPassword: "/forgot-password",
+  resetPassword: "/reset-password",
+  cookiePolicy:"/cookie-policy",
   notFound: "*",
 };
 
