@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../../Components/Button";
-import happyShopper from "../../Assets/svg_images/Whisk_19879cdfd 8.svg";
+import happyShopper from "../../Assets/svg_images/hero_image.svg";
 import { Heading, Text } from "../../Components/Typography";
 import { useNavigate } from "react-router-dom";
 import { Play, Rocket } from "lucide-react";
@@ -62,7 +62,7 @@ fast, and stress-free, so you shop more and  worry less.
            <img
              src={happyShopper}
              alt="Happy woman with shopping bags giving thumbs up"
-             className="rounded-2xl w-full h-auto object-cover"
+             className="rounded-2xl w-full h-full object-cover"
            />
          </div>
        </div>

@@ -5,7 +5,7 @@ import { Button } from "../../../Components/Button";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Heading, Text } from "../../../Components/Typography";
+import { Text } from "../../../Components/Typography";
 
 import toast from "react-hot-toast";
 import {
@@ -14,7 +14,6 @@ import {
 } from "../../../redux/features/orderManagement/orderManagementThunk";
 import { PageLoader } from "../../../Components/PageLoader";
 import Modal from "../../../Components/Modal";
-import GoBack from "../../../Components/GoBack";
 import { resetConfirmPaymentState } from "../../../redux/features/orderManagement/orderManagementSlice";
 
 export default function PaymentDeatails() {
@@ -29,7 +28,7 @@ export default function PaymentDeatails() {
   );
 
   const accountDetails = {
-    bank: "Access Bank",
+    bank: "Guarantee Trust Bank",
     accountName: "ShopViaCal Ltd",
     accountNumber: "1234567890",
   };
@@ -90,10 +89,10 @@ return (
           </div>
 
           <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 leading-tight">
-            Complete Your Payment
+            Complete your order
           </h2>
           <p className="text-xs sm:text-sm text-gray-600 max-w-xs mx-auto leading-relaxed px-2">
-            Transfer to the account details below using your banking app
+  Please pay the exact amount due to the account details below.
           </p>
         </div>
 
