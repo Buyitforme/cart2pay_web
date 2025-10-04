@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "../../Components/Button";
 import happyShopper from "../../Assets/svg_images/hero_image.svg";
 import { Heading, Text } from "../../Components/Typography";
