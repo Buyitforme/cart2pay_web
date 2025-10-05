@@ -4,19 +4,23 @@ import zaraLogo from "../../Assets/svg_images/zara2.svg";
 import asosLogo from "../../Assets/svg_images/asos.svg";
 import sheinLogo from "../../Assets/svg_images/shein.svg";
 import primarkLogo from "../../Assets/svg_images/primark.svg";
+import LazyImage from "../../Components/LazyImage";
+import fashionovaLogo from "../../Assets/fashionova.jpeg";
 
 const storeLogos = [
   { name: "Zara", logo: zaraLogo, url: "https://www.zara.com/" },
   { name: "ASOS", logo: asosLogo, url: "https://www.asos.com/" },
   { name: "Shein", logo: sheinLogo, url: "https://us.shein.com/" },
   { name: "Primark", logo: primarkLogo, url: "https://www.primark.com/en-gb" },
+  {
+    name: "Fashionova",
+    logo: fashionovaLogo,
+    url: "https://www.fashionnova.com/",
+  },
 ];
 
 const StoreMarquee = () => {
   const handleStoreClick = (url: string, storeName: string) => {
-    // Optional: Add analytics tracking here
-
-    // Open in new tab
     window.open(url, "_blank", "noopener,noreferrer");
   };
   return (
@@ -58,7 +62,7 @@ const StoreMarquee = () => {
                   }
                 }}
               >
-                <img
+                <LazyImage
                   src={store.logo}
                   alt={`Visit ${store.name} store`}
                   className="h-12 md:h-16 object-contain"

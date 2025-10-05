@@ -11,7 +11,7 @@ const Cart2payEssentials = () => {
     <div className="max-w-[85%] mx-auto">
       {/* Header */}
       <div className="relative lg:mb-16">
-        <div className="rounded-none p-8 md:p-12 bg-transparent relative">
+        <div className="rounded-none  md:p-12 bg-transparent relative">
           <div className="text-start mb-6 lg:mb-8">
             <Heading
               as="h1"

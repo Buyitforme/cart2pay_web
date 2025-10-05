@@ -105,7 +105,7 @@ const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
 
 const WhyChooseUs = () => {
   return (
-    <section className="w-full bg-background py-20 px-3 md:px-12">
+    <section className="w-full bg-background py-20  md:px-12">
       <div className="max-w-[85%] mx-auto">
         <div className="text-start mb-16">
           <Heading
@@ -126,7 +126,7 @@ const WhyChooseUs = () => {
           </Text>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mx-6 md:mx-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8  md:mx-20">
           {essentials.map((item, index) => (
             <CardItem key={index} item={item} />
           ))}

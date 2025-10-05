@@ -13,6 +13,7 @@ import {
   StatusBadge,
 } from "./ComponentHelpers";
 import { MapPin } from "lucide-react";
+import { Heading } from "../../../Components/Typography";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -43,9 +44,9 @@ const OrderDetails = () => {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-6">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Order Details
-              </h1>
+               <Heading size="xl" weight="bold" className="mb-6">
+  Order Overview
+              </Heading>
               <p className="text-sm text-gray-500">
                 Order placed on{" "}
                 {order?.createdAt
@@ -106,6 +107,8 @@ const OrderDetails = () => {
               value={order?.delivery_information?.phone}
               className="sm:col-span-2 lg:col-span-1"
             />
+                        <InfoCard title="Email" value={order?.email} />
+
           </div>
         </div>
 

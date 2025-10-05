@@ -71,9 +71,8 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
           </Text>
           <div>
             <Button
-              variant="primary"
-              // icon={<BiLink className="w-5 h-5" />}
-              className="w-full text-sm sm:text-base py-2 sm:py-3"
+                 variant="primary"
+                 className="w-auto px-6"
               onClick={() => navigate("/dashboard/new-order")}
             >
               Get Started
@@ -143,7 +142,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
                     </button>
                     <button
                       className="hover:text-secondary_light"
-                      onClick={() => navigate("/signin")}
+              onClick={() => navigate("/dashboard/new-order")}
                     >
                       <Text size="sm" weight="normal">
                         Share a request

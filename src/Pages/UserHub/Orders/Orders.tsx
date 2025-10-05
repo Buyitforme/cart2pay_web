@@ -79,15 +79,18 @@ return (
       </div>
 
       {!filteredOrders.length ? (
-        <div className="mt-12 text-center space-y-4">
-          <Text size="lg">No {activeTab} orders yet.</Text>
-          <Button
-            variant="primary"
-            onClick={() => (window.location.href = "/dashboard/new-order")}
-          >
-            Shop for me
-          </Button>
-        </div>
+      <div className="mt-12 text-center space-y-4">
+  <Text size="lg">No {activeTab} orders yet.</Text>
+  <div className="flex justify-center">
+    <Button
+      variant="primary"
+      className="w-auto px-6"
+      onClick={() => (window.location.href = "/dashboard/new-order")}
+    >
+      Shop for me
+    </Button>
+  </div>
+</div>
       ) : (
        <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
   {filteredOrders.map((order: any) => (
@@ -147,29 +150,29 @@ return (
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="space-y-2 sm:space-y-0 sm:flex sm:gap-2">
-        <Button
-          size="sm"
-          className="w-full sm:flex-1 h-8 sm:h-9 text-xs sm:text-sm"
-          variant="outline"
-          onClick={() =>
-            navigate(`/dashboard/orders/order-details/${order._id}`)
-          }
-        >
-          View Details
-        </Button>
-        <Button
-          size="sm"
-          className="w-full sm:flex-1 h-8 sm:h-9 text-xs sm:text-sm"
-          variant="outline"
-          onClick={() =>
-            navigate(`/dashboard/orders/quote/${order._id}`)
-          }
-        >
-          View Quote
-        </Button>
-      </div>
+    {/* Action Buttons */}
+<div className="flex flex-row w-full gap-2 sm:gap-4">
+  <Button
+    size="sm"
+    className="w-full h-8 sm:h-9 text-xs sm:text-sm"
+    variant="outline"
+    onClick={() =>
+      navigate(`/dashboard/orders/order-details/${order._id}`)
+    }
+  >
+    View Details
+  </Button>
+  <Button
+    size="sm"
+    className="w-full h-8 sm:h-9 text-xs sm:text-sm"
+    variant="outline"
+    onClick={() =>
+      navigate(`/dashboard/orders/quote/${order._id}`)
+    }
+  >
+    View Quote
+  </Button>
+</div>
     </Card>
   ))}
 </div>

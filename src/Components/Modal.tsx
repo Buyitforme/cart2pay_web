@@ -23,7 +23,7 @@ export const Modal = ({
         aria-hidden="true"
       />
       <div 
-        className={`relative z-50 bg-white p-6 rounded-lg shadow-lg space-y-4 ${className} text-center`}
+        className={`relative z-50 bg-white  rounded-lg shadow-lg  ${className} text-center`}
       >
         {children}
       </div>

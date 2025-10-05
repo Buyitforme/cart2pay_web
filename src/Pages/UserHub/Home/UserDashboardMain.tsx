@@ -56,7 +56,7 @@ const Home = () => {
   }
 
   return (
-    <div className="py-6 space-y-6 text-[#1E2A47]">
+    <div className="py-6 space-y-6 text-[#1E2A47] bg-white">
       {/* Greeting */}
       <div>
            <Heading size="xl">

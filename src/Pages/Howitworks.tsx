@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Link,
   CreditCard,
@@ -14,29 +14,41 @@ import { stores } from "./data";
 import { Heading, Text } from "../Components/Typography";
 import { useNavigate } from "react-router-dom";
 import { AnimatedSection } from "./LandingPage/LandingPageMain";
+import happy_shopper from "../Assets/fashion.jpeg";
+import beauty from "../Assets/brushes.jpeg";
+import LazyImage from "../Components/LazyImage";
 
 interface SupportedStoresProps {
   isOpen: boolean;
   onClose: any;
 }
+
 const SupportedStoresModal = ({ isOpen, onClose }: SupportedStoresProps) => {
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState<
+    "Fashion" | "Beauty" | null
+  >(null);
 
   if (!isOpen) return null;
+
+  const filteredStores = stores.filter((s) => s.category === selectedCategory);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        {/* Modal Content */}
-        <div className=" m-4 rounded-lg p-6">
+        <div className="m-4 rounded-lg p-6">
           {/* Header */}
           <div className="flex justify-between items-start mb-6">
             <div>
               <Heading size="2xl" weight="bold" className="text-gray-900 mb-2">
-                Store we support
+                {selectedCategory
+                  ? `${selectedCategory} Stores`
+                  : "Stores We Support"}
               </Heading>
               <Heading size="md" weight="normal" className="text-gray-600">
-                We support the following stores listed
+                {selectedCategory
+                  ? "Explore the supported stores in this category"
+                  : "Choose a category to explore supported stores"}
               </Heading>
             </div>
             <button
@@ -47,40 +59,85 @@ const SupportedStoresModal = ({ isOpen, onClose }: SupportedStoresProps) => {
             </button>
           </div>
 
-          {/* Stores Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {stores.map((store, index) => (
-              <a
-                key={index}
-                href={store.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-4 rounded-lg hover:bg-gray-50 transition-colors"
-              >
+          {/* Category or Store View */}
+          {!selectedCategory ? (
+            // CATEGORY CARDS
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+              {[
+                { title: "Fashion & accessories", img: happy_shopper },
+                { title: "Beauty & Cosmetics", img: beauty },
+              ].map((category) => (
                 <div
-                  className={`w-12 h-12 ${store.bgColor} rounded-lg flex items-center justify-center text-xl`}
+                  key={category.title}
+                  onClick={() =>
+                    setSelectedCategory(
+                      category.title.startsWith("Fashion")
+                        ? "Fashion"
+                        : "Beauty"
+                    )
+                  }
+                  className="cursor-pointer border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
-                  {store.icon}
+                  <LazyImage
+                    src={category.img}
+                    alt={category.title}
+                    className="w-full h-40 object-cover"
+                  />
+
+                  <div className="p-4 text-center">
+                    <Heading
+                      size="lg"
+                      weight="semibold"
+                      className="text-gray-800"
+                    >
+                      {category.title}
+                    </Heading>
+                  </div>
                 </div>
-                <div>
-                  <Heading
-                    size="lg"
-                    weight="semibold"
-                    className="text-gray-900"
-                  >
-                    {store.name}
-                  </Heading>
-                  <Heading size="sm" weight="normal" className="text-gray-600">
-                    {store.category}
-                  </Heading>
+              ))}
+            </div>
+          ) : (
+            // STORE LIST VIEW
+            <>
+              {filteredStores.length > 0 ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-8 justify-center items-center">
+                  {filteredStores.map((store, index) => (
+                    <a
+                      key={index}
+                      href={store.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex justify-center items-center p-4 rounded-lg hover:shadow-md transition-shadow border border-gray-100 bg-white"
+                    >
+                      <LazyImage
+                        src={store.icon}
+                        alt={store.name}
+                        className="w-20 h-auto object-contain"
+                      />
+                    </a>
+                  ))}
                 </div>
-              </a>
-            ))}
-          </div>
+              ) : (
+                <p className="text-gray-500 italic mb-8 text-center">
+                  No store at the moment.
+                </p>
+              )}
+
+              {/* Back Button */}
+              <Button
+                variant="primary"
+                className="w-auto px-6"
+                // className="text-gray-700 border-gray-300"
+                onClick={() => setSelectedCategory(null)}
+              >
+                Back to catogires
+              </Button>
+            </>
+          )}
         </div>
 
-        {/* Bottom Section */}
-        <div className=" mx-4 mb-4 rounded-lg p-6">
+        {/* Footer */}
+        <div className="mx-4 mb-4 rounded-lg p-6 border-t border-gray-100">
           <div className="flex justify-between items-center">
             <Heading
               size={{ sm: "sm", md: "lg" }}
@@ -90,8 +147,8 @@ const SupportedStoresModal = ({ isOpen, onClose }: SupportedStoresProps) => {
               Do you have questions?
             </Heading>
             <Button
-              variant="primary"
-              className="bg-green-600 hover:bg-green-700 flex items-center gap-2"
+              variant="secondary"
+              className="w-auto px-6"
               onClick={() => navigate("contact-us")}
             >
               <Headphones className="w-4 h-4" />
@@ -110,7 +167,7 @@ const HowItWorksSection = () => {
 
   return (
     <AnimatedSection>
-      <section className="bg-gradient-to-br from-emerald-50 via-slate-50 to-indigo-100 py-16 px-4 sm:px-6 lg:px-8">
+      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-12">
@@ -128,8 +185,8 @@ const HowItWorksSection = () => {
               weight="normal"
               className="pt-2 text-[#6B7280] text-center md:text-start"
             >
-              From sharing a link to receiving your order — shopping made
-              effortless in 3 steps.
+              From sharing a product link to receiving your order — shopping
+              made effortless in 3 simple steps.
             </Text>
           </div>
 
@@ -240,7 +297,9 @@ const HowItWorksSection = () => {
                     weight="normal"
                     className="text-gray-600 mb-4"
                   >
-                   Copy the product link from any major store (Zara, Fashion Nova, Shein, etc.), share it with us, and add your shipping address.
+                    Copy the product link from any major store (Zara, Fashion
+                    Nova, Shein, etc.), share it with us, and add your shipping
+                    address.
                   </Heading>
 
                   <div className="flex justify-between items-center mb-4">
@@ -278,9 +337,10 @@ const HowItWorksSection = () => {
                     2 — We purchase on your behalf
                   </Heading>
                   <Heading size="md" weight="normal" className="text-gray-600">
-                    Our team confirms stock availability, applies discounts if available, and provides you with a full cost breakdown. Once you confirm payment, we’ll make the purchase for you.
+                    Our team confirms stock availability, applies discounts if
+                    available, and provides you with a full cost breakdown. Once
+                    you confirm payment, we’ll make the purchase for you.
                   </Heading>
-                 
                 </div>
               </div>
 
@@ -302,7 +362,9 @@ const HowItWorksSection = () => {
                     weight="normal"
                     className="text-gray-600 mb-4"
                   >
-                   We’ll ship your order straight to your door with full tracking and updates along the way. Plus, our support team is here if you need help.
+                    We’ll ship your order straight to your door with full
+                    tracking and updates along the way. Plus, our support team
+                    is here if you need help.
                   </Heading>
 
                   <div className="flex justify-between items-center mb-4">

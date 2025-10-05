@@ -124,7 +124,7 @@ const Quote = () => {
           </div>
         </div>
       ) : (
-        <div className="max-w-3xl mx-auto p-6 rounded-xl space-y-8">
+        <div className="max-w-3xl mx-auto  rounded-xl space-y-8 md:px-2">
           <div className="text-center space-y-2">
             <Heading size="lg" weight="bold" color="default">
               🎉 Your Quote Is Ready!
@@ -288,34 +288,34 @@ const Quote = () => {
           )}
 
           <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-            <div className="py-2 w-full flex flex-col items-center justify-center">
-              <Lottie
-                animationData={success}
-                loop={true}
-                style={{ width: 80, height: 80 }}
-              />
-
-              {/* Account Name */}
-              <div className="space-y-1">
-                <Text size="sm" color="subtle">
-                  Kindly, {generatePaymentDetails.message}
-                </Text>
-              </div>
-
-              {/* Done Button */}
-              <div className="pt-4">
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    setIsModalOpen(false);
-                  }}
-                  className="w-full"
-                >
-                  Ok
-                </Button>
-              </div>
-            </div>
-          </Modal>
+  <div className="py-2 w-full max-w-md flex flex-col items-center justify-center">
+    <Lottie
+      animationData={success}
+      loop={true}
+      style={{ width: 80, height: 80 }}
+    />
+    
+    {/* Account Name */}
+    <div className="space-y-1 w-full px-4">
+      <Text size="sm" color="subtle" weight='normal' className="break-words">
+        Kindly,{generatePaymentDetails.message}
+      </Text>
+    </div>
+    
+    {/* Done Button */}
+    <div className="pt-4 w-full px-4">
+      <Button
+        variant="primary"
+        onClick={() => {
+          setIsModalOpen(false);
+        }}
+        className="w-full"
+      >
+        Ok
+      </Button>
+    </div>
+  </div>
+</Modal>
 
          
         </div>
