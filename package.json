@@ -44,8 +44,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-        "lint": "eslint ."
-
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -65,8 +64,6 @@
       "last 1 safari version"
     ]
   },
- 
-
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^18.19.112",

@@ -1,5 +1,6 @@
 import React from "react";
 import { Heading, Text } from "../../Components/Typography";
+import SliderComponent from "../../Components/SliderComponent";
 
 const testimonials = [
   {
@@ -67,53 +68,46 @@ const TestimonialSection: React.FC<TestimonialProps> = ({ onExploreClick }) => {
       <div className="flex flex-col items-center gap-8">
         {/* Infinite Scroll Animation */}
         <div className="relative overflow-hidden w-full">
-<div 
-  className="flex hover:[animation-play-state:paused] space-x-6 sm:space-x-8 lg:space-x-10"
-   style={{
-    animation: `scroll ${testimonials.length * 2}s linear infinite`
-  }}
->            {[...Array(2)]
-              .flatMap(() => testimonials)
-              .map((t, idx) => (
-                <div
-                  key={idx}
-                  className="border border-color-border bg-white shadow-md px-6 py-3 rounded-lg flex-shrink-0 hover:shadow-lg transition-shadow duration-300 w-[300px] sm:w-[350px] md:w-[400px]"
-                >
-                  <Text
-                    size={{ sm: "sm", base: "xs" }}
-                    weight="normal"
-                    color="default"
-                    className="text-gray-600 italic mb-4 break-words"
-                  >
-                    "{t.quote}"
-                  </Text>
+         <SliderComponent>
+  {[...Array(2)]
+    .flatMap(() => testimonials)
+    .map((t, idx) => (
+      <div
+        key={idx}
+        className="border border-color-border bg-white shadow-md px-6 py-3 rounded-lg hover:shadow-lg transition-shadow duration-300 w-[300px] sm:w-[350px] md:w-[400px]"
+      >
+        <Text
+          size={{ sm: "sm", base: "xs" }}
+          weight="normal"
+          className="text-gray-600 italic mb-4 break-words"
+        >
+          "{t.quote}"
+        </Text>
 
-                  <div className="flex items-center gap-3 mt-4">
-                    <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-300 text-gray-700 font-semibold flex-shrink-0">
-                      {t.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <Text
-                        size="md"
-                        weight="bold"
-                        className="text-gray-800 font-semibold truncate"
-                      >
-                        {t.name}
-                      </Text>
-                      <Text size="sm" className="text-gray-500 truncate">
-                        {t.location}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
-              ))}
+        <div className="flex items-center gap-3 mt-4">
+          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-300 text-gray-700 font-semibold flex-shrink-0">
+            {t.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")}
+          </div>
+          <div className="min-w-0 flex-1">
+            <Text size="md" weight="bold" className="text-gray-800 font-semibold truncate">
+              {t.name}
+            </Text>
+            <Text size="sm" className="text-gray-500 truncate">
+              {t.location}
+            </Text>
           </div>
         </div>
       </div>
-    </div>
+    ))}
+</SliderComponent>
+
+          
+          </div>
+        </div>
+      </div>
   );
 };
 

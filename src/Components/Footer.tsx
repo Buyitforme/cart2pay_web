@@ -237,7 +237,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
           {/* Bottom Section */}
           <div className="mt-6 sm:mt-8 flex flex-col lg:flex-row items-center justify-between gap-6">
             <div className="text-xs sm:text-sm text-white">
-              © 2023 SHOPVIACAL. All rights reserved.
+              © 2025 SHOPVIACAL. All rights reserved.
             </div>
 
             <div className="flex space-x-4">
