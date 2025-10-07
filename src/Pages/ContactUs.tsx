@@ -102,7 +102,7 @@ const ContactUs = () => {
                       href="tel:+2347039379012"
                       className="text-primary font-medium"
                     >
-                      +234 703 937 9012
+                      +234 703 361 6311
                     </a>{" "}
                     {/* or{" "}
                     <a
