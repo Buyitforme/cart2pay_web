@@ -69,7 +69,7 @@ const AboutUs: React.FC = () => {
             className="w-full h-full object-cover"
           />
 
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-end px-4 sm:px-8 md:px-12 lg:px-16 pb-8 sm:pb-12 md:pb-16">
+          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end px-4 sm:px-8 md:px-12 lg:px-16 pb-8 sm:pb-12 md:pb-16">
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}

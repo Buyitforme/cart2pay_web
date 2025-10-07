@@ -39,9 +39,9 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
               variant="primary"
               icon={<Rocket className="w-5 h-5" />}
               className="w-full text-sm sm:text-base py-2 sm:my-3"
-              onClick={() => navigate("/signin")}
+              onClick={() => navigate("/dashboard/new-order")}
             >
-              Get Started
+              Shop for me
             </Button>
 
             <Button
