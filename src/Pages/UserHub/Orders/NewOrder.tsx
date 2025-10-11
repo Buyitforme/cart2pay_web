@@ -130,7 +130,6 @@ export const NewOrder = () => {
     if (!createOrder.error && createOrder.statusCode === 201) {
       setIsCreateOrderModalOpen(true);
       dispatch(clearFormData());
-     
     } else if (createOrder.error) {
       toast.error(createOrder.message);
     }
@@ -364,42 +363,44 @@ export const NewOrder = () => {
                             </Button>
                           </div>
                         </Modal>
-                        <Modal
-                          isOpen={isCreateOrderModalOpen}
-                          onClose={() => setIsCreateOrderModalOpen(false)}
-                        >
-                          <div className="flex flex-col items-center justify-center text-center p-4">
-                            <Lottie
-                              animationData={success}
-                              loop={true}
-                              style={{ width: 80, height: 80 }}
-                            />
+                      <Modal
+  isOpen={isCreateOrderModalOpen}
+  onClose={() => setIsCreateOrderModalOpen(false)}
+>
+  <div className="w-full flex flex-col items-center justify-center text-center p-4">
+    <Lottie
+      animationData={success}
+      loop={true}
+      style={{ width: 80, height: 80 }}
+    />
 
-                            <Text size="lg" weight="bold" className="mt-2">
-                              Order successfully created
-                            </Text>
+    <Text size="lg" weight="normal" className="mt-2">
+      Order successfully created
+    </Text>
 
-                            <div className="flex justify-center gap-4 mt-6">
-                              <Button
-                                variant="primary"
-                                onClick={() => setIsCreateOrderModalOpen(false)}
-                              >
-                                Ok
-                              </Button>
-                              <Button
-                                variant="outline"
-                                onClick={() => {
-                                  remove(index);
-                                  setIsModalOpen(false);
-                                  navigate("/dashboard/orders");
-                                }}
-                              >
-                                View order
-                              </Button>
-                             
-                            </div>
-                          </div>
-                        </Modal>
+    <div className="flex justify-center gap-4 mt-6 w-full max-w-xs">
+      <Button
+        className="flex-1"
+        variant="primary"
+        onClick={() => setIsCreateOrderModalOpen(false)}
+      >
+        Ok
+      </Button>
+      <Button
+        className="flex-1"
+        variant="outline"
+        onClick={() => {
+          remove(index);
+          setIsModalOpen(false);
+          navigate("/dashboard/orders");
+        }}
+      >
+        View order
+      </Button>
+    </div>
+  </div>
+</Modal>
+
                       </div>
                     ))}
                   </div>

@@ -32,7 +32,9 @@ export const storeOptions = [
   { label: "Shein", value: "shein" },
   { label: "Zara", value: "zara" },
   { label: "Fashion Nova", value: "fashion-nova" },
-  { label: "Other", value: "other" },
+  { label: "Asos", value: "asos" },
+    { label: "Primark", value: "primark" },
+
 ];
 export const sizeOptions = [
   // US Sizes

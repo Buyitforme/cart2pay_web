@@ -5,9 +5,10 @@ import { Card } from "../../../Components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { triggerOrderHistory } from "../../../redux/features/orderManagement/orderManagementThunk";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PageLoader } from "../../../Components/PageLoader";
 import Tabs from "../../../Components/Tabs";
+import { ShoppingBag } from "lucide-react";
 
 export interface Order {
   _id: string;
@@ -80,16 +81,18 @@ return (
 
       {!filteredOrders.length ? (
       <div className="mt-12 text-center space-y-4">
-  <Text size="lg">No {activeTab} orders yet.</Text>
-  <div className="flex justify-center">
-    <Button
-      variant="primary"
-      className="w-auto px-6"
-      onClick={() => (window.location.href = "/dashboard/new-order")}
-    >
-      Shop for me
-    </Button>
-  </div>
+ <div className="flex flex-col items-center justify-center py-10 text-center">
+          <ShoppingBag className="w-16 h-16 text-gray-400 mb-3" />
+          <Text size="lg" weight="medium">
+            No {activeTab} orders yet.
+          </Text>
+          <Text size="sm" className="text-gray-500 mb-5">
+            When you place an order, it will appear here.
+          </Text>
+          <Link to="/dashboard/new-order">
+            <Button>Start Shopping</Button>
+          </Link>
+        </div>
 </div>
       ) : (
        <div className="mt-6 sm:mt-8 grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">

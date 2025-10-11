@@ -19,7 +19,7 @@ import {
   triggerEditAddress,
   triggerGetAddreses,
 } from "../redux/features/orderManagement/orderManagementThunk";
-import { Pencil, Trash2 } from "lucide-react";
+import { MapPin, Pencil, Trash2 } from "lucide-react";
 import { EditAddressPayload } from "../redux/features/orderManagement/types";
 import { lgaOptions, stateOptions } from "./UserHub/Orders/ordersHelpers";
 import Select from "../Components/Select";
@@ -54,14 +54,14 @@ const UserProfile = () => {
   const [showForm, setShowForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen]=useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const { getUserProfileData, editUserProfileData } = useSelector(
     (state: RootState) => state.user_account_management
   );
-  const { addresses, editAddress,deleteAddress } = useSelector(
+  const { addresses, editAddress, deleteAddress } = useSelector(
     (state: RootState) => state.order_management
   );
   const userData = getUserProfileData.data?.results?.data;
@@ -137,42 +137,45 @@ const UserProfile = () => {
 
     dispatch(triggerEditAddress({ payload, addressId: editingAddress._id }));
   };
-    const handleDeleteAddress = () => {
+  const handleDeleteAddress = () => {
     dispatch(triggerDeleteAddress({ addressId: editingAddress._id }));
   };
 
-useEffect(() => {
-  if (!editAddress.error && editAddress.statusCode === 200) {
-    toast.success(editAddress.message);
-    localStorage.setItem("activeTab", "addresses");
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  } else if (editAddress.error) {
-    toast.error(editAddress.message);
-  }
-}, [editAddress.error, editAddress.message, editAddress.statusCode]);
+  useEffect(() => {
+    if (!editAddress.error && editAddress.statusCode === 200) {
+      toast.success(editAddress.message);
+      localStorage.setItem("activeTab", "addresses");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else if (editAddress.error) {
+      toast.error(editAddress.message);
+    }
+  }, [editAddress.error, editAddress.message, editAddress.statusCode]);
 
-useEffect(() => {
-  if (!deleteAddress.error && deleteAddress.statusCode === 200) {
-    toast.success(deleteAddress.message);
-    localStorage.setItem("activeTab", "addresses");
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
-  } else if (deleteAddress.error) {
-    toast.error(deleteAddress.message);
-  }
-}, [deleteAddress.error, deleteAddress.message, deleteAddress.statusCode]);
+  useEffect(() => {
+    if (!deleteAddress.error && deleteAddress.statusCode === 200) {
+      toast.success(deleteAddress.message);
+      localStorage.setItem("activeTab", "addresses");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } else if (deleteAddress.error) {
+      toast.error(deleteAddress.message);
+    }
+  }, [deleteAddress.error, deleteAddress.message, deleteAddress.statusCode]);
 
-// restore on mount
-useEffect(() => {
-const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | null;
-  if (savedTab) {
-    setActiveTab(savedTab);
-    localStorage.removeItem("activeTab");
-  }
-}, []);
+  // restore on mount
+  useEffect(() => {
+    const savedTab = localStorage.getItem("activeTab") as
+      | "addresses"
+      | "profile"
+      | null;
+    if (savedTab) {
+      setActiveTab(savedTab);
+      localStorage.removeItem("activeTab");
+    }
+  }, []);
   if (getUserProfileData.loading || !getUserProfileData.data) {
     return (
       <div className="flex justify-center items-center h-screen w-full">
@@ -287,15 +290,16 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
                 <Modal
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
+                  className="p-6 flex items-center justify-center"
                 >
-                  <div className="space-y-6 p-4 md:p-4">
-                    <Text size="lg" weight="semibold" className="text-center">
+                  <div className="flex flex-col items-center justify-center space-y-6 p-4 md:p-6 text-center">
+                    <Text size="lg" weight="semibold">
                       Are you sure you want to logout?
                     </Text>
 
-                    <div className="flex justify-end gap-4">
+                    <div className="flex justify-center gap-4">
                       <Button
-                        variant="secondary"
+                        variant="outline"
                         onClick={() => setIsModalOpen(false)}
                       >
                         Cancel
@@ -359,10 +363,12 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
                         >
                           <Pencil className="w-5 h-5 text-gray-600 hover:text-blue-600 cursor-pointer" />
                         </button>
-                        <button  onClick={() => {
+                        <button
+                          onClick={() => {
                             setEditingAddress(addr); // store the address being edited
                             setIsDeleteModalOpen(true); // show the form
-                          }}>
+                          }}
+                        >
                           <Trash2 className="w-5 h-5 text-gray-600 hover:text-red-600 cursor-pointer" />
                         </button>
                       </div>{" "}
@@ -370,19 +376,33 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
                   ))}
                 </div>
               ) : (
-                // ✅ Empty state
-                <div className="border rounded-lg p-4 text-center">
-                  <Text size="sm" color="muted">
-                    No addresses yet.
-                  </Text>
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  {/* Icon */}
+                  <MapPin className="w-12 h-12 text-gray-400" />
+
+                  {/* Message */}
+                  <div className="flex flex-col  pt-4 mb-6">
+                    <Text size="md" weight="medium" color="muted">
+                      No addresses added yet.
+                    </Text>
+                    <Text size="sm" color="muted">
+                      Your addresses will appear here here
+                    </Text>
+                  </div>
+
+                  {/* Call-to-action */}
+                  
+                  <Button
+                    onClick={() => setShowForm(true)}
+                    className=""
+                  >
+                    Add Address
+                  </Button>
                 </div>
               )}
 
               {/* ✅ Always visible Add Address button */}
-              <Button
-                variant="primary"
-                onClick={() => navigate("address")}
-              >
+              <Button variant="primary" onClick={() => navigate("address")}>
                 Add New Address
               </Button>
             </div>
@@ -392,8 +412,7 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
       <Modal
         isOpen={showForm}
         onClose={() => setShowForm(false)}
-          className="w-full max-w-md md:max-w-2xl"
-
+        className=" p-4"
       >
         <Heading size="lg" weight="bold">
           Edit address
@@ -423,7 +442,7 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
         >
           {({ values, setFieldValue, isValid, dirty }) => (
             <Form className="space-y-4">
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 [&_label]:text-left">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 [&_label]:text-left">
                 <Input
                   name="firstName"
                   label="First name"
@@ -478,32 +497,31 @@ const savedTab = localStorage.getItem("activeTab") as "addresses" | "profile" | 
         </Formik>
       </Modal>
       {isDeleteModalOpen && (
- <Modal
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-      >
-        <Heading size="lg" weight="bold">
-          Are you sure you want to delete this address?
-        </Heading>
-        <div className='flex gap-6 justify-center items-center'>
-              <Button
-                variant="primary"
-                onClick={handleDeleteAddress}
-                loading={deleteAddress.loading}
-              >
-                Yes
-              </Button>
-               <Button
-                variant="outline"
-                onClick={() => setIsDeleteModalOpen(false)}
-              >
-                Cancel
-              </Button>
-        </div>
-    
-      </Modal>
+        <Modal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          className="p-6"
+        >
+          <Heading size="lg" weight="normal">
+            Are you sure you want to delete this address?
+          </Heading>
+          <div className="flex gap-6 justify-center items-center pt-4">
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteAddress}
+              loading={deleteAddress.loading}
+            >
+              Yes
+            </Button>
+          </div>
+        </Modal>
       )}
-      
     </div>
   );
 };

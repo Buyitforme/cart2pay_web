@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../redux/state";
 import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
-import SectionRenderer from "../../../Components/SectionRenderer";
 import { triggerOrderHistory } from "../../../redux/features/orderManagement/orderManagementThunk";
 import { PageLoader } from "../../../Components/PageLoader";
 import { capitalizeFirstLetter } from "../../../utils";
+import { ShoppingBag } from "lucide-react";
 
 const Home = () => {
   const { getUserProfileData } = useSelector(
@@ -105,22 +105,37 @@ const Home = () => {
       </div>
 
       {/* Quick Action */}
-      <div className="bg-white rounded-xl shadow p-4 flex items-center justify-between">
-        <div>
-          <Heading size="lg" weight="semibold">
-            Start a New Order
-          </Heading>
-          <Text size="sm" className="text-gray-500">
-            Submit your cart or item URL, and we’ll complete the checkout for
-            you.
-          </Text>
-        </div>
-        <Link to="/dashboard/new-order">
-          <Button variant="primary" className="whitespace-normal py-8 md:py-0">
-            Shop for me
-          </Button>
-        </Link>
-      </div>
+   <div className="bg-white rounded-xl shadow p-4 md:p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">
+  <div className="text-left">
+    <Heading
+      size="lg"
+      weight="semibold"
+      className="text-gray-900 leading-snug md:text-xl lg:text-2xl"
+    >
+      Start a New Order
+    </Heading>
+    <Text
+      size="sm"
+      className="text-gray-500 mt-2 text-sm md:text-base leading-relaxed"
+    >
+      Submit your cart or item URL, and we’ll complete the checkout for you.
+    </Text>
+  </div>
+
+  <Link
+    to="/dashboard/new-order"
+    className="self-start md:self-center"
+  >
+    <Button
+      variant="primary"
+      className="px-6 py-2 md:px-8 md:py-3 text-sm md:text-base"
+    >
+      Shop for me
+    </Button>
+  </Link>
+</div>
+
+
 
       {/* Recent Orders */}
       <div className="bg-white rounded-xl shadow p-4">
@@ -139,29 +154,44 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="space-y-4">
-          {orders.slice(0, 3).map((order: any) => (
-            <div
-              key={order._id}
-              className="flex items-center justify-between border-b pb-2"
-            >
-              <div>
-                <Text size="md" weight="medium">
-                  {order.store || "Unknown Store"}
-                </Text>
-                <Text size="sm" className="text-gray-500">
-                  {new Date(order.createdAt).toLocaleDateString()} •{" "}
-                  {capitalizeFirstLetter(order.status)}
-                </Text>
-              </div>
-              <Link to={`/dashboard/orders/order-details/${order._id}`}>
-                <Button size="sm" variant="outline">
-                  View
-                </Button>
-              </Link>
+         <div className="space-y-4">
+      {orders.length > 0 ? (
+        orders.slice(0, 3).map((order: any) => (
+          <div
+            key={order._id}
+            className="flex items-center justify-between border-b pb-2"
+          >
+            <div>
+              <Text size="md" weight="medium">
+                {order.store || "Unknown Store"}
+              </Text>
+              <Text size="sm" className="text-gray-500">
+                {new Date(order.createdAt).toLocaleDateString()} •{" "}
+                {capitalizeFirstLetter(order.status)}
+              </Text>
             </div>
-          ))}
+            <Link to={`/dashboard/orders/order-details/${order._id}`}>
+              <Button size="sm" variant="outline">
+                View
+              </Button>
+            </Link>
+          </div>
+        ))
+      ) : (
+        <div className="flex flex-col items-center justify-center py-10 text-center">
+          <ShoppingBag className="w-16 h-16 text-gray-400 mb-3" />
+          <Text size="lg" weight="medium">
+            No orders yet
+          </Text>
+          <Text size="sm" className="text-gray-500 mb-5">
+            When you place an order, it will appear here.
+          </Text>
+          <Link to="/dashboard/new-order">
+            <Button>Start Shopping</Button>
+          </Link>
         </div>
+      )}
+    </div>
       </div>
 
       {/* Helpful Tip */}
@@ -175,7 +205,7 @@ const Home = () => {
         </Heading>
         <Text size="sm" className="text-[#DCDCDC]">
           Spot something you love? Send the item(s) URL our way, and we’ll
-          handle the checkout for you.
+          handle the rest
         </Text>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
@@ -186,7 +216,9 @@ const Home = () => {
             },
             { label: "Shein", link: "https://www.shein.com" },
             { label: "Zara", link: "https://www.zara.com/ww/" },
-            { label: "H&M", link: "https://www2.hm.com" },
+            { label: "Primark", link: "https://www.primark.com/en-us" },
+                        { label: "Asos", link: "https://www.asos.com/men/" },
+
           ].map((store) => (
             <a
               key={store.label}
@@ -211,7 +243,7 @@ const Home = () => {
           Stores We Support
         </Heading>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {["Shein", "Zara", "Fashion Nova", "H&M"].map((store) => (
+          {["Shein", "Zara", "Fashion Nova", "Primark","Asos"].map((store) => (
             <div
               key={store}
               className="p-3 rounded-lg border text-center hover:shadow transition"

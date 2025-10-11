@@ -124,9 +124,8 @@ const Address = () => {
   useEffect(() => {
     if (!error && statusCode === 200) {
       toast.success(message);
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
+         dispatch(triggerGetAddreses({}));
+
     } else if (error) {
       toast.error(message);
     }
