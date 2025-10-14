@@ -337,70 +337,71 @@ export const NewOrder = () => {
                             </Button>
                           </div>
                         )}
-                        <Modal
-                          isOpen={isModalOpen}
-                          onClose={() => setIsModalOpen(false)}
-                        >
-                          <Text size="lg" weight="bold" color="subtle">
-                            Are you sure you want to remove this item?
-                          </Text>
-
-                          <div className="flex justify-center gap-2 pt-4">
-                            <Button
-                              variant="secondary"
-                              onClick={() => setIsModalOpen(false)}
-                            >
-                              Cancel
-                            </Button>
-                            <Button
-                              variant="destructive"
-                              onClick={() => {
-                                remove(index);
-                                setIsModalOpen(false);
-                              }}
-                            >
-                              Yes
-                            </Button>
-                          </div>
-                        </Modal>
-                      <Modal
-  isOpen={isCreateOrderModalOpen}
-  onClose={() => setIsCreateOrderModalOpen(false)}
+                       <Modal
+  isOpen={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
 >
-  <div className="w-full flex flex-col items-center justify-center text-center p-4">
-    <Lottie
-      animationData={success}
-      loop={true}
-      style={{ width: 80, height: 80 }}
-    />
-
-    <Text size="lg" weight="normal" className="mt-2">
-      Order successfully created
+  <div className="p-6 sm:p-8 space-y-6">
+    <Text size="lg" weight="bold" color="subtle">
+      Are you sure you want to remove this item?
     </Text>
 
-    <div className="flex justify-center gap-4 mt-6 w-full max-w-xs">
+    <div className="flex justify-center gap-3">
       <Button
-        className="flex-1"
-        variant="primary"
-        onClick={() => setIsCreateOrderModalOpen(false)}
+        variant="outline"
+        onClick={() => setIsModalOpen(false)}
       >
-        Ok
+        Cancel
       </Button>
       <Button
-        className="flex-1"
-        variant="outline"
+        variant="destructive"
         onClick={() => {
           remove(index);
           setIsModalOpen(false);
-          navigate("/dashboard/orders");
         }}
       >
-        View order
+        Yes
       </Button>
     </div>
   </div>
 </Modal>
+                        <Modal
+                          isOpen={isCreateOrderModalOpen}
+                          onClose={() => setIsCreateOrderModalOpen(false)}
+                        >
+                          <div className="w-full flex flex-col items-center justify-center text-center p-4">
+                            <Lottie
+                              animationData={success}
+                              loop={true}
+                              style={{ width: 80, height: 80 }}
+                            />
 
+                            <Text size="lg" weight="normal" className="mt-2">
+                              Order successfully created
+                            </Text>
+
+                            <div className="flex justify-center gap-4 mt-6 w-full max-w-xs">
+                              <Button
+                                className="flex-1"
+                                variant="primary"
+                                onClick={() => setIsCreateOrderModalOpen(false)}
+                              >
+                                Ok
+                              </Button>
+                              <Button
+                                className="flex-1"
+                                variant="outline"
+                                onClick={() => {
+                                  remove(index);
+                                  setIsModalOpen(false);
+                                  navigate("/dashboard/orders");
+                                }}
+                              >
+                                View order
+                              </Button>
+                            </div>
+                          </div>
+                        </Modal>
                       </div>
                     ))}
                   </div>

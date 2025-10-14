@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "@headlessui/react": "^2.2.4",
+    "@portabletext/react": "^4.0.3",
+    "@portabletext/types": "^2.0.15",
     "@reduxjs/toolkit": "^2.8.2",
+    "@sanity/client": "^7.12.0",
     "@tailwindcss/vite": "^4.1.10",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",

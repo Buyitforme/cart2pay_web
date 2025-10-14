@@ -8,7 +8,6 @@ import ThirstTraps from "./WhyChooseUs";
 import TestimonialSection from "./Testimonials";
 import { ReactNode, useEffect, useRef } from "react";
 import React from "react";
-import { Heading, Text } from "../../Components/Typography";
 import HowItWorks from "./HowItWorks";
 
 
@@ -41,6 +40,7 @@ const LandingPageMain = () => {
       <AnimatedSection>
         <HeroSection onExploreClick={scrollToStoreMarquee} />
       </AnimatedSection>
+      
       <AnimatedSection>
         <HowItWorks />
       </AnimatedSection>

@@ -12,7 +12,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className }) => 
       {/* Skeleton while loading */}
       {!loaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-200 animate-pulse rounded-xl">
-          <span className="text-gray-400 text-sm">Loading...</span>
+          {/* <span className="text-gray-400 text-sm">Loading...</span> */}
         </div>
       )}
 

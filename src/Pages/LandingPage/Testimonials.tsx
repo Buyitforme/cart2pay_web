@@ -1,42 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { Heading, Text } from "../../Components/Typography";
 import SliderComponent from "../../Components/SliderComponent";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Amaka O.",
-    quote:
-      "ShopViaCal made buying from Amazon so easy. I just dropped the product link, and they handled the rest!",
-    location: "Lagos, Nigeria",
-    avatar: "https://i.pravatar.cc/100?img=1",
+    quote: "So easy. I paste links and my orders arrive fast.",
+    name: "Samson Kitigo",
+    role: "Freelancer",
+    rating: 5,
   },
   {
-    name: "James A.",
-    quote:
-      "No more stress with international payments. I paid locally, and my order arrived right on time.",
-    location: "Abuja, Nigeria",
-    avatar: "https://i.pravatar.cc/100?img=2",
+    quote: "They handled a tricky international checkout seamlessly.",
+    name: "Ebere Enyiora",
+    role: "Freelancer",
+    rating: 5,
   },
   {
-    name: "Ngozi T.",
-    quote:
-      "I was worried about delivery delays, but tracking updates kept me informed until my package arrived.",
-    location: "Port Harcourt, Nigeria",
-    avatar: "https://i.pravatar.cc/100?img=3",
+    quote: "Worth it for the time saved. I use it weekly.",
+    name: "Tunde Nelson",
+    role: "Store Owner",
+    rating: 5,
   },
   {
-    name: "Daniel K.",
-    quote:
-      "Finally, a simple way to shop global brands without hidden fees. Transparent and reliable service.",
-    location: "Enugu, Nigeria",
-    avatar: "https://i.pravatar.cc/100?img=4",
+    quote: "Best service ever. Saves me hours every week.",
+    name: "Edith Martins",
+    role: "Student",
+    rating: 5,
   },
   {
-    name: "Lola S.",
-    quote:
-      "The whole process felt effortless. Fast delivery, secure payment, and excellent support!",
-    location: "Ibadan, Nigeria",
-    avatar: "https://i.pravatar.cc/100?img=5",
+    quote: "I'd say it's perfect if you love convenience",
+    name: "Sarah Johnson",
+    role: "Banker",
+    rating: 5,
   },
 ];
 
@@ -44,70 +40,123 @@ interface TestimonialProps {
   onExploreClick?: () => void;
 }
 const TestimonialSection: React.FC<TestimonialProps> = ({ onExploreClick }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsPerView = 3;
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? testimonials.length - itemsPerView : prev - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) =>
+      prev >= testimonials.length - itemsPerView ? 0 : prev + 1
+    );
+  };
+
+  const visibleTestimonials = testimonials.slice(
+    currentIndex,
+    currentIndex + itemsPerView
+  );
+
+  const getInitials = (fullName: string) => {
+    const names = fullName.trim().split(" ");
+    if (names.length >= 2) {
+      return (names[0][0] + names[names.length - 1][0]).toUpperCase();
+    }
+    return names[0][0].toUpperCase();
+  };
   return (
-    <div className="w-full bg-white py-8 sm:py-12 lg:py-16 md:px-8">
-      <div className="text-start mb-16">
-        <Heading
-          as="h1"
-          size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
-          weight="semibold"
-          className="md:leading-tight text-center "
-        >
-          Loved by shoppers
-        </Heading>
+    <div className="w-full bg-gray-50 py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
+      {/* Header */}
+      <div className="text-center mb-12 lg:mb-16">
+        <div className="flex items-center justify-center gap-3 mb-4">
+          <span className="text-3xl">😍</span>
+          <Heading
+            as="h1"
+            size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
+            weight="bold"
+            className="md:leading-tight text-center"
+          >
+            Loved by <span className="text-primary">customers</span>
+          </Heading>
+          <span className="text-3xl">❤️</span>
+        </div>
 
         <Text
-          size="lg"
-          weight="normal"
-          className="pt-2 text-[#6B7280] text-center px-4"
+          size={{ sm: "sm", md: "lg" }}
+          weight={{ sm: "normal", md: "semibold" }}
+          className="pt-2 text-[#6B7280] text-center"
         >
-          Real stories from people enjoying stress-free shopping with ShopViaCal
+          {" "}
+          Our clients send us bunch of smiles with our services and we love them
         </Text>
       </div>
 
-      <div className="flex flex-col items-center gap-8">
-        {/* Infinite Scroll Animation */}
-        <div className="relative overflow-hidden w-full">
-         <SliderComponent>
-  {[...Array(2)]
-    .flatMap(() => testimonials)
-    .map((t, idx) => (
-      <div
-        key={idx}
-        className="border border-color-border bg-white shadow-md px-6 py-3 rounded-lg hover:shadow-lg transition-shadow duration-300 w-[300px] sm:w-[350px] md:w-[400px]"
-      >
-        <Text
-          size={{ sm: "sm", base: "xs" }}
-          weight="normal"
-          className="text-gray-600 italic mb-4 break-words"
-        >
-          "{t.quote}"
-        </Text>
+      {/* Testimonials Carousel */}
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {visibleTestimonials.map((testimonial, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow border border-gray-100"
+            >
+              {/* Quote */}
+              <p className="text-gray-700 text-sm sm:text-base mb-6 italic leading-relaxed">
+                "{testimonial.quote}"
+              </p>
 
-        <div className="flex items-center gap-3 mt-4">
-          <div className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-300 text-gray-700 font-semibold flex-shrink-0">
-            {t.name
-              .split(" ")
-              .map((n) => n[0])
-              .join("")}
-          </div>
-          <div className="min-w-0 flex-1">
-            <Text size="md" weight="bold" className="text-gray-800 font-semibold truncate">
-              {t.name}
-            </Text>
-            <Text size="sm" className="text-gray-500 truncate">
-              {t.location}
-            </Text>
-          </div>
+              {/* User Info & Rating */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-semibold text-sm">
+                    {getInitials(testimonial.name)}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-gray-900 text-sm">
+                      {testimonial.name}
+                    </p>
+                    {/* <p className="text-gray-500 text-xs">
+                      {testimonial.role}
+                    </p> */}
+                  </div>
+                </div>
+
+                {/* Stars */}
+                {/* <div className="flex gap-1">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-4 h-4 fill-orange-400 text-orange-400"
+                    />
+                  ))}
+                </div> */}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Navigation Arrows */}
+        <div className="flex items-center justify-center gap-4">
+          <button
+            onClick={handlePrev}
+            className="p-2 rounded-full border-2 border-gray-300 hover:border-primary hover:bg-orange-50 transition-colors"
+            aria-label="Previous testimonials"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-600 hover:text-orange-500" />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="p-2 rounded-full border-2 border-gray-300 hover:border-primary hover:bg-orange-50 transition-colors"
+            aria-label="Next testimonials"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-600 hover:text-orange-500" />
+          </button>
         </div>
       </div>
-    ))}
-</SliderComponent>
-
-          
-          </div>
-        </div>
-      </div>
+    </div>
   );
 };
 
