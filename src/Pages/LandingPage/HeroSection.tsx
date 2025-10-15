@@ -72,7 +72,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
   const navigate = useNavigate();
   return (
     <div>
-      <div className="bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 ">
+      <div className="bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 pt-16 lg:pt-8">
         {/* <div className="bg-secondary "> */}
 
         <div className="max-w-[85%] mx-auto grid lg:grid-cols-2 gap-4 lg:gap-8 items-center">
@@ -120,7 +120,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
                 className="w-full text-sm sm:text-base py-2 sm:py-3 bg-[#E8F7F0] text-secondary hover:bg-secondary"
                 onClick={() => navigate("/how-it-works")}
               >
-                See how it works
+                How it works
               </Button>
             </div>
           </div>

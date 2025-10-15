@@ -35,7 +35,7 @@ const SupportedStoresModal = ({ isOpen, onClose }: SupportedStoresProps) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto ">
         <div className="m-4 rounded-lg p-6">
           {/* Header */}
           <div className="flex justify-between items-start mb-6">
@@ -136,7 +136,6 @@ const SupportedStoresModal = ({ isOpen, onClose }: SupportedStoresProps) => {
           )}
         </div>
 
-        {/* Footer */}
         <div className="mx-4 mb-4 rounded-lg p-6 border-t border-gray-100">
           <div className="flex justify-between items-center">
             <Heading
@@ -167,7 +166,7 @@ const HowItWorksSection = () => {
 
   return (
     <AnimatedSection>
-      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8">
+      <section className="bg-white py-16 px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-12">

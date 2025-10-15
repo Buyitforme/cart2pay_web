@@ -43,13 +43,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
       toast.error("error!");
     }
   };
-  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `hover:text-[#8fac6a] transition-colors duration-200 ${
-      isActive ? "text-[#8fac6a] " : ""
-    }`;
-
-  const textClass = (isActive: boolean) =>
-    `text-white hover:text-[#8fac6a] ${isActive ? "!text-[#8fac6a]" : ""}`;
+ 
   return (
     <>
       <section className="bg-gradient-to-br from-emerald-50 via-blue-50 to-blue-100 py-16">

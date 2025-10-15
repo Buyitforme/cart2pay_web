@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Heading, Text } from "../../Components/Typography";
 import SectionRenderer from "../../Components/SectionRenderer";
 import unhappyShopper from "../../Assets/svg_images/african_girl.svg";
@@ -8,8 +8,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import shopping_basket from "../../Assets/svg_images/Group 1.svg";
 import { ImageRenderer } from "../../Components/ImageRenderer";
 import { useNavigate } from "react-router-dom";
-import { PageLoader } from "../../Components/PageLoader";
 import LazyImage from "../../Components/LazyImage";
+import { Button } from "../../Components/Button";
+import { AnimatedSection } from "../LandingPage/LandingPageMain";
+import StoreMarquee from "../LandingPage/StoreMarquee";
 
 const faqItems = [
   {
@@ -36,227 +38,197 @@ const faqItems = [
 
 const AboutUs: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   const toggleIndex = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
+ return (
+  <>
+    <div className="bg-background text-gray-800">
+      <section className="bg-secondary_dark w-full pt-36 lg:pt-48 pb-10 lg:pb-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 px-4 lg:px-12 items-center">
+          {/* Left Column */} 
+          <div>
+            <p className="text-sm sm:text-base font-medium tracking-widest text-white/70 mb-2 sm:mb-4">
+              ABOUT SHOPVIACAL
+            </p>
 
-  if (loading) {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        <PageLoader />
+            <h1 className="mt-2 text-2xl sm:text-3xl lg:text-5xl font-light text-white leading-[1.2] lg:leading-[1.25]">
+              The trusted personal shopper <br className="hidden sm:block" />
+              <span className="italic font-medium">
+                simplifying your buying experience
+              </span>
+            </h1>
+          </div>
+
+          {/* Right Column */}
+          <div className="mt-6 lg:mt-0">
+            <p className="text-white/90 text-base sm:text-lg leading-relaxed mb-4 max-w-lg">
+              Whether it’s securing that limited-edition item, saving time on
+              everyday purchases, or navigating complex international
+              checkouts, we make shopping effortless and convenient, so you
+              get what you need, faster.
+            </p>
+
+            <Button
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-secondary_dark transition-all duration-300 px-4 sm:px-5 py-2 sm:py-2.5 w-auto"
+              onClick={() => navigate("/dashboard/new-order")}
+            >
+              Get started
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <div className="w-full h-64 sm:h-80 md:h-[400px] lg:h-[480px] overflow-hidden">
+        <LazyImage
+          src={unhappyShopper}
+          alt="Hero"
+          className="w-full h-full object-cover"
+        />
       </div>
-    );
-  }
-  return (
-    <>
-      <div className="bg-background text-gray-800">
-        {/* Hero Section */}
-        <section className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] w-full overflow-hidden">
-          <LazyImage
-            src={unhappyShopper}
-            alt="Hero"
-            className="w-full h-full object-cover"
-          />
 
-          <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end px-4 sm:px-8 md:px-12 lg:px-16 pb-8 sm:pb-12 md:pb-16">
+      <section className="bg-secondary_dark text-white pt-8 px-4 lg:px-12">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-6 lg:gap-12 items-start">
+          {/* Right - FAQ */}
+          <div className="flex-1 w-full">
+            <div className="space-y-4">
+              {faqItems.map((item, idx) => {
+                const isOpen = openIndex === idx;
+
+                return (
+                  <div
+                    key={idx}
+                    className="border-b px-4 py-4 rounded-md cursor-pointer transition"
+                    onClick={() => toggleIndex(idx)}
+                  >
+                    <div className="flex justify-between items-center">
+                      <Text
+                        size="lg"
+                        weight="normal"
+                        className="text-muted_white text-lg md:text-2xl"
+                      >
+                        {item.title}
+                      </Text>
+                      {isOpen ? (
+                        <ChevronDown className="w-6 h-6 text-white transition-transform duration-200" />
+                      ) : (
+                        <ChevronRight className="w-6 h-6 text-white transition-transform duration-200" />
+                      )}
+                    </div>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          key="content"
+                          initial={{
+                            height: 0,
+                            opacity: 0,
+                            y: 20,
+                            marginTop: 0,
+                          }}
+                          animate={{
+                            height: "auto",
+                            opacity: 1,
+                            y: 0,
+                            marginTop: 16,
+                          }}
+                          exit={{
+                            height: 0,
+                            opacity: 0,
+                            y: 20,
+                            marginTop: 0,
+                          }}
+                          transition={{ duration: 0.35, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <Text
+                            size="lg"
+                            className="text-muted_white leading-6 tracking-wide pr-3"
+                          >
+                            {item.content}
+                          </Text>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          {/* Left - Image */}
+          <div className="flex-1">
+            <ImageRenderer src={happyShopper} alt="Team" />
+          </div>
+        </div>
+      </section>
+
+      <AnimatedSection>
+        <StoreMarquee />
+      </AnimatedSection>
+
+      {/* Mission Section - Side by Side */}
+      <section className="max-w-7xl mx-auto px-4 py-8 lg:px-12 lg:py-12">
+        <SectionRenderer
+          left={
+            <div className="flex justify-center items-center mb-6 md:mb-0">
+              <LazyImage
+                src={shopping_basket}
+                alt="Shopping basket"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          }
+          right={
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="w-full"
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
             >
               <Heading
-                size="2xl"
+                as="h1"
+                size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
                 weight="bold"
-                className="text-white drop-shadow text-start sm:text-3xl md:text-4xl lg:text-5xl"
+                className="md:leading-tight text-center md:text-start"
               >
-                About Us
+                Join the{" "}
+                <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+                  ShopViaCal Experience
+                </span>
               </Heading>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Who We Are */}
-        <section className="max-w-[700px] mx-auto px-6 py-16">
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex flex-col justify-center items-center"
-          >
-            <Heading
-              as="h1"
-              size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
-              weight="bold"
-              className="md:leading-tight text-center"
-            >
-              Your trusted{" "}
-              <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
-                personal shopper{" "}
-              </span>{" "}
-              for every need
-            </Heading>
-
-            <Text
-              size={{ sm: "sm", md: "lg" }}
-              weight={{ sm: "normal", md: "semibold" }}
-              className="pt-6 text-[#6B7280] text-center"
-            >
-              Whether it’s securing that limited-edition item, saving time on
-              everyday purchases, finding the pieces that best fit your style,
-              or navigating complex international checkouts, we’re here to make
-              shopping effortless. At ShopViaCal, our goal is simple: to handle
-              the hard part of shopping and guide you toward the right choices,
-              so you can focus on what matters most.
-            </Text>
-          </motion.div>
-        </section>
-
-        <section className="bg-secondary_dark text-white pt-12 px-6">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-10 items-start">
-            {/* Right - FAQ */}
-            <div className="flex-1 w-full">
-              <div className="space-y-4">
-                {faqItems.map((item, idx) => {
-                  const isOpen = openIndex === idx;
-
-                  return (
-                    <div
-                      key={idx}
-                      className="border-b px-4 py-6 rounded-md cursor-pointer transition "
-                      onClick={() => toggleIndex(idx)}
-                    >
-                      <div className="flex justify-between items-center">
-                        <Text
-                          size="lg"
-                          weight="normal"
-                          className="text-muted_white text-xl md:text-2xl"
-                        >
-                          {item.title}
-                        </Text>
-                        {isOpen ? (
-                          <ChevronDown className="w-6 h-6 text-white transition-transform duration-200" />
-                        ) : (
-                          <ChevronRight className="w-6 h-6 text-white transition-transform duration-200" />
-                        )}
-                      </div>
-
-                      <AnimatePresence initial={false}>
-                        {isOpen && (
-                          <motion.div
-                            key="content"
-                            initial={{
-                              height: 0,
-                              opacity: 0,
-                              y: 20,
-                              marginTop: 0,
-                            }}
-                            animate={{
-                              height: "auto",
-                              opacity: 1,
-                              y: 0,
-                              marginTop: 16,
-                            }}
-                            exit={{
-                              height: 0,
-                              opacity: 0,
-                              y: 20,
-                              marginTop: 0,
-                            }}
-                            transition={{ duration: 0.35, ease: "easeInOut" }}
-                            className="overflow-hidden"
-                          >
-                            <Text
-                              size="lg"
-                              className="text-muted_white leading-6 tracking-wide pr-3"
-                            >
-                              {item.content}
-                            </Text>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            {/* Left - Image */}
-            <div className="flex-1 ">
-              <ImageRenderer src={happyShopper} alt="Team" />
-            </div>
-          </div>
-        </section>
-
-        {/* Mission Section - Side by Side */}
-        <section className="max-w-7xl mx-auto px-6 py-12">
-          <SectionRenderer
-            left={
-              <div className="flex justify-center items-center mb-8 md:mb-0">
-                <LazyImage
-                  src={shopping_basket}
-                  alt="Shopping basket"
-                  // className="w-full h-full object-cover"
-                />
-              </div>
-            }
-            right={
-              <motion.div
-                initial={{ opacity: 0, x: 60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
+              <Text
+                size="md"
+                color="subtle"
+                weight="normal"
+                className="leading-6 tracking-wide pt-4 text-center md:text-start"
               >
-                <Heading
-                  as="h1"
-                  size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
-                  weight="bold"
-                  className="md:leading-tight text-center md:text-start"
+                Shopping should feel exciting, not stressful. With ShopViaCal,
+                you have a trusted partner to handle the details from finding
+                the right items to making secure purchases and ensuring smooth
+                delivery. We’re here to remove the worries of international
+                checkouts, confusing payments, or endless browsing, so you can
+                shop with confidence and ease. Whether it’s for daily needs or
+                special finds, we’ve got you covered.{" "}
+                <span
+                  className="inline-flex items-center text-secondary_light font-semibold hover:underline cursor-pointer group"
+                  onClick={() => navigate("/signup")}
                 >
-                  Join the{" "}
-                  <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
-                    ShopViaCal Experience
-                  </span>
-                </Heading>
-                <Text
-                  size="md"
-                  color="subtle"
-                  weight="normal"
-                  className="leading-6 tracking-wide pt-4 text-center md:text-start"
-                >
-                  Shopping should feel exciting, not stressful. With ShopViaCal,
-                  you have a trusted partner to handle the details — from
-                  finding the right items to making secure purchases and
-                  ensuring smooth delivery. We’re here to remove the worries of
-                  international checkouts, confusing payments, or endless
-                  browsing, so you can shop with confidence and ease. Whether
-                  it’s for daily needs or special finds, we’ve got you covered.{" "}
-                  <span
-                    className="inline-flex items-center text-secondary_light font-semibold hover:underline cursor-pointer group"
-                    onClick={() => navigate("/signup")}
-                  >
-                    TRY US TODAY{" "}
-                    <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Text>
-              </motion.div>
-            }
-          />
-        </section>
-      </div>
-    </>
-  );
+                  TRY US TODAY{" "}
+                  <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Text>
+            </motion.div>
+          }
+        />
+      </section>
+    </div>
+  </>
+);
 };
 
 export default AboutUs;

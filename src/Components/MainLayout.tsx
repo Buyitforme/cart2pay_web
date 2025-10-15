@@ -11,8 +11,21 @@ const MainLayout = () => {
  useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+   const getNavBg = () => {
+  switch (pathname) {
+    case '/':
+      return 'bg-transparent';
+    case '/about':
+      return 'bg-white';
+    case '/contact-us':
+      return 'bg-gray-50';
+    default:
+      return 'bg-transparent';
+  }
+};
   return (
-    <div className="min-h-screen flex flex-col w-full bg-white">
+    <div className="min-h-screen flex flex-col w-full ">
       <Nav />
       <main className="flex-grow">
         <Outlet />

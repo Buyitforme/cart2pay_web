@@ -23,7 +23,7 @@ const ContactUs = () => {
   return (
     <>
       <AnimatedSection>
-        <div className="min-h-screen bg-background px-6 py-16 flex items-start justify-center">
+        <div className="min-h-screen bg-background px-6 py-16 flex items-start justify-center pt-24 lg:pt-32">
           <div className="w-full max-w-3xl bg-white shadow-md rounded-xl p-8 space-y-6">
             <div className="text-center space-y-2">
               <Heading size="2xl" weight="bold" className="text-accent">

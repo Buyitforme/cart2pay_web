@@ -8,8 +8,8 @@ import LazyImage from "../../Components/LazyImage";
 
 const HowItWorks = () => {
   return (
-    <div className="min-h-screen bg-white py-12 ">
-      <div className="max-w-[85%] mx-auto">
+    <div className="min-h-screen bg-white pt-8">
+      <div className="max-w-[85%] mx-auto ">
         {/* Header */}
         <div className="text-start mb-16 w-full lg:w-1/3">
           <Heading
