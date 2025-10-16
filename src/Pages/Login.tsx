@@ -96,7 +96,7 @@ const Login = () => {
         )}
       </Formik>
 
-<div className='flex flex-col gap-2 items-center'>
+<div className='flex flex-col gap-2 items-center pt-2'>
     <Text size="sm" weight="medium" color="default">
          Forgot password?{" "}
         <Link to="/forgot-password" className="text-primary">
