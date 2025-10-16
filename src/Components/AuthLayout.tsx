@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AnimatedSection } from "../Pages/LandingPage/LandingPageMain";
-import logo from "../Assets/svg_images/Logo2.svg";
-
+import logo from "../Assets/svg_images/logoWhite.svg";
+import happyShopper from "../Assets/cart.png";
+import { Text } from "./Typography";
 
 interface AuthLayoutProps {
   children: React.ReactNode;
@@ -10,28 +10,47 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <AnimatedSection>
-      <div
-        className="relative min-h-screen bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('your-background-image-url')",
-        }}
-      >
-        {/* Logo */}
-        <div className="absolute top-4 left-6">
-          <Link to="/" className="flex">
-            <img src={logo} alt="logo" />
-          </Link>
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="flex flex-1 flex-col md:flex-row">
+        {/* Left Section - Image, Logo, Overlay */}
+        <div className="relative md:w-1/2 w-full h-[400px] sm:h-[500px] md:h-screen flex items-center justify-center overflow-hidden">
+          {/* Background Image */}
+          <img
+            src={happyShopper}
+            alt="Shopping"
+            className="absolute inset-0 w-full h-full object-contain"
+          />
+
+          {/* Overlay Pattern */}
+          <div className="absolute inset-0 bg-secondary_dark/85" />
+
+          {/* Logo & Text Centered */}
+          <div className="relative z-10 text-white text-center px-4 sm:px-6 md:px-10">
+            <Link to="/" className="inline-block mb-3 sm:mb-4">
+              <img 
+                src={logo} 
+                alt="App Logo" 
+              />
+            </Link>
+
+            <Text 
+              size={{ sm: "lg", md: "xl" }}
+              weight="light" 
+              className="text-white"
+            >
+              Simplifying your buying experience
+            </Text>
+          </div>
         </div>
 
-        {/* Form card container */}
-        <div className="flex justify-center pt-24 items-center h-full">
-          <div className="w-full max-w-md space-y-8 bg-white/90 p-8 rounded-lg shadow-md my-auto backdrop-blur-sm">
+        {/* Right Section - Form */}
+        <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-10">
+          <div className="w-full max-w-sm">
             {children}
           </div>
         </div>
       </div>
-    </AnimatedSection>
+    </div>
   );
 };
 

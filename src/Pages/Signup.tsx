@@ -84,7 +84,7 @@ const Signup = () => {
           <span className="text-4xl">🎉</span>
         </div>
         <Text size="sm" weight="medium" color="subtle">
-          No more cart abandonment, Register to get started today!
+          Register to get started today!
         </Text>
       </div>
 
@@ -119,17 +119,18 @@ const Signup = () => {
         )}
       </Formik>
 
-      <p className="text-sm text-center">
+      <p className="text-sm text-center pt-2">
         Already have an account?{" "}
         <Link to="/signin" className="text-primary">
           Login
         </Link>
       </p>
 
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-        <h2 className="text-2xl font-bold">🎉 Sign up successful!</h2>
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} className="p-6 ">
+        <h2 className="text-2xl font-bold mb-2">🎉 Sign up successful!</h2>
         <p>An otp has been sent to your email, kindly proceed to verify your account</p>
-        <Button onClick={() => navigate("/verification")}>Proceed</Button>
+        <div className="pt-4"><Button onClick={() => navigate("/verification")} className="w-auto px-6">Proceed</Button></div>
+        
       </Modal>
     </AuthLayout>
   );

@@ -145,7 +145,7 @@ const Nav = () => {
           <div className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col h-full">
             {/* Top Row */}
             <div className="flex justify-between items-center mb-6 sm:mb-8">
-              <Link to="/" className="flex">
+              <Link to="/" className="flex" onClick={() => setIsOpen(false)}>
                 <img src={logo} alt="logo" />
               </Link>
 
