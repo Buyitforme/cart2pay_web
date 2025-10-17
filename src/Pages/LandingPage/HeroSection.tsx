@@ -72,9 +72,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
   const navigate = useNavigate();
   return (
     <div>
-      <div className="bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 pt-16 lg:pt-8">
-        {/* <div className="bg-secondary "> */}
-
+      <div className="relative bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 pt-16 lg:pt-8">
         <div className="max-w-[85%] mx-auto grid lg:grid-cols-2 gap-4 lg:gap-8 items-center">
           {/* Left Content */}
           <div className="pt-8 lg:pt-0 space-y-4">
@@ -137,7 +135,8 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
           </div>
         </div>
       </div>
-      <section className="relative -mt-5 bg-transparent pb-16 lg:pb-20 z-40">
+
+      <section className="relative -mt-4 pb-16 lg:pb-20 z-40 bg-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Cards Grid */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
