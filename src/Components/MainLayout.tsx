@@ -5,32 +5,18 @@ import Footer from "../Components/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import CookieConsent from "../services/CookiesConscent";
 
- 
 const MainLayout = () => {
-    const { pathname } = useLocation();
- useEffect(() => {
+  const { pathname } = useLocation();
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-   const getNavBg = () => {
-  switch (pathname) {
-    case '/':
-      return 'bg-transparent';
-    case '/about':
-      return 'bg-white';
-    case '/contact-us':
-      return 'bg-gray-50';
-    default:
-      return 'bg-transparent';
-  }
-};
   return (
     <div className="min-h-screen flex flex-col w-full ">
       <Nav />
       <main className="flex-grow">
         <Outlet />
         <CookieConsent />
-
       </main>
       <Footer />
     </div>

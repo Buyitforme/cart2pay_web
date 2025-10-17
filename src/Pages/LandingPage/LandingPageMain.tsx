@@ -10,11 +10,24 @@ import { ReactNode, useEffect, useRef } from "react";
 import React from "react";
 import HowItWorks from "./HowItWorks";
 
-
 const variants = {
-  hidden: { opacity: 0, y: 100 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+  hidden: {
+    opacity: 0,
+    y: 60,
+    scale: 0.98,
+    filter: "blur(8px)",
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+} as const;
 
 interface AnimatedSectionProps {
   children: ReactNode;
@@ -32,7 +45,7 @@ const LandingPageMain = () => {
 
   // Reset scroll position on mount
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "auto" }); // or "smooth" if you prefer
+    window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
 
   return (
@@ -40,39 +53,49 @@ const LandingPageMain = () => {
       <AnimatedSection>
         <HeroSection onExploreClick={scrollToStoreMarquee} />
       </AnimatedSection>
-      
+
       <AnimatedSection>
         <HowItWorks />
       </AnimatedSection>
 
-        <AnimatedSection ref={storeMarqueeRef}>
-          <StoreMarquee />
-        </AnimatedSection>
+      <AnimatedSection ref={storeMarqueeRef}>
+        <StoreMarquee />
+      </AnimatedSection>
 
       <AnimatedSection>
         <Cart2payEssentials />
       </AnimatedSection>
 
       <AnimatedSection>
-        <div></div>
         <TestimonialSection onExploreClick={scrollToStoreMarquee} />
-        <ThirstTraps  />
+      </AnimatedSection>
+      <AnimatedSection>
+        <ThirstTraps />
+      </AnimatedSection>
+      <AnimatedSection>
         <Faq />
       </AnimatedSection>
     </>
   );
 };
 
+// ✅ Modern AnimatedSection with pre-trigger + refined motion
 export const AnimatedSection = React.forwardRef<
   HTMLDivElement,
   AnimatedSectionProps
 >(({ children }, forwardedRef) => {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.2 });
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    rootMargin: "200px 0px", // starts animating before entering view
+    triggerOnce: true, // prevents re-triggering
+  });
 
-  if (inView) {
-    controls.start("visible");
-  }
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+    }
+  }, [inView, controls]);
 
   return (
     <motion.div

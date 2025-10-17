@@ -79,7 +79,7 @@ const Nav = () => {
           ].map((item) => (
             <Link key={item.path} to={item.path}>
               <Text
-                size="md"
+                size="sm"
                 weight="normal"
                 className={`cursor-pointer duration-300 ease-in-out
           ${
