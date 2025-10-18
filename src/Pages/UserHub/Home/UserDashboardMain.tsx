@@ -67,16 +67,15 @@ const Home = () => {
   }
 
   return (
-    <div className="py-6 space-y-6 text-[#1E2A47] bg-background">
+    <div className="py-0 md:py-2 space-y-3 text-[#1E2A47] bg-background">
       {/* Greeting */}
       <div>
         <Heading size="xl" className="mb-2">
           {greeting}, {userData?.fullName}
         </Heading>
 
-        <Text size="lg" className="opacity-90">
-          You have {groupedOrders["pending"] || "..."} pending orders waiting
-          for approval
+        <Text size="lg" className="opacity-90" weight='normal'>
+          Here is a quick overview of your activity
         </Text>
       </div>
 
@@ -198,7 +197,7 @@ const Home = () => {
 
       {/* Recent Orders */}
       <div className="bg-white rounded-2xl shadow-md p-4 sm:p-6">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-6">
+        <div className="flex justify-between items-center gap-3 sm:gap-0 mb-6">
           <Heading size={{ base: "sm", sm: "lg" }} weight="bold">
             Recent Orders
           </Heading>
