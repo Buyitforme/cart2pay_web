@@ -115,7 +115,7 @@ const UserProfile = () => {
     localStorage.clear();
     setLoading(true);
     setTimeout(() => {
-      navigate("/signin");
+      navigate("/");
     }, 2000);
   };
   useEffect(() => {
