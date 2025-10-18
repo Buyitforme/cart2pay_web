@@ -1,6 +1,5 @@
 import star from "../../Assets/svg_images/Background.svg";
 import { Heading, Text } from "../../Components/Typography";
-import { useInView } from "react-intersection-observer";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Star } from "lucide-react";
 
@@ -59,7 +58,7 @@ const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
       {/* Card Content */}
       <div className="relative z-10 bg-transparent md:bg-white md:group-hover:bg-transparent h-full rounded-2xl p-6 flex flex-col justify-between transition-all duration-500 min-h-[320px]">
         <div className="flex gap-4 items-start">
-          <div className="h-12 w-12 bg-orange-500 md:bg-gray-200 md:group-hover:bg-orange-500 rounded-xl flex justify-center items-center transition duration-300 flex-shrink-0">
+          <div className="h-12 w-12 bg-primary md:bg-gray-200 md:group-hover:bg-primary rounded-xl flex justify-center items-center transition duration-300 flex-shrink-0">
             <Star className="w-[20px] h-[20px] text-white md:text-gray-500 md:group-hover:text-white transition duration-300" />
           </div>
           <Text
