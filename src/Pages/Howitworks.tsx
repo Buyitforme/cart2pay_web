@@ -184,7 +184,7 @@ const HowItWorksSection = () => {
               weight="normal"
               className="pt-2 text-[#6B7280] text-center md:text-start"
             >
-              From sharing a product link to receiving your order — shopping
+              From sharing a product link to receiving your order, shopping
               made effortless in 3 simple steps.
             </Text>
           </div>
@@ -289,7 +289,7 @@ const HowItWorksSection = () => {
                     weight="semibold"
                     className="text-gray-900 mb-2"
                   >
-                    1 — Paste the product link
+                    1. Paste the product link
                   </Heading>
                   <Heading
                     size="md"
@@ -333,7 +333,7 @@ const HowItWorksSection = () => {
                     weight="semibold"
                     className="text-gray-900 mb-2"
                   >
-                    2 — We purchase on your behalf
+                    2. We purchase on your behalf
                   </Heading>
                   <Heading size="md" weight="normal" className="text-gray-600">
                     Our team confirms stock availability, applies discounts if
@@ -354,7 +354,7 @@ const HowItWorksSection = () => {
                     weight="semibold"
                     className="text-gray-900 mb-2"
                   >
-                    3 — Tracked delivery to your door
+                    3. Tracked delivery to your door
                   </Heading>
                   <Heading
                     size="md"
