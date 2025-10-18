@@ -56,3 +56,8 @@
 .animate-gradient {
   animation: gradient 8s ease infinite;
 }
+
+@media (hover: none) and (pointer: coarse) {
+  .force-hover {
+  }
+}
