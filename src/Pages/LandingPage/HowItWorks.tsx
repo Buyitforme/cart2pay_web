@@ -99,9 +99,8 @@ const HowItWorks = () => {
           </div>
 
           {/* Step 3 */}
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 lg:col-span-2 pb-12">
+          <div className="pl-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 lg:col-span-2 pb-12">
            <StepImage src={deliveryMan} alt="delivery man" stepNumber={3} />
-
 
             <div className="flex-1 lg:w-1/2">
               <Heading

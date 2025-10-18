@@ -59,118 +59,116 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
   //   console.log("HS", heroSection);
 
   const navigate = useNavigate();
-  return (
-    <div>
-      <div className="relative bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 pt-16 lg:pt-8">
-        <div className="max-w-[85%] mx-auto grid lg:grid-cols-2 gap-4 lg:gap-8 items-center">
-          {/* Left Content */}
-          <div className="pt-8 lg:pt-0 space-y-4">
-            <div>
-              <Heading
-                as="h1"
-                size={{ sm: "xl", base: "3xl", md: "4xl", lg: "5xl" }}
-                weight="bold"
-                className="md:leading-tight  md:text-start leading-snug"
-              >
-                {/* {heroSection?.title && <PortableText value={heroSection.title} />} */}
-                Your digital concierge for all things{" "}
-                <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-[#054B2F] to-[#0CB16F] bg-clip-text text-transparent pb-1">
-                  shopping
-                </span>
-              </Heading>
-            </div>
-
-            <Text
-              size="lg"
-              color="secondary"
-              weight="extra_light"
-              className=" "
-            >
-              Your personal shopping assistant at your fingertips. From rare
-              finds to everyday essentials, we make shopping simple, fast, and
-              stress-free, so you shop more and worry less.{" "}
-            </Text>
-
-            <div className="flex justify-start items-center gap-4 pt-4">
-              <Button
-                variant="primary"
-                icon={<Rocket className="w-5 h-5" />}
-                className="w-full text-sm sm:text-base py-2 sm:my-3"
-                onClick={() => navigate("/dashboard/new-order")}
-              >
-                Shop for me
-              </Button>
-
-              <Button
-                variant="secondary"
-                icon={<Play className="w-5 h-5" />}
-                className="w-full text-sm sm:text-base py-2 sm:py-3 bg-[#E8F7F0] text-secondary hover:bg-secondary"
-                onClick={() => navigate("/how-it-works")}
-              >
-                How it works
-              </Button>
-            </div>
-          </div>
-
-          {/* Right Image */}
-          <div className="relative flex justify-center lg:justify-end">
-            <div className="relative z-10 w-full lg:w-auto">
-              <LazyImage
-                src={happyShopper}
-                alt="img"
-                className="rounded-2xl w-full h-auto object-contain"
-              />
-            </div>
-          </div>
-        </div>
+return (
+  <div>
+   <div className="relative bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 pt-16 lg:pt-8 overflow-hidden">
+  <div className="max-w-[85%] mx-auto grid lg:grid-cols-2 gap-0 lg:gap-8 items-center">
+    {/* Left Content */}
+    <div className="pt-8 pb-0 lg:pt-0 space-y-4">
+      <div>
+        <Heading
+          as="h1"
+          size={{ sm: "xl", base: "3xl", md: "4xl", lg: "5xl" }}
+          weight="bold"
+          className="md:leading-tight md:text-start leading-snug"
+        >
+          Your digital concierge for all things{" "}
+          <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-[#054B2F] to-[#0CB16F] bg-clip-text text-transparent pb-1">
+            shopping
+          </span>
+        </Heading>
       </div>
 
-      <section className="relative -mt-4 pb-16 lg:pb-20 z-40 bg-transparent">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Cards Grid */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="relative bg-white rounded-3xl border-2 border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col shadow-md"
-              >
-                {/* Icon & Content Row */}
-                <div className="flex gap-4 mb-2">
-                  {/* Icon */}
-                  <div className="w-14 h-14 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                    {React.cloneElement(feature.icon, {
-                      className: "w-7 h-7 text-primary",
-                    })}
-                  </div>
+      <Text
+        size="lg"
+        color="secondary"
+        className="font-normal text-[#696C71]"
+      >
+        Your personal shopping assistant at your fingertips. From rare
+        finds to everyday essentials, we make shopping simple, fast, and
+        stress-free, so you shop more and worry less.
+      </Text>
 
-                  {/* Title & Description */}
-                  <div className="flex flex-col flex-grow">
-                    <Heading
-                      as="h3"
-                      size="lg"
-                      weight="semibold"
-                      className="text-gray-900 mb-1"
-                    >
-                      {feature.title}
-                    </Heading>
+      <div className="flex justify-start items-center gap-4 pt-4">
+        <Button
+          variant="primary"
+          icon={<Rocket className="w-5 h-5" />}
+          className="w-full text-sm sm:text-base py-2 sm:my-3"
+          onClick={() => navigate("/dashboard/new-order")}
+        >
+          Shop for me
+        </Button>
 
-                    {/* Description */}
-                    <Text
-                      size="sm"
-                      weight="normal"
-                      className="text-gray-600 leading-relaxed mb-2 flex-grow"
-                    >
-                      {feature.text}
-                    </Text>
-                  </div>
+        <Button
+          variant="secondary"
+          icon={<Play className="w-5 h-5" />}
+          className="w-full text-sm sm:text-base py-2 sm:py-3 bg-[#E8F7F0] text-secondary hover:bg-secondary"
+          onClick={() => navigate("/how-it-works")}
+        >
+          How it works
+        </Button>
+      </div>
+    </div>
+
+    {/* Right Image */}
+    <div className="relative flex justify-center lg:justify-end -mb-1 lg:mb-0 pt-12 md:pt-24">
+      <div className="relative z-10 w-full aspect-[4/3]">
+        <LazyImage
+          src={happyShopper}
+          alt="Shopping illustration"
+          className="w-full h-full object-cover scale-125 object-center"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+    <section className="relative -mt-4 pb-16 lg:pb-20 z-40 bg-transparent">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Cards Grid */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="relative bg-white rounded-3xl border-2 border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col shadow-md"
+            >
+              {/* Icon & Content Row */}
+              <div className="flex gap-4 mb-2">
+                {/* Icon */}
+                <div className="w-14 h-14 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                  {React.cloneElement(feature.icon, {
+                    className: "w-7 h-7 text-primary",
+                  })}
+                </div>
+
+                {/* Title & Description */}
+                <div className="flex flex-col flex-grow">
+                  <Heading
+                    as="h3"
+                    size="lg"
+                    weight="semibold"
+                    className="text-gray-900 mb-1"
+                  >
+                    {feature.title}
+                  </Heading>
+
+                  {/* Description */}
+                  <Text
+                    size="sm"
+                    weight="normal"
+                    className="text-gray-600 leading-relaxed mb-2 flex-grow"
+                  >
+                    {feature.text}
+                  </Text>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </section>
-    </div>
-  );
+      </div>
+    </section>
+  </div>
+);
 };
 
 export default HeroSection;

@@ -1,13 +1,10 @@
-import React from "react";
 import { Heading, Text } from "../../Components/Typography";
 import zaraLogo from "../../Assets/svg_images/zara2.svg";
 import asosLogo from "../../Assets/svg_images/asos.svg";
 import sheinLogo from "../../Assets/svg_images/shein.svg";
 import primarkLogo from "../../Assets/svg_images/primark.svg";
-import LazyImage from "../../Components/LazyImage";
 import fashionovaLogo from "../../Assets/fashionova.jpeg";
-import SliderComponent from "../../Components/SliderComponent";
-import StripeSlider from "../../Components/SliderComponent";
+
 import LogoSlider from "../../Components/SliderComponent";
 
 export const storeLogos = [
@@ -23,9 +20,7 @@ export const storeLogos = [
 ];
 
 const StoreMarquee = () => {
-  const handleStoreClick = (url: string, storeName: string) => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
+ 
   return (
     <section className="w-full bg-background py-16 pt-24 overflow-hidden">
       <div className="text-center px-4 md:px-0">
@@ -48,35 +43,8 @@ const StoreMarquee = () => {
           </Text>
         </div>
 
-        {/* Scrolling marquee */}
         <div className="relative overflow-hidden">
-          {/* <div className="flex gap-10 animate-scroll whitespace-nowrap hover:[animation-play-state:paused]"> */}
-         {/* <StripeSlider  
-  autoplay={true}
-  autoplayDelay={3000}
-  showDots={true}
-  showArrows={true}
-  slidesPerView={{ mobile: 1, tablet: 2, desktop: 3 }}
->
-  {[...storeLogos, ...storeLogos].map((store, idx) => (
-    <div
-      key={idx}
-      className="flex justify-center items-center cursor-pointer opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105"
-      onClick={() => handleStoreClick(store.url, store.name)}
-    >
-      <div className="h-16 w-28 flex justify-center items-center">
-        <LazyImage
-          src={store.logo}
-          alt={`Visit ${store.name} store`}
-          className="max-h-full max-w-full object-contain"
-        />
-      </div>
-    </div>
-  ))}
-</StripeSlider> */}
 <LogoSlider />
-
-          {/* </div> */}
         </div>
       </div>
     </section>
