@@ -184,8 +184,8 @@ const UserProfile = () => {
     );
   }
   return (
-    <div className=" px-4">
-      <div className="w-full  shadow-lg bg-white rounded-xl p-8 space-y-6">
+    <div className="px-1 lg:px-4">
+      <div className="w-full  shadow-lg bg-white rounded-xl p-3 lg:p-8 space-y-6">
         <div className="flex space-x-6   pb-2">
           <button
             onClick={() => setActiveTab("profile")}
@@ -222,7 +222,7 @@ const UserProfile = () => {
                   </Text>
                 </div>
                 {!isEditing && (
-                  <Button variant="primary" onClick={handleEditToggle}>
+                  <Button variant="primary" onClick={handleEditToggle} className="w-auto">
                     Edit Profile
                   </Button>
                 )}
@@ -269,7 +269,7 @@ const UserProfile = () => {
 
                         <Button
                           type="button"
-                          variant="secondary"
+                          variant="outline"
                           onClick={() => setIsEditing(false)}
                         >
                           Cancel
@@ -283,7 +283,7 @@ const UserProfile = () => {
                 <Button
                   variant="destructive"
                   onClick={() => setIsModalOpen(true)}
-                  // className="w-full"
+                  className="w-auto"
                 >
                   Logout
                 </Button>
@@ -305,7 +305,7 @@ const UserProfile = () => {
                         Cancel
                       </Button>
                       <Button
-                        variant="destructive"
+                        variant="primary"
                         onClick={handleLogout}
                         loading={loading}
                       >

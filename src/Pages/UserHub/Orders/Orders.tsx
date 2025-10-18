@@ -71,7 +71,7 @@ const Orders: FC = () => {
     );
   }
   return (
-    <div className="px-4 md:px-16 py-6">
+    <div className="px-4 md:px-16 py-0 md:py-2">
       <Heading size="2xl" weight="bold">
         Orders
       </Heading>

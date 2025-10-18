@@ -43,7 +43,7 @@ const baseStyles =
         "bg-transparent text-slate-900 hover:bg-slate-100 transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-slate-500",
 
       destructive:
-        "bg-error text-white hover:bg-error_light transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-red-600",
+        "bg-error_light text-white hover:bg-error_light transform hover:scale-y-105 transition duration-700 ease-in-out focus-visible:ring-red-600",
     };
 
     const sizes = {
