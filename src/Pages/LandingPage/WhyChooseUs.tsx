@@ -40,73 +40,69 @@ const essentials = [
 const CardItem = ({ item }: { item: (typeof essentials)[0] }) => {
   const navigate = useNavigate();
 
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.2,
-  });
-
   return (
     <div
-      ref={ref}
-      className={`group relative bg-white shadow-lg rounded-lg p-6 overflow-hidden h-80 transition duration-500 ${
-        inView ? "force-hover" : ""
-      }`}
+      className="group relative rounded-2xl shadow-lg overflow-hidden transition-all duration-500 
+      hover:shadow-xl hover:-translate-y-1"
     >
-      {/* Sliding gradient background */}
+      {/* Gradient background - visible by default on mobile, slides on desktop hover */}
       <div
-        className="absolute inset-0 z-0 w-full h-full transform -translate-x-full group-hover:translate-x-0 force-hover:translate-x-0 transition-transform duration-700 ease-in-out"
+        className="absolute inset-0 z-0 w-full h-full rounded-2xl 
+        translate-x-0 md:transform md:-translate-x-full md:group-hover:translate-x-0 
+        transition-transform duration-700 ease-in-out"
         style={{
           backgroundImage:
-            "linear-gradient(to right, #054B2F 80%, #F38C05 120%)",
+            "linear-gradient(to right, #1C4A3F 80%, #F38C05 120%)",
         }}
       ></div>
 
-      {/* Content */}
-      <div className="relative z-10 transition duration-500 group-hover:text-white force-hover:text-white h-full flex flex-col justify-between">
-        <div className="flex gap-4 items-center justify-start">
-          <div className="h-10 w-10 bg-gray-200 group-hover:bg-orange-500 rounded-xl flex justify-center items-center transition duration-300">
-            <Star className="w-[20px] h-[20px] text-gray-500 group-hover:text-white transition duration-300" />
+      {/* Card Content */}
+      <div className="relative z-10 bg-transparent md:bg-white md:group-hover:bg-transparent h-full rounded-2xl p-6 flex flex-col justify-between transition-all duration-500 min-h-[320px]">
+        <div className="flex gap-4 items-start">
+          <div className="h-12 w-12 bg-orange-500 md:bg-gray-200 md:group-hover:bg-orange-500 rounded-xl flex justify-center items-center transition duration-300 flex-shrink-0">
+            <Star className="w-[20px] h-[20px] text-white md:text-gray-500 md:group-hover:text-white transition duration-300" />
           </div>
           <Text
-            size={{ base: "md", md: "lg", lg: "xl" }}
-            weight={{ base: "semibold", md: "bold" }}
-            className="text-[#4A4A4A] group-hover:text-white transition duration-300"
+            size={{ base: "lg", md: "xl", lg: "2xl" }}
+            weight="bold"
+            className="text-white md:text-[#1F2937] md:group-hover:text-white transition duration-300"
           >
             {item.title}
           </Text>
         </div>
 
         <Text
-          size={{ sm: "sm", md: 'md'}}
-          weight={{ sm: "light", md: "light" }}
-          className="text-[#6B7280] group-hover:text-white transition duration-300"
+          size={{ sm: "sm", md: "md" }}
+          weight="normal"
+          className="text-white md:text-[#6B7280] md:group-hover:text-white transition duration-300 mt-4"
         >
           {item.description}
         </Text>
 
         <div
-          className="flex justify-between items-center mt-2 cursor-pointer"
-          onClick={() => navigate("/signup")}
+          className="flex items-center gap-2 mt-6 cursor-pointer"
+                onClick={() => navigate("/dashboard/new-order")}
         >
           <Text
             size="lg"
-            weight="normal"
-            color="secondary"
-            className="text-primary group-hover:text-white transition duration-300"
+            weight="semibold"
+            className="text-white md:text-[#F38C05] md:group-hover:text-white transition duration-300"
           >
-            Get started
+            Get Started
           </Text>
-          <ArrowRight className="w-5 group-hover:text-white transition duration-300" />
+          <ArrowRight className="w-5 h-5 text-white md:text-[#F38C05] md:group-hover:text-white transition duration-300" />
         </div>
       </div>
     </div>
   );
 };
 
+
+
 const WhyChooseUs = () => {
   return (
     <section className="w-full bg-background py-20  md:px-12">
-      <div className="max-w-[85%] mx-auto">
+      <div className="max-w-[95%] mx-auto">
         <div className="text-start mb-16">
           <Heading
             as="h1"
@@ -126,11 +122,14 @@ const WhyChooseUs = () => {
           </Text>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8  md:mx-20">
-          {essentials.map((item, index) => (
-            <CardItem key={index} item={item} />
-          ))}
-        </div>
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+  <CardItem item={essentials[0]} />
+  <CardItem item={essentials[1]} />
+  <CardItem item={essentials[2]} />
+  <div className="md:col-start-2 lg:col-start-2">
+    <CardItem item={essentials[3]} />
+  </div>
+</div>
       </div>
     </section>
   );

@@ -251,6 +251,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
               </a>
               <a
                 href="https://www.instagram.com/shopviacal"
+                target="blank"
                 aria-label="Instagram"
                 className="hover:text-[#8fac6a] transition-colors duration-200 p-2"
               >

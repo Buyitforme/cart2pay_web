@@ -7,8 +7,10 @@ import primarkLogo from "../../Assets/svg_images/primark.svg";
 import LazyImage from "../../Components/LazyImage";
 import fashionovaLogo from "../../Assets/fashionova.jpeg";
 import SliderComponent from "../../Components/SliderComponent";
+import StripeSlider from "../../Components/SliderComponent";
+import LogoSlider from "../../Components/SliderComponent";
 
-const storeLogos = [
+export const storeLogos = [
   { name: "Zara", logo: zaraLogo, url: "https://www.zara.com/" },
   { name: "ASOS", logo: asosLogo, url: "https://www.asos.com/" },
   { name: "Shein", logo: sheinLogo, url: "https://us.shein.com/" },
@@ -49,31 +51,30 @@ const StoreMarquee = () => {
         {/* Scrolling marquee */}
         <div className="relative overflow-hidden">
           {/* <div className="flex gap-10 animate-scroll whitespace-nowrap hover:[animation-play-state:paused]"> */}
-          <SliderComponent>
-            {[...storeLogos, ...storeLogos].map((store, idx) => (
-              <div
-                key={idx}
-                className="flex justify-center items-center cursor-pointer opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105"
-                onClick={() => handleStoreClick(store.url, store.name)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleStoreClick(store.url, store.name);
-                  }
-                }}
-              >
-                <div className="h-16 w-28 flex justify-center items-center">
-                  <LazyImage
-                    src={store.logo}
-                    alt={`Visit ${store.name} store`}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-              </div>
-            ))}
-          </SliderComponent>
+         {/* <StripeSlider  
+  autoplay={true}
+  autoplayDelay={3000}
+  showDots={true}
+  showArrows={true}
+  slidesPerView={{ mobile: 1, tablet: 2, desktop: 3 }}
+>
+  {[...storeLogos, ...storeLogos].map((store, idx) => (
+    <div
+      key={idx}
+      className="flex justify-center items-center cursor-pointer opacity-80 hover:opacity-100 transition-all duration-300 hover:scale-105"
+      onClick={() => handleStoreClick(store.url, store.name)}
+    >
+      <div className="h-16 w-28 flex justify-center items-center">
+        <LazyImage
+          src={store.logo}
+          alt={`Visit ${store.name} store`}
+          className="max-h-full max-w-full object-contain"
+        />
+      </div>
+    </div>
+  ))}
+</StripeSlider> */}
+<LogoSlider />
 
           {/* </div> */}
         </div>

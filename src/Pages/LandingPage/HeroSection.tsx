@@ -2,19 +2,8 @@ import { Button } from "../../Components/Button";
 import happyShopper from "../../Assets/svg_images/hero_image.svg";
 import { Heading, Text } from "../../Components/Typography";
 import { useNavigate } from "react-router-dom";
-import {
-  Clock,
-  CreditCard,
-  Globe2,
-  Play,
-  Rocket,
-  ShoppingBag,
-  Zap,
-} from "lucide-react";
+import { Clock, CreditCard, Play, Rocket, ShoppingBag } from "lucide-react";
 import type { TypedObject } from "@portabletext/types";
-import { useEffect, useState } from "react";
-import { client } from "../../sanityClient";
-import { PortableText } from "@portabletext/react";
 import LazyImage from "../../Components/LazyImage";
 import React from "react";
 
@@ -26,11 +15,11 @@ export interface HeroSectionTypes {
   description: string;
   image: string;
 }
-const query = `*[_type == "heroSection"][0]{
-  title,
-  description,
-  "image": image.asset->url
-}`;
+// const query = `*[_type == "heroSection"][0]{
+//   title,
+//   description,
+//   "image": image.asset->url
+// }`;
 
 const features = [
   {
@@ -51,7 +40,7 @@ const features = [
 ];
 
 const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
-  const [heroSection, setHeroSection] = useState<HeroSectionTypes>();
+  // const [heroSection, setHeroSection] = useState<HeroSectionTypes>();
   //  useEffect(() => {
   //    const fetchHeroSection = async () => {
   //   try {
@@ -150,7 +139,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
                   {/* Icon */}
                   <div className="w-14 h-14 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
                     {React.cloneElement(feature.icon, {
-                      className: "w-7 h-7 text-primary_dark",
+                      className: "w-7 h-7 text-primary",
                     })}
                   </div>
 
