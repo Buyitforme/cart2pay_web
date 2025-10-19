@@ -12,6 +12,9 @@ const routeNames = {
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password",
   cookiePolicy:"/cookie-policy",
+  termsAndConditions:"terms-and-conditions",
+    privacy:"privacy",
+
   notFound: "*",
 };
 
