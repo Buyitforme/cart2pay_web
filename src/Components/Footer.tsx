@@ -1,9 +1,9 @@
 import React from "react";
-import { Link,  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "./Button";
 import { Input } from "./Inputfield";
 import { Text } from "./Typography";
-import { Facebook, Twitter, Instagram} from "lucide-react";
+import { Facebook, Twitter, Instagram } from "lucide-react";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import toast from "react-hot-toast";
@@ -43,7 +43,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
       toast.error("error!");
     }
   };
- 
+
   return (
     <>
       <section className="bg-gradient-to-br from-emerald-50 via-blue-50 to-blue-100 py-16">
@@ -61,12 +61,13 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
             weight={{ sm: "normal", md: "semibold" }}
             className="text-[#6B7280] group-hover:text-white transition duration-300"
           >
-           Share your first product link and we’ll handle the rest simple, safe, and fast.
+            Share your first product link and we’ll handle the rest simple,
+            safe, and fast.
           </Text>
           <div>
             <Button
-                 variant="primary"
-                 className="w-auto px-6"
+              variant="primary"
+              className="w-auto px-6"
               onClick={() => navigate("/dashboard/new-order")}
             >
               Get Started
@@ -136,14 +137,12 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
                     </button>
                     <button
                       className="hover:text-secondary_light"
-              onClick={() => navigate("/dashboard/new-order")}
+                      onClick={() => navigate("/dashboard/new-order")}
                     >
                       <Text size="sm" weight="normal">
                         Share a request
                       </Text>
                     </button>
-
-                   
                   </div>
                 </div>
 
@@ -153,27 +152,23 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
                     LEGAL
                   </Text>
                   <div className="flex flex-col justify-start items-start gap-4 pt-5">
-                     <button
+                    <button
                       className="hover:text-secondary_light"
+                      // onClick={() => navigate("terms-and-conditions")}
                       onClick={onExploreClick}
                     >
-                        <Text
-                          size="sm"
-                          weight="normal"
-                        >
-                          Terms & Conditions
-                        </Text>
+                      <Text size="sm" weight="normal">
+                        Terms & Conditions
+                      </Text>
                     </button>
-                      <button
-                      className="hover:text-secondary_light"
-                      onClick={onExploreClick}
-                    >
-                        <Text
-                          size="sm"
-                          weight="normal"
-                        >
-                          Privacy Policy
-                        </Text>
+                    <button className="hover:text-secondary_light">
+                      <Text
+                        size="sm"
+                        weight="normal"
+                        onClick={() => navigate("privacy")}
+                      >
+                        Privacy Policy
+                      </Text>
                     </button>
                   </div>
                 </div>

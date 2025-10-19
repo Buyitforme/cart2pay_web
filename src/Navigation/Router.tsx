@@ -28,6 +28,8 @@ import OrderDetails from "../Pages/UserHub/Orders/OrderDetails";
 import Address from "../Pages/UserHub/Orders/Address";
 import CookiePolicyPage from "../services/CookiesPolicy";
 import PaymentDeatails from "../Pages/UserHub/Quote/PaymentDeatails";
+import TermsAndConditions from "../Pages/T&C";
+import Privacy from "../Pages/Privacy";
 
 const routes: RouteObject[] = [
   {
@@ -41,6 +43,9 @@ const routes: RouteObject[] = [
       { path: routeNames.stories, element: <Stories /> },
       { path: routeNames.share_story, element: <ShareYourStory /> },
       { path: routeNames.cookiePolicy, element: <CookiePolicyPage /> },
+      { path: routeNames.termsAndConditions, element: <TermsAndConditions /> },
+            { path: routeNames.privacy, element: <Privacy /> },
+
     ],
   },
   { path: routeNames.signIn, element: <Login /> },
