@@ -12,8 +12,8 @@ const routeNames = {
   forgotPassword: "/forgot-password",
   resetPassword: "/reset-password",
   cookiePolicy:"/cookie-policy",
-  termsAndConditions:"terms-and-conditions",
-    privacy:"privacy",
+  termsAndConditions:"terms-of-service",
+    privacy:"privacy-policy",
 
   notFound: "*",
 };
