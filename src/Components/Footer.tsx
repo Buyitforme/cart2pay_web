@@ -154,8 +154,7 @@ const Footer: React.FC = ({ onExploreClick }: FooterProps) => {
                   <div className="flex flex-col justify-start items-start gap-4 pt-5">
                     <button
                       className="hover:text-secondary_light"
-                      // onClick={() => navigate("terms-and-conditions")}
-                      onClick={onExploreClick}
+                      onClick={() => navigate("terms-and-conditions")}
                     >
                       <Text size="sm" weight="normal">
                         Terms & Conditions
