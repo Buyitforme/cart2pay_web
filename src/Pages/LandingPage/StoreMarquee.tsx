@@ -6,6 +6,7 @@ import primarkLogo from "../../Assets/primark-seeklogo.png";
 import fashionovaLogo from "../../Assets/fashionova.jpeg";
 
 import LogoSlider from "../../Components/SliderComponent";
+import ImageSlider from "../../Components/Slider";
 
 export const storeLogos = [
   { name: "Zara", logo: zaraLogo, url: "https://www.zara.com/" },
@@ -20,7 +21,6 @@ export const storeLogos = [
 ];
 
 const StoreMarquee = () => {
- 
   return (
     <section className="w-full bg-background py-16 pt-24 overflow-hidden">
       <div className="text-center px-4 md:px-0">
@@ -43,8 +43,10 @@ const StoreMarquee = () => {
           </Text>
         </div>
 
-        <div className="relative overflow-hidden">
-<LogoSlider />
+        <div className="relative overflow-hidden bg-white">
+          {/* <LogoSlider /> */}
+                <ImageSlider images={storeLogos} />
+
         </div>
       </div>
     </section>

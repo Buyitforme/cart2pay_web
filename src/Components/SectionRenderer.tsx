@@ -19,10 +19,18 @@ const SectionRenderer: React.FC<SideBySideSectionProps> = ({
         reverse ? "md:flex-row-reverse" : ""
       } items-center ${gap}`}
     >
-      <div className="flex-1">{left}</div>
-      <div className="flex-1">{right}</div>
+      {/* Left Section */}
+      <div className="flex justify-center items-center w-full">
+        {left}
+      </div>
+
+      {/* Right Section */}
+      <div className="flex justify-center md:justify-start items-center w-full">
+        {right}
+      </div>
     </div>
   );
 };
+
 
 export default SectionRenderer;
