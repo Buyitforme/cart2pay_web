@@ -35,13 +35,10 @@ export interface Order {
 const Orders: FC = () => {
   const { orderHistory } = useSelector(
     (state: RootState) => state.order_management
-  );  
+  );
   const location = useLocation();
   const initialTab = location.state?.activeTab || "pending";
   const [activeTab, setActiveTab] = useState(initialTab);
-
-
-
 
   const tabs = [
     { key: "pending", label: "Pending" },

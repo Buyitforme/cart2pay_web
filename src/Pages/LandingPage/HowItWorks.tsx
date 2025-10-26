@@ -2,8 +2,7 @@ import { Heading, Text } from "../../Components/Typography";
 import deliveryMan from "../../Assets/svg_images/delivery.svg";
 import request from "../../Assets/svg_images/Request product.svg";
 import bag from "../../Assets/svg_images/Request product (1).svg";
-import LazyImage from "../../Components/LazyImage";
-import  { StepImage } from "../HIWSteps";
+import { StepImage } from "../HIWSteps";
 
 const HowItWorks = () => {
   return (
@@ -31,109 +30,95 @@ const HowItWorks = () => {
         </div>
 
         {/* Steps */}
-      {/* <StackingSteps> */}
-       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+        <div className="grid grid-cols-1 gap-12 lg:gap-20">
           {/* Step 1 */}
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 lg:col-span-2">
-  <StepImage src={request} alt="delivery man" stepNumber={1} />
-
-
-            <div className="flex-1 lg:w-1/2">
+          <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-8 lg:gap-16">
+            <StepImage src={request} alt="product request" stepNumber={1} />
+            <div className="flex-1 text-center lg:text-left">
               <Heading
                 as="h1"
                 size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
                 weight="bold"
-                className="md:leading-tight text-center md:text-start"
+                className="md:leading-tight"
               >
                 Share the{" "}
-                <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+                <span className="font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
                   product url
                 </span>
               </Heading>
-
               <Text
                 size="lg"
                 color="secondary"
-                weight="normal"
-                className="pt-3 text-center md:text-start"
+                className="pt-3 font-[400] text-text-secondary"
               >
-                Copy the product URL from any store Zara, Shein, Fashionva or
-                your favorite retailer and send it to us. No complicated forms
-                or confusing checkout. Just share the link, and we’ll take it
-                from there.
+                Copy the product URL from any store like Zara, Shein,
+                Fashionnova or your favorite retailer and send it to us. No
+                complicated forms, just share the link and we’ll take it from
+                there.
               </Text>
             </div>
           </div>
 
           {/* Step 2 */}
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 lg:col-span-2">
-           <StepImage src={bag} alt="bag" stepNumber={2} />
-
-
-            <div className="flex-1 lg:w-1/2 lg:order-1">
+          <div className="flex flex-col lg:flex-row-reverse items-center lg:justify-between gap-8 lg:gap-16">
+            <StepImage src={bag} alt="shopping bag" stepNumber={2} />
+            <div className="flex-1 text-center lg:text-left">
               <Heading
                 as="h1"
                 size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
                 weight="bold"
-                className="md:leading-tight text-center md:text-start"
+                className="md:leading-tight"
               >
                 We handle{" "}
-                <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+                <span className="font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
                   the purchase
                 </span>{" "}
                 for you
               </Heading>
-
               <Text
                 size="lg"
                 color="secondary"
-                weight="normal"
-                className="pt-3 text-center md:text-start"
+                className="pt-3 font-[400] text-text-secondary"
               >
                 After receiving your link, our team reviews the order, checks
-                items availability, and provides you with a clear cost summary.
-                Once you confirm and make payment, we securely complete the
-                purchase on your behalf.
+                availability, and gives you a clear cost summary. Once you
+                confirm and make payment, we complete the purchase securely on
+                your behalf.
               </Text>
             </div>
           </div>
 
           {/* Step 3 */}
-          <div className="pl-8 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 lg:col-span-2 pb-12">
-           <StepImage src={deliveryMan} alt="delivery man" stepNumber={3} />
-
-            <div className="flex-1 lg:w-1/2">
+          <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-8 lg:gap-16 pb-12">
+            <StepImage src={deliveryMan} alt="delivery man" stepNumber={3} />
+            <div className="flex-1 text-center lg:text-left">
               <Heading
                 as="h1"
                 size={{ sm: "lg", base: "2xl", md: "3xl", lg: "4xl" }}
                 weight="bold"
-                className="md:leading-tight text-center md:text-start"
+                className="md:leading-tight"
               >
                 Get fast,{" "}
-                <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+                <span className="font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
                   tracked delivery
                 </span>{" "}
                 to your{" "}
-                <span className="md:pt-2 inline-block font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
-                  door step
+                <span className="font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent">
+                  doorstep
                 </span>
               </Heading>
-
               <Text
                 size="lg"
                 color="secondary"
-                weight="normal"
-                className="pt-3 text-center md:text-start"
+                className="pt-3 font-[400] text-text-secondary"
               >
                 Your order ships straight to your door with full tracking. From
                 purchase to delivery, you’ll receive real-time updates every
-                step of the way fast, reliable, and completely stress-free.
+                step of the way — fast, reliable, and stress-free.
               </Text>
             </div>
           </div>
         </div>
-        {/* </StackingSteps> */}
-
       </div>
     </div>
   );

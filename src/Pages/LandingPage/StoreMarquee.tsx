@@ -2,7 +2,7 @@ import { Heading, Text } from "../../Components/Typography";
 import zaraLogo from "../../Assets/svg_images/zara2.svg";
 import asosLogo from "../../Assets/svg_images/asos.svg";
 import sheinLogo from "../../Assets/svg_images/shein.svg";
-import primarkLogo from "../../Assets/svg_images/primark.svg";
+import primarkLogo from "../../Assets/primark-seeklogo.png";
 import fashionovaLogo from "../../Assets/fashionova.jpeg";
 
 import LogoSlider from "../../Components/SliderComponent";

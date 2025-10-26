@@ -54,8 +54,10 @@ const validationSchema = Yup.object({
                 shein: ["shein.com"],
                 zara: ["zara.com"],
                 "fashion-nova": ["fashionnova.com"],
-                other: [],
+                primark: ["www.primark.com"],
+                asos: ["asos.com"],
               };
+
               if (!value || !store || store === "other") return true;
               return storeDomains[store]?.some((domain) =>
                 value.includes(domain)
@@ -74,6 +76,8 @@ export const NewOrder = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCreateOrderModalOpen, setIsCreateOrderModalOpen] = useState(false);
+  const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
+
 
   const { createOrder, addresses, formDataInState } = useSelector(
     (state: RootState) => state.order_management
@@ -128,6 +132,10 @@ export const NewOrder = () => {
   }, [dispatch]);
   useEffect(() => {
     if (!createOrder.error && createOrder.statusCode === 201) {
+       const orderId = createOrder.data?.results?._id;
+    if (orderId) {
+      setCreatedOrderId(orderId);
+    }
       setIsCreateOrderModalOpen(true);
       dispatch(clearFormData());
     } else if (createOrder.error) {
@@ -329,47 +337,49 @@ export const NewOrder = () => {
                         {values.items.length > 1 && (
                           <div className="flex justify-end">
                             <Button
-                              variant="primary"
+                              variant="outline"
                               type="button"
                               onClick={() => setIsModalOpen(true)}
+                              className="w-auto"
                             >
                               Remove Item
                             </Button>
                           </div>
                         )}
-                       <Modal
-  isOpen={isModalOpen}
-  onClose={() => setIsModalOpen(false)}
->
-  <div className="p-6 sm:p-8 space-y-6">
-    <Text size="lg" weight="bold" color="subtle">
-      Are you sure you want to remove this item?
-    </Text>
+                        <Modal
+                          isOpen={isModalOpen}
+                          onClose={() => setIsModalOpen(false)}
+                        >
+                          <div className="p-6 sm:p-8 space-y-6">
+                            <Text size="lg" weight="bold" color="subtle">
+                              Are you sure you want to remove this item?
+                            </Text>
 
-    <div className="flex justify-center gap-3">
-      <Button
-        variant="outline"
-        onClick={() => setIsModalOpen(false)}
-      >
-        Cancel
-      </Button>
-      <Button
-        variant="destructive"
-        onClick={() => {
-          remove(index);
-          setIsModalOpen(false);
-        }}
-      >
-        Yes
-      </Button>
-    </div>
-  </div>
-</Modal>
+                            <div className="flex justify-center gap-3">
+                              <Button
+                                variant="outline"
+                                onClick={() => setIsModalOpen(false)}
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                variant="destructive"
+                                onClick={() => {
+                                  remove(index);
+                                  setIsModalOpen(false);
+                                }}
+                              >
+                                Yes
+                              </Button>
+                            </div>
+                          </div>
+                        </Modal>
                         <Modal
                           isOpen={isCreateOrderModalOpen}
                           onClose={() => setIsCreateOrderModalOpen(false)}
+                          className="w-full max-w-sm"
                         >
-                          <div className="w-full flex flex-col items-center justify-center text-center p-4">
+                          <div className="w-full flex flex-col items-center justify-center text-center p-4 sm:p-6">
                             <Lottie
                               animationData={success}
                               loop={true}
@@ -380,21 +390,14 @@ export const NewOrder = () => {
                               Order successfully created
                             </Text>
 
-                            <div className="flex justify-center gap-4 mt-6 w-full max-w-xs">
+                            <div className="flex justify-center mt-6 w-full">
                               <Button
-                                className="flex-1"
+                      className="w-auto "
                                 variant="primary"
-                                onClick={() => setIsCreateOrderModalOpen(false)}
-                              >
-                                Ok
-                              </Button>
-                              <Button
-                                className="flex-1"
-                                variant="outline"
                                 onClick={() => {
                                   remove(index);
                                   setIsModalOpen(false);
-                                  navigate("/dashboard/orders");
+      navigate(`/dashboard/orders/order-details/${createdOrderId}`);
                                 }}
                               >
                                 View order
@@ -409,8 +412,10 @@ export const NewOrder = () => {
                   <div className="pb-8">
                     <Button
                       type="submit"
-                      variant="secondary"
+                      variant="outline"
+                      
                       onClick={() => push(initialItem)}
+                      className="w-auto border border-primary text-primary"
                     >
                       Add Another Item
                     </Button>
@@ -531,12 +536,9 @@ export const NewOrder = () => {
                   !values.items.every(
                     (item: { itemLink: string }) => item.itemLink
                   )
-                  //  ||
-                  // !values.items.every(
-                  //   (item: { quantity: number }) => item.quantity
-                  // )
                 }
                 loading={createOrder.loading}
+                className="w-auto"
               >
                 Proceed
               </Button>

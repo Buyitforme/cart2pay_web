@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export const StepImage = ({ src, alt, stepNumber }: { src: string; alt: string; stepNumber: number }) => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="flex-1 lg:w-1/2 relative">
+    <div className="flex-1 w-full relative">
       {/* Reserve image space to prevent layout shift */}
       <div className="aspect-[4/3] w-full relative">
         <img

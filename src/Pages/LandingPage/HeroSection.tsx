@@ -61,7 +61,7 @@ const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
   const navigate = useNavigate();
   return (
     <div>
-      <div className="relative bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 pt-16 lg:pt-8 overflow-hidden">
+      <div className="relative bg-gradient-to-br from-slate-100 via-blue-50 to-blue-200 pt-7 lg:pt-8 overflow-hidden">
        <div className="max-w-[85%] mx-auto grid lg:grid-cols-2 gap-4 lg:gap-4 items-center pt-6">
   {/* Left Content */}
   <div className="pt-8 pb-0 lg:pt-0 space-y-4">

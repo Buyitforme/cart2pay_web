@@ -409,93 +409,104 @@ const UserProfile = () => {
           </div>
         )}
       </div>
-      <Modal
-        isOpen={showForm}
-        onClose={() => setShowForm(false)}
-        className=" p-4"
-      >
-        <Heading size="lg" weight="bold">
-          Edit address
-        </Heading>
-        <Formik
-          initialValues={
-            editingAddress
-              ? {
-                  firstName: editingAddress.firstName || "",
-                  lastName: editingAddress.lastName || "",
-                  phone: editingAddress.phone || "",
-                  state: editingAddress.state || "",
-                  lga: editingAddress.lga || "",
-                  street: editingAddress.street || "",
-                }
-              : {
-                  firstName: "",
-                  lastName: "",
-                  phone: "",
-                  state: "",
-                  lga: "",
-                  street: "",
-                }
+     <Modal
+  isOpen={showForm}
+  onClose={() => setShowForm(false)}
+  className="p-4 sm:p-6 w-full max-w-[95vw] sm:max-w-2xl"
+>
+  <Heading size="lg" weight="bold" className="mb-4">
+    Edit address
+  </Heading>
+  <Formik
+    initialValues={
+      editingAddress
+        ? {
+            firstName: editingAddress.firstName || "",
+            lastName: editingAddress.lastName || "",
+            phone: editingAddress.phone || "",
+            state: editingAddress.state || "",
+            lga: editingAddress.lga || "",
+            street: editingAddress.street || "",
           }
-          validationSchema={validationSchema}
-          onSubmit={handleEditAddress}
-        >
-          {({ values, setFieldValue, isValid, dirty }) => (
-            <Form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 [&_label]:text-left">
-                <Input
-                  name="firstName"
-                  label="First name"
-                  value={values.firstName}
-                />
-                <Input
-                  name="lastName"
-                  label="Last name"
-                  value={values.lastName}
-                />
+        : {
+            firstName: "",
+            lastName: "",
+            phone: "",
+            state: "",
+            lga: "",
+            street: "",
+          }
+    }
+    validationSchema={validationSchema}
+    onSubmit={handleEditAddress}
+  >
+    {({ values, setFieldValue, isValid, dirty }) => (
+      <Form className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="text-left">
+            <Input
+              name="firstName"
+              label="First name"
+              value={values.firstName}
+            />
+          </div>
+          <div className="text-left">
+            <Input
+              name="lastName"
+              label="Last name"
+              value={values.lastName}
+            />
+          </div>
+          <div className="text-left">
+            <Select
+              name="state"
+              label="State"
+              options={stateOptions}
+              value={values.state}
+              onChange={(e: any) => {
+                setFieldValue("state", e.target.value);
+                setFieldValue("lga", "");
+              }}
+            />
+          </div>
+          <div className="text-left">
+            <Select
+              name="lga"
+              label="LGA"
+              options={lgaOptions[values.state] || []}
+              value={values.lga}
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                setFieldValue("lga", e.target.value)
+              }
+            />
+          </div>
+          <div className="text-left">
+            <Input name="street" label="Street" value={values.street} />
+          </div>
+          <div className="text-left">
+            <Input
+              name="phone"
+              label="Phone"
+              type="number"
+              value={values.phone}
+            />
+          </div>
+        </div>
 
-                <Select
-                  name="state"
-                  label="State"
-                  options={stateOptions}
-                  value={values.state}
-                  onChange={(e: any) => {
-                    setFieldValue("state", e.target.value);
-                    setFieldValue("lga", "");
-                  }}
-                />
-                <Select
-                  name="lga"
-                  label="LGA"
-                  options={lgaOptions[values.state] || []}
-                  value={values.lga}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    setFieldValue("lga", e.target.value)
-                  }
-                />
-                <Input name="street" label="Street" value={values.street} />
-                <Input
-                  name="phone"
-                  label="Phone"
-                  type="number"
-                  value={values.phone}
-                />
-              </div>
-
-              <div className="flex gap-2 items-center">
-                <Button
-                  loading={editAddress.loading}
-                  disabled={!(isValid && dirty) || editAddress.loading}
-                  className="mt-4"
-                  type="submit"
-                >
-                  {editingAddress ? "Update Address" : "Save Address"}
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </Modal>
+        <div className="flex gap-2 items-center">
+          <Button
+            loading={editAddress.loading}
+            disabled={!(isValid && dirty) || editAddress.loading}
+            className="mt-4 w-auto"
+            type="submit"
+          >
+            {editingAddress ? "Update Address" : "Save Address"}
+          </Button>
+        </div>
+      </Form>
+    )}
+  </Formik>
+</Modal>
       {isDeleteModalOpen && (
         <Modal
           isOpen={isDeleteModalOpen}
