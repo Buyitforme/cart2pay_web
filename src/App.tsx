@@ -2,7 +2,6 @@ import { Toaster } from "react-hot-toast";
 import Router from "./Navigation/Router";
 import { Provider } from "react-redux";
 import store from "./redux/state";
-import { useEffect } from "react";
 
 function App() {
   //  useEffect(() => {
@@ -14,7 +13,7 @@ function App() {
   //   document.body.appendChild(script);
   // }, []);
   return (
-    <div className="bg-white">
+    <div className="bg-background">
       <Toaster position="top-center" reverseOrder={false} />
       <Provider store={store}>
         <Router />

@@ -26,7 +26,6 @@ const VerificationService = () => {
   const isOtpComplete = otpValues.every((value) => value !== "");
   const [counter, setCounter] = useState(120); // 2 minutes countdown
 
-
   const navigate = useNavigate();
   const handleChange = (value: string, index: number) => {
     if (!/^\d*$/.test(value)) return;
@@ -108,12 +107,12 @@ const VerificationService = () => {
   ]);
 
   useEffect(() => {
-  let timer: NodeJS.Timeout;
-  if (counter > 0) {
-    timer = setTimeout(() => setCounter(counter - 1), 1000);
-  }
-  return () => clearTimeout(timer);
-}, [counter]);
+    let timer: NodeJS.Timeout;
+    if (counter > 0) {
+      timer = setTimeout(() => setCounter(counter - 1), 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [counter]);
   return (
     <div>
       <AuthLayout>
@@ -165,26 +164,25 @@ const VerificationService = () => {
           Verify
         </Button>
 
-       <p className="text-sm text-center mt-4">
-  Didn't receive a code?{" "}
-  {counter > 0 ? (
-    <span className="text-gray-500">Resend in {counter}s</span>
-  ) : resendOtpData.loading ? (
-    <span className="text-green-500">Sending...</span>
-  ) : (
-    <button
-      type="button"
-      className="text-primary font-medium"
-      onClick={() => {
-        handleResendOtp();
-        setCounter(120); // Reset countdown after resend
-      }}
-    >
-      Resend OTP
-    </button>
-  )}
-</p>
-
+        <p className="text-sm text-center mt-4">
+          Didn't receive a code?{" "}
+          {counter > 0 ? (
+            <span className="text-gray-500">Resend in {counter}s</span>
+          ) : resendOtpData.loading ? (
+            <span className="text-green-500">Sending...</span>
+          ) : (
+            <button
+              type="button"
+              className="text-primary font-medium"
+              onClick={() => {
+                handleResendOtp();
+                setCounter(120); // Reset countdown after resend
+              }}
+            >
+              Resend OTP
+            </button>
+          )}
+        </p>
       </AuthLayout>
     </div>
   );

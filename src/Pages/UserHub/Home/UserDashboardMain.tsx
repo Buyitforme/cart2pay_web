@@ -70,21 +70,27 @@ const Home = () => {
     <div className="py-0 md:py-2 space-y-3 text-[#1E2A47] bg-background">
       {/* Greeting */}
       <div>
-        <Heading size="xl" className="mb-2">
-          {greeting}, {userData?.fullName}
-        </Heading>
+     <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
+  <Heading size="xl" weight="normal" className="text-primary">
+    {greeting},
+  </Heading>
+  <Heading size="xl">
+    {userData?.fullName}
+  </Heading>
+</div>
 
-        <Text size="lg" className="opacity-90" weight='normal'>
+
+        <Text size="lg" className="opacity-90 " weight="normal">
           Here is a quick overview of your activity
         </Text>
       </div>
 
       {/* Quick Stats Section */}
-      <Heading size="lg" weight="semibold" className="mb-4">
+      <Heading size="lg" weight="semibold" className="mb-4 pt-4">
         Orders
       </Heading>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
         {[
           {
             label: "Pending",
@@ -117,9 +123,29 @@ const Home = () => {
             ),
           },
           {
+            label: "Shipped",
+            key: "shipped",
+            value: groupedOrders["shipped"] || 0,
+            icon: (
+              <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center">
+                <PackageSearch className="w-8 h-8 sm:w-10 sm:h-10 text-primary_dark" />
+              </div>
+            ),
+          },
+          {
             label: "Received",
             key: "received",
             value: groupedOrders["received"] || 0,
+            icon: (
+              <div className="p-2 sm:p-2 rounded-lg bg-green-100 flex items-center justify-center">
+                <HandCoins className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
+              </div>
+            ),
+          },
+          {
+            label: "Rejected",
+            key: "rejected",
+            value: groupedOrders["rejected"] || 0,
             icon: (
               <div className="p-2 sm:p-2 rounded-lg bg-green-100 flex items-center justify-center">
                 <HandCoins className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
@@ -436,44 +462,44 @@ const Home = () => {
       </div>
 
       {/* Payment Reminder */}
-      {orders.some((o: any) => o.status === "pending") && showPaymentReminder && (
-  <div className="fixed bottom-3 right-3 left-3 sm:left-auto sm:w-80 z-50 animate-slide-up">
-    <div className="bg-highlight rounded-xl shadow-lg p-3 sm:p-4 relative overflow-hidden">
-      <div className="relative z-10">
-        {/* Close button */}
-        <div className="flex justify-end mb-2">
-          <button
-            onClick={() => setShowPaymentReminder(false)}
-            className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all duration-200 hover:rotate-90"
-            aria-label="Close reminder"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
+      {orders.some((o: any) => o.status === "pending") &&
+        showPaymentReminder && (
+          <div className="fixed bottom-3 right-3 left-3 sm:left-auto sm:w-80 z-50 animate-slide-up">
+            <div className="bg-highlight rounded-xl shadow-lg p-3 sm:p-4 relative overflow-hidden">
+              <div className="relative z-10">
+                {/* Close button */}
+                <div className="flex justify-end mb-2">
+                  <button
+                    onClick={() => setShowPaymentReminder(false)}
+                    className="w-7 h-7 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-all duration-200 hover:rotate-90"
+                    aria-label="Close reminder"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
 
-        {/* Message */}
-        <Text size="sm" className="mb-3 leading-snug">
-          You have{" "}
-          <span className="font-bold text-base">
-            {groupedOrders["pending"] || 0}
-          </span>{" "}
-          unpaid {groupedOrders["pending"] === 1 ? "order" : "orders"}. Complete
-          payment now to avoid sold outs!
-        </Text>
+                {/* Message */}
+                <Text size="sm" className="mb-3 leading-snug">
+                  You have{" "}
+                  <span className="font-bold text-base">
+                    {groupedOrders["pending"] || 0}
+                  </span>{" "}
+                  unpaid {groupedOrders["pending"] === 1 ? "order" : "orders"}.
+                  Complete payment now to avoid sold outs!
+                </Text>
 
-        {/* Action button */}
-        <Button
-          className="w-full sm:w-auto px-3 py-2 text-xs sm:text-sm"
-          variant="outline"
-          onClick={() => navigate("/dashboard/orders")}
-        >
-          View Pending Orders
-        </Button>
-      </div>
-    </div>
-  </div>
-)}
-
+                {/* Action button */}
+                <Button
+                  className="w-full sm:w-auto px-3 py-2 text-xs sm:text-sm"
+                  variant="outline"
+                  onClick={() => navigate("/dashboard/orders")}
+                >
+                  View Pending Orders
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
     </div>
   );
 };

@@ -83,7 +83,8 @@ module.exports = {
           secondary: "#403D39",
         },
         links: "#CAEDCC",
-        background: "#F6FBFF",
+        // background: "#F6FBFF",
+        background:"#faf7f3",
         input: {
           bg: "#E6F0FA",
           value: "#10111A",

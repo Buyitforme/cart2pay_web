@@ -44,7 +44,9 @@ const Orders: FC = () => {
     { key: "pending", label: "Pending" },
     { key: "approved", label: "Approved" },
     { key: "processed", label: "Processed" },
-    { key: "received", label: "Received" },
+    { key: "shipped", label: "Shipped" },
+     { key: "received", label: "Received" },
+    { key: "rejected", label: "Rejected" },
   ];
 
   const dispatch: AppDispatch = useDispatch();
@@ -125,9 +127,11 @@ const Orders: FC = () => {
                 ? "bg-yellow-100 text-yellow-800"
                 : order.status === "approved"
                 ? "bg-green-100 text-green-800"
-                : order.status === "completed"
+                : order.status === "processed"
                 ? "bg-blue-100 text-blue-800"
-                : order.status === "cancelled"
+                : order.status === "shipped"
+                ? "bg-red-100 text-red-800"
+                : order.status === "rejected"
                 ? "bg-red-100 text-red-800"
                 : "bg-gray-100 text-gray-800"
             }

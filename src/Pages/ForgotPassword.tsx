@@ -59,7 +59,7 @@ const ForgotPassword = () => {
         validationSchema={forgotPasswordSchema}
         onSubmit={handleForgotPassword}
       >
-        {({  isValid,dirty}) => (
+        {({ isValid, dirty }) => (
           <Form className="space-y-4">
             <Input label="Email" name="email" type="email" />
             <Button
@@ -68,7 +68,7 @@ const ForgotPassword = () => {
               size="lg"
               loading={loading}
               className="w-full"
-  disabled={!(isValid && dirty) || loading}
+              disabled={!(isValid && dirty) || loading}
             >
               Send reset otp
             </Button>

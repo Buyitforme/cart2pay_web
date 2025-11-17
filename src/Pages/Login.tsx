@@ -45,14 +45,14 @@ const Login = () => {
 
   useEffect(() => {
     if (!error && statusCode === 200) {
-            localStorage.setItem('user_full_name',data?.results?.fullName)
+      localStorage.setItem("user_full_name", data?.results?.fullName);
       formikRef.current?.resetForm();
       navigate(from);
     } else if (error && message === "Email not verified") {
       setModalOpen(true);
     } else if (error && message === "Invalid credentials") {
       toast.error(message);
-    } 
+    }
     dispatch(resetState());
   }, [error, statusCode, message, navigate, dispatch, data, from]);
 
@@ -77,7 +77,7 @@ const Login = () => {
         validationSchema={validationSchema}
         onSubmit={handleSignIn}
       >
-        {({  isValid,dirty }) => (
+        {({ isValid, dirty }) => (
           <Form className="space-y-4">
             <Input label="Email" name="email" type="email" />
             <Input label="Password" name="password" type="password" />
@@ -87,8 +87,7 @@ const Login = () => {
               size="lg"
               loading={loading}
               className="w-full"
-  disabled={!(isValid && dirty) || loading}
-
+              disabled={!(isValid && dirty) || loading}
             >
               Login
             </Button>
@@ -96,21 +95,20 @@ const Login = () => {
         )}
       </Formik>
 
-<div className='flex flex-col gap-2 items-center pt-2'>
-    <Text size="sm" weight="medium" color="default">
-         Forgot password?{" "}
-        <Link to="/forgot-password" className="text-primary">
-          Reset
-        </Link>
-      </Text>
-    <Text size="sm" weight="medium" color="default">
-        Don&apos;t have an account?{" "}
-        <Link to="/signup" className="text-primary">
-          Sign up
-        </Link>
-      </Text>
-</div>
-
+      <div className="flex flex-col gap-2 items-center pt-2">
+        <Text size="sm" weight="medium" color="default">
+          Forgot password?{" "}
+          <Link to="/forgot-password" className="text-primary">
+            Reset
+          </Link>
+        </Text>
+        <Text size="sm" weight="medium" color="default">
+          Don&apos;t have an account?{" "}
+          <Link to="/signup" className="text-primary">
+            Sign up
+          </Link>
+        </Text>
+      </div>
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <Text size="sm" weight="medium" color="subtle">
