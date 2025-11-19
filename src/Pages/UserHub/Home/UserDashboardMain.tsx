@@ -72,17 +72,14 @@ const Home = () => {
     <div className="py-0 md:py-2 space-y-3  bg-background">
       {/* Greeting */}
       <div>
-     <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
-  <Heading size="xl" weight="normal" className="text-primary">
-    {greeting},
-  </Heading>
-  <Heading size="xl">
-    {userData?.fullName}
-  </Heading>
-</div>
+        <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
+          <Heading size="xl" weight="normal" className="text-primary">
+            {greeting},
+          </Heading>
+          <Heading size="xl">{userData?.fullName}</Heading>
+        </div>
 
-
-        <Text size="lg" className="opacity-90 pt-3 md:pt-1 " weight="normal" >
+        <Text size="lg" className="opacity-90 pt-3 md:pt-1 " weight="normal">
           Here is a quick overview of your activity
         </Text>
       </div>
@@ -98,61 +95,61 @@ const Home = () => {
             label: "Pending",
             key: "pending",
             value: groupedOrders["pending"] || 0,
-             icon: (
-        <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-yellow-100">
-          <TrendingUpDown className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-800" />
-        </div>
-      ),
+            icon: (
+              <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-yellow-100">
+                <TrendingUpDown className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-800" />
+              </div>
+            ),
           },
           {
             label: "Approved",
             key: "approved",
             value: groupedOrders["approved"] || 0,
-          icon: (
-        <div className="p-2 sm:p-2 rounded-lg bg-secondary_light flex items-center justify-center bg-blue-100 ">
-          <BookOpenCheck className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
-        </div>
-      ),
+            icon: (
+              <div className="p-2 sm:p-2 rounded-lg bg-secondary_light flex items-center justify-center bg-blue-100 ">
+                <BookOpenCheck className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
+              </div>
+            ),
           },
           {
             label: "Processed",
             key: "processed",
             value: groupedOrders["processed"] || 0,
-           icon: (
-        <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center bg-indigo-100 ">
-          <PackageSearch className="w-8 h-8 sm:w-10 sm:h-10  text-indigo-800" />
-        </div>
-      ),
+            icon: (
+              <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center bg-indigo-100 ">
+                <PackageSearch className="w-8 h-8 sm:w-10 sm:h-10  text-indigo-800" />
+              </div>
+            ),
           },
           {
             label: "Shipped",
             key: "shipped",
             value: groupedOrders["shipped"] || 0,
-             icon: (
-        <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center bg-purple-100">
-          <Truck  className="w-8 h-8 sm:w-10 sm:h-10 text-purple-800" />
-        </div>
-      ),
+            icon: (
+              <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center bg-purple-100">
+                <Truck className="w-8 h-8 sm:w-10 sm:h-10 text-purple-800" />
+              </div>
+            ),
           },
           {
             label: "Received",
             key: "received",
             value: groupedOrders["received"] || 0,
             icon: (
-        <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-teal-100 ">
-          <HandCoins className="w-8 h-8 sm:w-10 sm:h-10  text-teal-800" />
-        </div>
-      ),
+              <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-teal-100 ">
+                <HandCoins className="w-8 h-8 sm:w-10 sm:h-10  text-teal-800" />
+              </div>
+            ),
           },
           {
             label: "Rejected",
             key: "rejected",
             value: groupedOrders["rejected"] || 0,
-             icon: (
-        <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-red-100">
-          <BanknoteX className="w-8 h-8 sm:w-10 sm:h-10 text-red-800" />
-        </div>
-      ),
+            icon: (
+              <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-red-100">
+                <BanknoteX className="w-8 h-8 sm:w-10 sm:h-10 text-red-800" />
+              </div>
+            ),
           },
         ].map((stat) => (
           <div
@@ -467,7 +464,7 @@ const Home = () => {
       {orders.some((o: any) => o.status === "pending") &&
         showPaymentReminder && (
           <div className="fixed bottom-3 right-3 left-3 sm:left-auto sm:w-80 z-50 animate-slide-up">
-            <div className="bg-highlight rounded-xl shadow-lg p-3 sm:p-4 relative overflow-hidden">
+            <div className="bg-white rounded-xl shadow-lg p-3 sm:p-4 relative overflow-hidden">
               <div className="relative z-10">
                 {/* Close button */}
                 <div className="flex justify-end mb-2">
@@ -480,24 +477,31 @@ const Home = () => {
                   </button>
                 </div>
 
-                {/* Message */}
                 <Text size="sm" className="mb-3 leading-snug">
-                  You have{" "}
+                  Hi {userData?.fullName}, you have{" "}
                   <span className="font-bold text-base">
-                    {groupedOrders["pending"] || 0}
+                    {groupedOrders["approved"] || 0}
                   </span>{" "}
-                  unpaid {groupedOrders["pending"] === 1 ? "order" : "orders"}.
-                  Complete payment now to avoid sold outs!
+                  approved{" "}
+                  {groupedOrders["approved"] === 1 ? "order" : "orders"}{" "}
+                  awaiting checkout. Complete your payment to avoid price
+                  changes and stockouts.
                 </Text>
 
                 {/* Action button */}
-                <Button
-                  className="w-full sm:w-auto px-3 py-2 text-xs sm:text-sm"
-                  variant="outline"
-                  onClick={() => navigate("/dashboard/orders")}
-                >
-                  View Pending Orders
-                </Button>
+            <Button
+  className="w-full sm:w-auto px-3 py-2 text-xs sm:text-sm"
+  variant="outline"
+  onClick={(e) => {
+    e.stopPropagation();
+    navigate("/dashboard/orders", {
+      state: { activeTab: "approved" },
+    });
+  }}
+>
+  {groupedOrders["approved"] === 1 ? "View Order" : "View Orders"}
+</Button>
+
               </div>
             </div>
           </div>
