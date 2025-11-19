@@ -1,9 +1,9 @@
-import { ClimbingBoxLoader } from "react-spinners";
+import {PropagateLoader } from "react-spinners";
 
 export const PageLoader = () => {
   return (
        <div style={{ width: 400, height: 200 }} className='flex justify-center  '>
-      <ClimbingBoxLoader color="#6f6d6bff"/>
+      <PropagateLoader color="#dd8006ff"/>
     </div>
   );
 };

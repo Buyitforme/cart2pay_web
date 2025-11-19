@@ -69,7 +69,7 @@ const Home = () => {
   }
 
   return (
-    <div className="py-0 md:py-2 space-y-3 text-[#1E2A47] bg-background">
+    <div className="py-0 md:py-2 space-y-3  bg-background">
       {/* Greeting */}
       <div>
      <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
@@ -82,7 +82,7 @@ const Home = () => {
 </div>
 
 
-        <Text size="lg" className="opacity-90 " weight="normal">
+        <Text size="lg" className="opacity-90 pt-3 md:pt-1 " weight="normal" >
           Here is a quick overview of your activity
         </Text>
       </div>

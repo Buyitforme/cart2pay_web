@@ -13,7 +13,7 @@ const UserHubLayout = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <UserHubNav />
-      <main className="py-12 flex-1 bg-background px-4 md:px-16">
+      <main className="pt-6  pb-12 md:pt-12 flex-1 bg-background px-4 md:px-16">
         <Outlet />
       </main>
       
