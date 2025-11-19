@@ -313,7 +313,7 @@ const Quote = () => {
           Exchange Rate
         </Text>
         <Text size="md" weight="normal" color="secondary">
-          NGN {order?.exchange_rate.toLocaleString()} / $1
+          NGN {order?.exchange_rate.toLocaleString()} / {order?.currency} 1
         </Text>
       </div>
 

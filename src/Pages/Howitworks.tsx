@@ -17,6 +17,7 @@ import { AnimatedSection } from "./LandingPage/LandingPageMain";
 import happy_shopper from "../Assets/fashion.jpeg";
 import beauty from "../Assets/brushes.jpeg";
 import LazyImage from "../Components/LazyImage";
+import routeNames from "../Navigation/RouteNames";
 
 interface SupportedStoresProps {
   isOpen: boolean;
@@ -148,7 +149,7 @@ const SupportedStoresModal = ({ isOpen, onClose }: SupportedStoresProps) => {
             <Button
               variant="secondary"
               className="w-auto px-6"
-              onClick={() => navigate("contact-us")}
+              onClick={() => navigate(routeNames.contactUs)}
             >
               <Headphones className="w-4 h-4" />
               Contact us

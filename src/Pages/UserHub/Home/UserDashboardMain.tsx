@@ -10,12 +10,14 @@ import { PageLoader } from "../../../Components/PageLoader";
 import { capitalizeFirstLetter } from "../../../utils";
 import {
   ArrowRight,
+  BanknoteX,
   BookOpenCheck,
   HandCoins,
   PackageSearch,
   ShoppingBag,
   ShoppingCart,
   TrendingUpDown,
+  Truck,
   X,
 } from "lucide-react";
 import { ArrowUpRight } from "lucide-react";
@@ -96,61 +98,61 @@ const Home = () => {
             label: "Pending",
             key: "pending",
             value: groupedOrders["pending"] || 0,
-            icon: (
-              <div className="p-2 sm:p-2 rounded-lg bg-yellow-100 flex items-center justify-center">
-                <TrendingUpDown className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-600" />
-              </div>
-            ),
+             icon: (
+        <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-yellow-100">
+          <TrendingUpDown className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-800" />
+        </div>
+      ),
           },
           {
             label: "Approved",
             key: "approved",
             value: groupedOrders["approved"] || 0,
-            icon: (
-              <div className="p-2 sm:p-2 rounded-lg bg-secondary_light flex items-center justify-center">
-                <BookOpenCheck className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
-              </div>
-            ),
+          icon: (
+        <div className="p-2 sm:p-2 rounded-lg bg-secondary_light flex items-center justify-center bg-blue-100 ">
+          <BookOpenCheck className="w-8 h-8 sm:w-10 sm:h-10 text-secondary" />
+        </div>
+      ),
           },
           {
             label: "Processed",
             key: "processed",
             value: groupedOrders["processed"] || 0,
-            icon: (
-              <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center">
-                <PackageSearch className="w-8 h-8 sm:w-10 sm:h-10 text-primary_dark" />
-              </div>
-            ),
+           icon: (
+        <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center bg-indigo-100 ">
+          <PackageSearch className="w-8 h-8 sm:w-10 sm:h-10  text-indigo-800" />
+        </div>
+      ),
           },
           {
             label: "Shipped",
             key: "shipped",
             value: groupedOrders["shipped"] || 0,
-            icon: (
-              <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center">
-                <PackageSearch className="w-8 h-8 sm:w-10 sm:h-10 text-primary_dark" />
-              </div>
-            ),
+             icon: (
+        <div className="p-2 sm:p-2 rounded-lg bg-primary_light flex items-center justify-center bg-purple-100">
+          <Truck  className="w-8 h-8 sm:w-10 sm:h-10 text-purple-800" />
+        </div>
+      ),
           },
           {
             label: "Received",
             key: "received",
             value: groupedOrders["received"] || 0,
             icon: (
-              <div className="p-2 sm:p-2 rounded-lg bg-green-100 flex items-center justify-center">
-                <HandCoins className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
-              </div>
-            ),
+        <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-teal-100 ">
+          <HandCoins className="w-8 h-8 sm:w-10 sm:h-10  text-teal-800" />
+        </div>
+      ),
           },
           {
             label: "Rejected",
             key: "rejected",
             value: groupedOrders["rejected"] || 0,
-            icon: (
-              <div className="p-2 sm:p-2 rounded-lg bg-green-100 flex items-center justify-center">
-                <HandCoins className="w-8 h-8 sm:w-10 sm:h-10 text-green-600" />
-              </div>
-            ),
+             icon: (
+        <div className="p-2 sm:p-2 rounded-lg flex items-center justify-center bg-red-100">
+          <BanknoteX className="w-8 h-8 sm:w-10 sm:h-10 text-red-800" />
+        </div>
+      ),
           },
         ].map((stat) => (
           <div
@@ -451,12 +453,12 @@ const Home = () => {
         {/* Optional: Add a CTA */}
         <div className="flex items-center justify-center mt-6 sm:mt-8">
           <Button
-            className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3 text-white hover:text-gray-600 text-sm sm:text-base"
-            variant="outline"
+            className="w-full sm:w-auto px-4 sm:px-6 py-2.5 sm:py-3  text-sm sm:text-base"
+            variant="primary"
             onClick={() => navigate("/dashboard/new-order")}
             icon={<ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />}
           >
-            Start Shopping Now
+            Start shopping
           </Button>
         </div>
       </div>

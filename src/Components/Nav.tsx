@@ -49,26 +49,26 @@ const Nav = () => {
         </Link>
 
         {/* Hamburger Menu */}
-       
+
         <button
-  className="lg:hidden flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full transition-colors bg-gray-100 hover:bg-gray-200"
-  onClick={() => setIsOpen(!isOpen)}
-  aria-label="Toggle menu"
->
-  <svg
-    className="w-5 h-5 sm:w-6 sm:h-6 text-gray-900"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-    />
-  </svg>
-</button>
+          className="lg:hidden flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full transition-colors bg-gray-100 hover:bg-gray-200"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
+        >
+          <svg
+            className="w-5 h-5 sm:w-6 sm:h-6 text-gray-900"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+            />
+          </svg>
+        </button>
 
         {/* Desktop Links */}
         <div className="hidden lg:flex items-center space-x-8 xl:space-x-10">
@@ -137,11 +137,11 @@ const Nav = () => {
         )}
 
         {/* Mobile/Tablet Side Drawer */}
-       <div
-  className={`lg:hidden fixed top-0 left-0 h-full w-full bg-white z-50 shadow-xl transform transition-transform duration-300 ease-in-out ${
-    isOpen ? "translate-x-0" : "-translate-x-full"
-  }`}
->
+        <div
+          className={`lg:hidden fixed top-0 left-0 h-full w-full bg-white z-50 shadow-xl transform transition-transform duration-300 ease-in-out ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
           <div className="px-4 sm:px-6 py-4 sm:py-6 flex flex-col h-full">
             {/* Top Row */}
             <div className="flex justify-between items-center mb-6 sm:mb-8">
@@ -260,17 +260,16 @@ const Nav = () => {
             </div>
 
             {/* Create Account Button - Sticky at bottom */}
-           <div className="mt-auto">
-  <Link to="/signup" onClick={() => setIsOpen(false)}>
-    <Button
-      variant="primary"
-      className="text-sm sm:text-base py-2 sm:py-3 w-auto px-6"
-
-    >
-      Create account
-    </Button>
-  </Link>
-</div>
+            <div className="mt-auto">
+              <Link to="/signup" onClick={() => setIsOpen(false)}>
+                <Button
+                  variant="primary"
+                  className="text-sm sm:text-base py-2 sm:py-3 w-auto px-6"
+                >
+                  Create account
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

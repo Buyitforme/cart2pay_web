@@ -169,9 +169,19 @@ const Orders: FC = () => {
 
               {/* Action Buttons */}
               <div className="flex flex-row w-full gap-2 sm:gap-4">
+                  <Button
+                  size="sm"
+                  className="w-full h-8 sm:h-9 text-xs sm:text-sm w-aut0"
+                  variant="primary"
+                  onClick={() =>
+                    navigate(`/dashboard/orders/quote/${order._id}`)
+                  }
+                >
+                  View Quote
+                </Button>
                 <Button
                   size="sm"
-                  className="w-full h-8 sm:h-9 text-xs sm:text-sm"
+                  className="w-full h-8 sm:h-9 text-xs sm:text-sm w-aut0"
                   variant="outline"
                   onClick={() =>
                     navigate(`/dashboard/orders/order-details/${order._id}`)
@@ -179,16 +189,7 @@ const Orders: FC = () => {
                 >
                   View Details
                 </Button>
-                <Button
-                  size="sm"
-                  className="w-full h-8 sm:h-9 text-xs sm:text-sm"
-                  variant="outline"
-                  onClick={() =>
-                    navigate(`/dashboard/orders/quote/${order._id}`)
-                  }
-                >
-                  View Quote
-                </Button>
+            
               </div>
             </Card>
           ))}
