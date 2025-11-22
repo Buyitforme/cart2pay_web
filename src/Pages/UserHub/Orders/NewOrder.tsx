@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Formik, Form, FieldArray } from "formik";
+import { useEffect, useRef, useState } from "react";
+import { Formik, Form, FieldArray, FormikProps } from "formik";
 import * as Yup from "yup";
 import { Button } from "../../../Components/Button";
 import { Heading, Text } from "../../../Components/Typography";
@@ -18,8 +18,10 @@ import {
 import toast from "react-hot-toast";
 import {
   clearFormData,
+  clearTAndC,
   resetCreateOrderState,
   updateFormData,
+  updateTAndC,
 } from "../../../redux/features/orderManagement/orderManagementSlice";
 import TextLoader from "../../../Components/TextLoader";
 import { triggerGetUserProfile } from "../../../redux/features/UserAccountManagement/userAccountManagementThunk";
@@ -44,7 +46,7 @@ const validationSchema = Yup.object({
       Yup.object({
         itemLink: Yup.string()
           .trim()
-          .required("Paste a valid cart link")
+          .required("Enter a valid product link")
           .test(
             "match-store",
             "Link doesn't match the selected store",
@@ -75,11 +77,14 @@ const validationSchema = Yup.object({
 export const NewOrder = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isCreateOrderModalOpen, setIsCreateOrderModalOpen] = useState(false);
   const [createdOrderId, setCreatedOrderId] = useState<string | null>(null);
+  const [hasConsented, setHasConsented] = useState(false);
+  const formikRef = useRef<FormikProps<any>>(null);
+  const [formKey, setFormKey] = useState(Math.random());
 
-
-  const { createOrder, addresses, formDataInState } = useSelector(
+  const { createOrder, addresses, formDataInState, tAndCInState } = useSelector(
     (state: RootState) => state.order_management
   );
 
@@ -130,14 +135,19 @@ export const NewOrder = () => {
   useEffect(() => {
     dispatch(triggerGetUserProfile({}));
   }, [dispatch]);
+
   useEffect(() => {
     if (!createOrder.error && createOrder.statusCode === 201) {
-       const orderId = createOrder.data?.results?._id;
-    if (orderId) {
-      setCreatedOrderId(orderId);
-    }
-      setIsCreateOrderModalOpen(true);
+      const orderId = createOrder.data?.results?._id;
+      if (orderId) {
+        setCreatedOrderId(orderId);
+      }
+      setHasConsented(false);
+      setIsConfirmModalOpen(false);
+      dispatch(clearTAndC());
       dispatch(clearFormData());
+      setFormKey(Math.random());
+      setIsCreateOrderModalOpen(true);
     } else if (createOrder.error) {
       toast.error(createOrder.message);
     }
@@ -156,6 +166,29 @@ export const NewOrder = () => {
     navigate("address");
   };
 
+  const handleTandC = (values: any) => {
+    const consentData = {
+      modalState: isConfirmModalOpen,
+      consentState: hasConsented,
+    };
+    console.log("Conscent", consentData);
+    dispatch(updateTAndC(consentData));
+    dispatch(updateFormData(values));
+
+    navigate("/terms-of-service#tax-and-duty", {
+      state: { acceptTerms: true },
+    });
+  };
+
+  useEffect(() => {
+    if (tAndCInState?.modalState || tAndCInState?.consentState) {
+      console.log("🔄 Restoring modal state:", tAndCInState);
+
+      setIsConfirmModalOpen(tAndCInState.modalState);
+      setHasConsented(tAndCInState.consentState);
+    }
+  }, [tAndCInState]);
+
   const persistedData = formDataInState;
 
   return (
@@ -164,6 +197,7 @@ export const NewOrder = () => {
         Personal shopper
       </Heading>
       <Formik
+        key={formKey}
         initialValues={{
           store: persistedData.store || "",
           items: persistedData.items || [initialItem],
@@ -172,7 +206,7 @@ export const NewOrder = () => {
         }}
         validationSchema={validationSchema}
         onSubmit={handleCreateOrder}
-        enableReinitialize={true}
+        enableReinitialize={false}
         validateOnChange={true}
         validateOnBlur={true}
       >
@@ -335,15 +369,17 @@ export const NewOrder = () => {
                         </div>
 
                         {values.items.length > 1 && (
-                          <div className="flex justify-end">
-                            <Button
-                              variant="outline"
-                              type="button"
-                              onClick={() => setIsModalOpen(true)}
-                              className="w-auto"
+                          <div
+                            className="flex justify-end cursor-pointer"
+                            onClick={() => setIsModalOpen(true)}
+                          >
+                            <Text
+                              size="xs"
+                              weight="semibold"
+                              className="text-primary"
                             >
                               Remove Item
-                            </Button>
+                            </Text>
                           </div>
                         )}
                         <Modal
@@ -386,21 +422,60 @@ export const NewOrder = () => {
                               style={{ width: 80, height: 80 }}
                             />
 
-                            <Text size="lg" weight="normal" className="mt-2">
-                              Order successfully created
+                            <Text
+                              size="lg"
+                              weight="semibold"
+                              className="mt-2"
+                              color="primary"
+                            >
+                              Thank you for your order!
                             </Text>
 
-                            <div className="flex justify-center mt-6 w-full">
+                            <Text
+                              size="sm"
+                              weight="normal"
+                              className="mt-2"
+                              color="subtle"
+                            >
+                              We’re reviewing your order and will update you
+                              shortly.
+                            </Text>
+
+                            <div className="flex justify-center gap-4 mt-6 w-full mb-3">
                               <Button
-                      className="w-auto "
+                                className="w-auto "
                                 variant="primary"
                                 onClick={() => {
                                   remove(index);
                                   setIsModalOpen(false);
-      navigate(`/dashboard/orders/order-details/${createdOrderId}`);
+                                  navigate(
+                                    `/dashboard/orders/order-details/${createdOrderId}`
+                                  );
                                 }}
                               >
-                                View order
+                                View order details
+                              </Button>
+                              <Button
+                                className="w-auto "
+                                variant="outline"
+                                onClick={() => {
+                                  dispatch(clearFormData());
+
+                                  // Reset Formik form to initial values
+                                  console.log(formikRef.current);
+
+                                  formikRef.current?.resetForm({
+                                    values: {
+                                      store: "",
+                                      items: [initialItem],
+                                      ...deliveryFields,
+                                    },
+                                  });
+
+                                  setIsCreateOrderModalOpen(false);
+                                }}
+                              >
+                                Create new order
                               </Button>
                             </div>
                           </div>
@@ -413,11 +488,10 @@ export const NewOrder = () => {
                     <Button
                       type="submit"
                       variant="outline"
-                      
                       onClick={() => push(initialItem)}
-                      className="w-auto border border-primary text-primary"
+                      className="w-auto"
                     >
-                      Add Another Item
+                      Add another item
                     </Button>
                   </div>
                 </>
@@ -523,7 +597,7 @@ export const NewOrder = () => {
             {/* Actions */}
             <div className="pt-4 space-x-4">
               <Button
-                type="submit"
+                type="button"
                 variant="primary"
                 disabled={
                   !isValid ||
@@ -538,11 +612,86 @@ export const NewOrder = () => {
                   )
                 }
                 loading={createOrder.loading}
+                onClick={() => setIsConfirmModalOpen(true)}
                 className="w-auto"
               >
                 Proceed
               </Button>
             </div>
+
+            <Modal
+              isOpen={isConfirmModalOpen}
+              onClose={() => {
+                setIsConfirmModalOpen(false);
+                setHasConsented(false);
+                dispatch(clearTAndC());
+              }}
+              className="
+  w-[90%] sm:w-[70%] md:w-[50%] lg:w-[40%] xl:w-[30%]
+  max-w-md
+  py-12 px-6
+  flex flex-col justify-center items-center
+"
+            >
+              <div className="flex  flex-col justify-center items-center">
+                <Text size="lg" weight="bold" className="mb-2">
+                  Important Tax & Duties Notice
+                </Text>
+
+                <Text size="sm" weight="normal" color="subtle">
+                  Tax and duty fees depend on the store. If included at checkout
+                  by the vendor, we'll add them to your order total. Otherwise,
+                  you'll pay them when your order arrives so we can clear
+                  customs and deliver to you.
+                  <span
+                    className="text-primary_dark cursor-pointer"
+                    onClick={() => handleTandC(values)}
+                  >
+                    {" "}
+                    Learn more
+                  </span>
+                </Text>
+
+                {/* Consent Checkbox */}
+                <label className="flex items-center gap-2 mt-4">
+                  <input
+                    type="checkbox"
+                    checked={hasConsented}
+                    onChange={(e) => setHasConsented(e.target.checked)}
+                    className="w-4 h-4"
+                  />
+                  <span className="text-xs text-primary_dark">
+                    I understand and accept responsibility for tax and duty fees
+                  </span>
+                </label>
+
+                {/* Buttons */}
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setIsConfirmModalOpen(false);
+                      setHasConsented(false);
+                      dispatch(clearTAndC());
+                    }}
+                    className="w-auto"
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    loading={createOrder.loading}
+                    className="w-auto"
+                    disabled={!hasConsented}
+                  >
+                    Create order
+                  </Button>
+                </div>
+              </div>
+            </Modal>
           </Form>
         )}
       </Formik>

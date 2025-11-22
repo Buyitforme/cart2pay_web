@@ -4,12 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "./Button";
 import logo from "../Assets/svg_images/Logo2.svg";
 import logo_light from "../Assets/svg_images/logoWhite.svg";
+import Cookies from "js-cookie";
 
 const Nav = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = location.pathname;
+  const token = Cookies.get("cart2pay_user_token");
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -99,7 +101,8 @@ const Nav = () => {
           ))}
 
           {/* Auth Buttons */}
-          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
+          {!token && (
+ <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
             <Link to="/signin">
               <Text
                 size="md"
@@ -124,6 +127,8 @@ const Nav = () => {
               </Button>
             </Link>
           </div>
+          )}
+         
         </div>
 
         {/* Mobile Menu (keep as is) */}
@@ -238,7 +243,8 @@ const Nav = () => {
               </Link>
 
               {/* Divider */}
-              <div className="w-full border-t border-gray-200 pt-4 sm:pt-6">
+              {!token && (
+ <div className="w-full border-t border-gray-200 pt-4 sm:pt-6">
                 <Link
                   to="/signin"
                   onClick={() => setIsOpen(false)}
@@ -257,10 +263,13 @@ const Nav = () => {
                   </Text>
                 </Link>
               </div>
+              )}
+             
             </div>
 
             {/* Create Account Button - Sticky at bottom */}
-            <div className="mt-auto">
+            {!token &&(
+              <div className="mt-auto">
               <Link to="/signup" onClick={() => setIsOpen(false)}>
                 <Button
                   variant="primary"
@@ -270,6 +279,8 @@ const Nav = () => {
                 </Button>
               </Link>
             </div>
+            )}
+            
           </div>
         </div>
       </div>
