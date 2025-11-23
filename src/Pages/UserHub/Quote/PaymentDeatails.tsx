@@ -280,12 +280,12 @@ export default function PaymentDeatails() {
         isOpen={paymentConfirmed}
         onClose={() => setPaymentComfirmed(false)}
       >
-        <div className="flex flex-col items-center justify-center space-y-2 px-6 py-3 pb-5 max-w-md mx-auto">
+        <div className="flex flex-col items-center justify-center  pb-5 max-w-md mx-auto">
           {/* Lottie Animation */}
           <Lottie
             animationData={success}
             loop={true}
-            style={{ width: 80, height: 80 }}
+            style={{ width: 60, height: 60 }}
           />
 
           {/* Title */}

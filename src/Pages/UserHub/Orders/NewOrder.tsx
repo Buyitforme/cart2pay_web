@@ -386,8 +386,8 @@ export const NewOrder = () => {
                           isOpen={isModalOpen}
                           onClose={() => setIsModalOpen(false)}
                         >
-                          <div className="p-6 sm:p-8 space-y-6">
-                            <Text size="lg" weight="bold" color="subtle">
+                          <div className="p-6 sm:p-8 space-y-6 mt-5">
+                            <Text size="lg" weight="normal">
                               Are you sure you want to remove this item?
                             </Text>
 
@@ -629,7 +629,7 @@ export const NewOrder = () => {
               className="
   w-[90%] sm:w-[70%] md:w-[50%] lg:w-[40%] xl:w-[30%]
   max-w-md
-  py-12 px-6
+ 
   flex flex-col justify-center items-center
 "
             >

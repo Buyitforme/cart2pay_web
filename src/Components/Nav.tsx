@@ -11,7 +11,6 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = location.pathname;
-  const token = Cookies.get("cart2pay_user_token");
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -101,13 +100,12 @@ const Nav = () => {
           ))}
 
           {/* Auth Buttons */}
-          {!token && (
- <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
-            <Link to="/signin">
-              <Text
-                size="md"
-                weight="normal"
-                className={`cursor-pointer duration-300 ease-in-out
+            <div className="hidden lg:flex items-center space-x-4 xl:space-x-6">
+              <Link to="/signin">
+                <Text
+                  size="md"
+                  weight="normal"
+                  className={`cursor-pointer duration-300 ease-in-out
           ${
             isAboutPage
               ? "text-secondary hover:text-secondary_light"
@@ -117,18 +115,16 @@ const Nav = () => {
           }
           ${isActive("/signin") ? "font-[500]" : ""}
         `}
-              >
-                Login
-              </Text>
-            </Link>
-            <Link to="/signup">
-              <Button variant="primary" className="whitespace-nowrap">
-                Create account
-              </Button>
-            </Link>
-          </div>
-          )}
-         
+                >
+                  Login
+                </Text>
+              </Link>
+              <Link to="/signup">
+                <Button variant="primary" className="whitespace-nowrap">
+                  Create account
+                </Button>
+              </Link>
+            </div>
         </div>
 
         {/* Mobile Menu (keep as is) */}
@@ -243,44 +239,39 @@ const Nav = () => {
               </Link>
 
               {/* Divider */}
-              {!token && (
- <div className="w-full border-t border-gray-200 pt-4 sm:pt-6">
-                <Link
-                  to="/signin"
-                  onClick={() => setIsOpen(false)}
-                  className="w-full"
-                >
-                  <Text
-                    size="md"
-                    weight="normal"
-                    className={`text-base sm:text-lg font-medium duration-300 text-secondary py-2 block ${
-                      isActive("/signin")
-                        ? "text-secondary_light font-[500]"
-                        : "hover:text-secondary_light"
-                    }`}
+                <div className="w-full border-t border-gray-200 pt-4 sm:pt-6">
+                  <Link
+                    to="/signin"
+                    onClick={() => setIsOpen(false)}
+                    className="w-full"
                   >
-                    Login
-                  </Text>
-                </Link>
-              </div>
-              )}
-             
+                    <Text
+                      size="md"
+                      weight="normal"
+                      className={`text-base sm:text-lg font-medium duration-300 text-secondary py-2 block ${
+                        isActive("/signin")
+                          ? "text-secondary_light font-[500]"
+                          : "hover:text-secondary_light"
+                      }`}
+                    >
+                      Login
+                    </Text>
+                  </Link>
+                </div>
             </div>
 
             {/* Create Account Button - Sticky at bottom */}
-            {!token &&(
               <div className="mt-auto">
-              <Link to="/signup" onClick={() => setIsOpen(false)}>
-                <Button
-                  variant="primary"
-                  className="text-sm sm:text-base py-2 sm:py-3 w-auto px-6"
-                >
-                  Create account
-                </Button>
-              </Link>
-            </div>
-            )}
-            
+                <Link to="/signup" onClick={() => setIsOpen(false)}>
+                  <Button
+                    variant="primary"
+                    className="text-sm sm:text-base py-2 sm:py-3 w-auto px-6"
+                  >
+                    Create account
+                  </Button>
+                </Link>
+              </div>
+          
           </div>
         </div>
       </div>

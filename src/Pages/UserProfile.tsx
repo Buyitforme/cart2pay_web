@@ -290,14 +290,14 @@ const UserProfile = () => {
                 <Modal
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
-                  className="p-6 flex items-center justify-center"
+                  className="px-6 flex items-center justify-center"
                 >
-                  <div className="flex flex-col items-center justify-center space-y-6 p-4 md:p-6 text-center">
-                    <Text size="lg" weight="semibold">
+                  <div className="flex flex-col items-center justify-center  text-center">
+                    <Text size="lg" weight="normal">
                       Are you sure you want to logout?
                     </Text>
 
-                    <div className="flex justify-center gap-4">
+                    <div className="flex justify-center gap-4 pt-5">
                       <Button
                         variant="outline"
                         onClick={() => setIsModalOpen(false)}
@@ -511,7 +511,7 @@ const UserProfile = () => {
         <Modal
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          className="p-6"
+          className="px-6"
         >
           <Heading size="lg" weight="normal">
             Are you sure you want to delete this address?

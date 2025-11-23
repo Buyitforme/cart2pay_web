@@ -126,7 +126,7 @@ const Signup = () => {
         </Link>
       </p>
 
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} className="p-6 ">
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <h2 className="text-2xl font-bold mb-2">🎉 Sign up successful!</h2>
         <p>An otp has been sent to your email, kindly proceed to verify your account</p>
         <div className="pt-4"><Button onClick={() => navigate("/verification")} className="w-auto px-6">Proceed</Button></div>
