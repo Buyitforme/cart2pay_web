@@ -40,23 +40,6 @@ const features = [
 ];
 
 const HeroSection = ({ onExploreClick }: HeroSectionProps) => {
-  // const [heroSection, setHeroSection] = useState<HeroSectionTypes>();
-  //  useEffect(() => {
-  //    const fetchHeroSection = async () => {
-  //   try {
-  //     if (!query) {
-  //       console.error("Query is undefined or null");
-  //       return;
-  //     }
-  //     const data = await client.fetch(query);
-  //     setHeroSection(data);
-  //   } catch (error) {
-  //     console.error("Error fetching heroSection:", error);
-  //   }
-  // };
-  //     fetchHeroSection();
-  //   }, []);
-  //   console.log("HS", heroSection);
 
   const navigate = useNavigate();
   return (

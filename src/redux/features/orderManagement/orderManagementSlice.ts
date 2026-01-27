@@ -3,7 +3,7 @@ import { triggerConfirmPayment, triggerCreateAddress, triggerCreateOrder, trigge
 
 interface IinitialState {
     formDataInState: any,
-
+tAndCInState: Record<string, any>
    error: boolean;
     loading: boolean;
     data: Record<string, any>;
@@ -76,7 +76,7 @@ interface IinitialState {
 }
 const initialState: IinitialState = {
     formDataInState: {},
-
+tAndCInState:{},
    error: false,
     loading: false,
     data: {},
@@ -158,6 +158,12 @@ const orderManagementSlice = createSlice({
     },
     clearFormData(state) {
       state.formDataInState = {};
+    },
+     updateTAndC(state, action) {
+      state.tAndCInState = action.payload;
+    },
+     clearTAndC(state) {
+      state.tAndCInState = {};
     },
      resetState: (state) => {
       state.error = initialState.error;
@@ -440,6 +446,6 @@ builder.addCase(triggerDeleteAddress.rejected, (state, action) => {
 
   },
 });
-export const {resetCreateOrderState,resetState,resetMakeDefaultState,updateFormData,clearFormData,resetConfirmPaymentState} = orderManagementSlice.actions
+export const {resetCreateOrderState,resetState,resetMakeDefaultState,updateFormData,clearFormData,updateTAndC,clearTAndC,resetConfirmPaymentState} = orderManagementSlice.actions
 
 export default orderManagementSlice.reducer;

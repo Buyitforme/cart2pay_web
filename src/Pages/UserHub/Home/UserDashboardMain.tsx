@@ -32,6 +32,7 @@ const Home = () => {
   const [showPaymentReminder, setShowPaymentReminder] = useState(true);
 
   const userData = getUserProfileData.data?.results?.data;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const orders = orderHistory.data?.results || [];
   const navigate = useNavigate();
 
@@ -76,7 +77,7 @@ const Home = () => {
           <Heading size="xl" weight="normal" className="text-primary">
             {greeting},
           </Heading>
-          <Heading size="xl">{userData?.fullName}</Heading>
+          <Heading size="xl">{userData?.fullName?.split(' ')[0] || userData?.fullName || 'User'}</Heading>
         </div>
 
         <Text size="lg" className="opacity-90 pt-3 md:pt-1 " weight="normal">

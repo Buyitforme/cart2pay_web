@@ -79,12 +79,12 @@ module.exports = {
         secondary_dark: "#1C4A3F",
         highlight: "#E8F7F0",
         text: {
-          primary: "#0F1724",
+          primary: "#151c27ff",
           secondary: "#403D39",
         },
         links: "#CAEDCC",
-        // background: "#F6FBFF",
-        background:"#faf7f3",
+        background: "#F6FBFF",
+        // background:"#faf7f3",
         input: {
           bg: "#E6F0FA",
           value: "#10111A",
