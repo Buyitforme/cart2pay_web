@@ -17,8 +17,8 @@ export interface CreateOrderPayload {
   first_name:string;
   last_name:string;
   phone: string;
-  email:string;
   details: OrderItem[];
+  tax_duty_acknowledged: boolean;
 }
 
 export interface CreateAddressPayload {

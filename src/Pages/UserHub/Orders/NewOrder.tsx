@@ -62,14 +62,14 @@ const validationSchema = Yup.object({
 
               if (!value || !store || store === "other") return true;
               return storeDomains[store]?.some((domain) =>
-                value.includes(domain)
+                value.includes(domain),
               );
-            }
+            },
           ),
         quantity: Yup.number()
           .required("Quantity is required")
           .min(1, "Must be at least 1"),
-      })
+      }),
     )
     .min(1, "At least one item is required"),
 });
@@ -85,15 +85,11 @@ export const NewOrder = () => {
   const [formKey, setFormKey] = useState(Math.random());
 
   const { createOrder, addresses, formDataInState, tAndCInState } = useSelector(
-    (state: RootState) => state.order_management
-  );
-
-  const { getUserProfileData } = useSelector(
-    (state: RootState) => state.user_account_management
+    (state: RootState) => state.order_management,
   );
   const dispatch: AppDispatch = useDispatch();
   const selectedAddress = addresses?.data?.results?.find(
-    (addr: any) => addr.isDefault === true
+    (addr: any) => addr.isDefault === true,
   );
   const deliveryFields = {
     fullName:
@@ -105,7 +101,6 @@ export const NewOrder = () => {
     address: selectedAddress?.street || "",
   };
 
-  const userData = getUserProfileData.data?.results?.data;
 
   const handleCreateOrder = (values: any) => {
     const payload: CreateOrderPayload = {
@@ -116,7 +111,6 @@ export const NewOrder = () => {
       first_name: selectedAddress?.firstName,
       last_name: selectedAddress?.lastName,
       phone: selectedAddress?.phone,
-      email: userData?.email,
       details: values.items.map((item: any) => ({
         link: item.itemLink,
         variant: {
@@ -125,6 +119,7 @@ export const NewOrder = () => {
           quantity: Number(item.quantity),
         },
       })),
+      tax_duty_acknowledged: hasConsented,
     };
 
     dispatch(triggerCreateOrder(payload));
@@ -171,10 +166,8 @@ export const NewOrder = () => {
       modalState: isConfirmModalOpen,
       consentState: hasConsented,
     };
-    console.log("Conscent", consentData);
     dispatch(updateTAndC(consentData));
     dispatch(updateFormData(values));
-
     navigate("/terms-of-service#tax-and-duty", {
       state: { acceptTerms: true },
     });
@@ -182,7 +175,6 @@ export const NewOrder = () => {
 
   useEffect(() => {
     if (tAndCInState?.modalState || tAndCInState?.consentState) {
-      console.log("🔄 Restoring modal state:", tAndCInState);
 
       setIsConfirmModalOpen(tAndCInState.modalState);
       setHasConsented(tAndCInState.consentState);
@@ -265,11 +257,11 @@ export const NewOrder = () => {
                                     options={sizeOptions}
                                     value={item.size}
                                     onChange={(
-                                      e: React.ChangeEvent<HTMLSelectElement>
+                                      e: React.ChangeEvent<HTMLSelectElement>,
                                     ) =>
                                       setFieldValue(
                                         `items[${index}].size`,
-                                        e.target.value
+                                        e.target.value,
                                       )
                                     }
                                     placeholder="Size"
@@ -283,7 +275,7 @@ export const NewOrder = () => {
                                       onChange={(e) =>
                                         setFieldValue(
                                           `items[${index}].customSize`,
-                                          e.target.value
+                                          e.target.value,
                                         )
                                       }
                                     />
@@ -293,7 +285,7 @@ export const NewOrder = () => {
                                       onClick={() =>
                                         setFieldValue(
                                           `items[${index}].size`,
-                                          ""
+                                          "",
                                         )
                                       }
                                     >
@@ -311,11 +303,11 @@ export const NewOrder = () => {
                                     options={colorOptions}
                                     value={item.color}
                                     onChange={(
-                                      e: React.ChangeEvent<HTMLSelectElement>
+                                      e: React.ChangeEvent<HTMLSelectElement>,
                                     ) =>
                                       setFieldValue(
                                         `items[${index}].color`,
-                                        e.target.value
+                                        e.target.value,
                                       )
                                     }
                                     placeholder="Color"
@@ -329,7 +321,7 @@ export const NewOrder = () => {
                                       onChange={(e) =>
                                         setFieldValue(
                                           `items[${index}].customColor`,
-                                          e.target.value
+                                          e.target.value,
                                         )
                                       }
                                     />
@@ -339,7 +331,7 @@ export const NewOrder = () => {
                                       onClick={() =>
                                         setFieldValue(
                                           `items[${index}].color`,
-                                          ""
+                                          "",
                                         )
                                       }
                                     >
@@ -359,7 +351,7 @@ export const NewOrder = () => {
                                   onChange={(e: any) =>
                                     setFieldValue(
                                       `items[${index}].quantity`,
-                                      e.target.value
+                                      e.target.value,
                                     )
                                   }
                                 />
@@ -449,7 +441,7 @@ export const NewOrder = () => {
                                   remove(index);
                                   setIsModalOpen(false);
                                   navigate(
-                                    `/dashboard/orders/order-details/${createdOrderId}`
+                                    `/dashboard/orders/order-details/${createdOrderId}`,
                                   );
                                 }}
                               >
@@ -462,7 +454,6 @@ export const NewOrder = () => {
                                   dispatch(clearFormData());
 
                                   // Reset Formik form to initial values
-                                  console.log(formikRef.current);
 
                                   formikRef.current?.resetForm({
                                     values: {
@@ -608,7 +599,7 @@ export const NewOrder = () => {
                   !deliveryFields.lga ||
                   !deliveryFields.phone ||
                   !values.items.every(
-                    (item: { itemLink: string }) => item.itemLink
+                    (item: { itemLink: string }) => item.itemLink,
                   )
                 }
                 loading={createOrder.loading}
@@ -633,64 +624,61 @@ export const NewOrder = () => {
   flex flex-col justify-center items-center
 "
             >
-              <div className="flex  flex-col justify-center items-center">
-                <Text size="lg" weight="bold" className="mb-2">
-                  Important Tax & Duties Notice
-                </Text>
+  <div className="flex flex-col justify-center items-center">
+  <Text size="lg" weight="bold" className="mb-2">
+    Tax & Duties Information
+  </Text>
 
-                <Text size="sm" weight="normal" color="subtle">
-                  Tax and duty fees depend on the store. If included at checkout
-                  by the vendor, we'll add them to your order total. Otherwise,
-                  you'll pay them when your order arrives so we can clear
-                  customs and deliver to you.
-                  <span
-                    className="text-primary_dark cursor-pointer"
-                    onClick={() => handleTandC(values)}
-                  >
-                    {" "}
-                    Learn more
-                  </span>
-                </Text>
+  <Text size="sm" weight="normal" color="subtle" className="text-center">
+Your order may be subject to customs and import charges. If applicable, these will 
+be shown in your order summary.    <span
+      className="text-primary_dark cursor-pointer font-medium"
+      onClick={() => handleTandC(values)}
+    >
+      {" "}
+      Learn more
+    </span>
+  </Text>
 
-                {/* Consent Checkbox */}
-                <label className="flex items-center gap-2 mt-4">
-                  <input
-                    type="checkbox"
-                    checked={hasConsented}
-                    onChange={(e) => setHasConsented(e.target.checked)}
-                    className="w-4 h-4"
-                  />
-                  <span className="text-xs text-primary_dark">
-                    I understand and accept responsibility for tax and duty fees
-                  </span>
-                </label>
+  {/* Consent Checkbox */}
+  <label className="flex items-start gap-2 mt-4 cursor-pointer">
+    <input
+      type="checkbox"
+      checked={hasConsented}
+      onChange={(e) => setHasConsented(e.target.checked)}
+      className="w-4 h-4 mt-0.5 cursor-pointer"
+    />
+    <span className="text-xs text-gray-700">
+      I understand there may be tax and duty fees on my order
+    </span>
+  </label>
 
-                {/* Buttons */}
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      setIsConfirmModalOpen(false);
-                      setHasConsented(false);
-                      dispatch(clearTAndC());
-                    }}
-                    className="w-auto"
-                  >
-                    Cancel
-                  </Button>
+  {/* Buttons */}
+  <div className="flex gap-3 pt-4">
+    <Button
+      type="button"
+      variant="outline"
+      onClick={() => {
+        setIsConfirmModalOpen(false);
+        setHasConsented(false);
+        dispatch(clearTAndC());
+      }}
+      className="w-auto"
+    >
+      Cancel
+    </Button>
 
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    loading={createOrder.loading}
-                    className="w-auto"
-                    disabled={!hasConsented}
-                  >
-                    Create order
-                  </Button>
-                </div>
-              </div>
+    <Button
+      type="submit"
+      variant="primary"
+      loading={createOrder.loading}
+      className="w-auto"
+      disabled={!hasConsented}
+    >
+      Create order
+    </Button>
+  </div>
+</div>
             </Modal>
           </Form>
         )}

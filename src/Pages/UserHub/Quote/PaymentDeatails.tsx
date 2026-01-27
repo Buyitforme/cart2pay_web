@@ -31,8 +31,8 @@ export default function PaymentDeatails() {
 
   const accountDetails = {
     bank: "Guarantee Trust Bank",
-    accountName: "ShopViaCal Ltd",
-    accountNumber: "1234567890",
+    accountName: "SHOPVIACAL LIMITED",
+    accountNumber: "3002874083",
   };
 
   const copyAccountNumber = () => {

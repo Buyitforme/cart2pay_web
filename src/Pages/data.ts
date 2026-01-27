@@ -88,20 +88,25 @@ export const data = [
       "Any changes in vendor prices, discounts, or promotions are beyond our control and will reflect directly on your final checkout cost.",
     ],
   },
-  {
-    id: "tax-and-duty",
-    title: "Tax and Duties",
-    content: [
-      "As a personal shopping service, we facilitate purchases from international brands on your behalf. We do not generate, calculate, or determine tax and duty costs.",
-      "In cases where your chosen vendor include tax and duty fees at checkout we add these fees to your order total, You pay amount due before we proceed to process order, no additional charges before delivery",
-      "In cases where your chosen vendor DO NOT include tax and duty fees at checkout(Require it is paid locally), YOU pay for the items and shipping fees initially,When your order arrives, we will notify you of the tax and duty fees as determined by customs authorities",
-      "All fees must be duely paid before we can clear your order at customs and deliver to you",
-      "The estimated tax and duty costs in your order total  are explicitly provided by customs or your chosen vendor and are subject to change.",
-      "You are responsible for paying all applicable taxes and duties on your orders, as required by the laws and regulations of your country or your chosen vendor.",
-      "We are not liable for any additional taxes or duties that may be imposed on your order, and we will not be responsible for any disputes or issues related to tax and duty costs.",
-      "Please note that tax and duty costs are non-refundable, even if the order is returned or cancelled.",
-    ],
-  },
+{
+  id: "tax-and-duty",
+  title: "Tax and Duties",
+  content: [
+    "As a personal shopping service, we facilitate purchases from international brands on your behalf. We do not generate, calculate, or determine tax and duty costs.",
+    
+    "When your chosen vendor includes tax and duty fees at checkout, we add the exact amount to your order total. You pay the full amount before we process your order no additional charges will be required before delivery.",
+    
+    "When your chosen vendor does NOT include tax and duty fees at checkout, we provide an estimated customs charge (25% of items subtotal) in your order total. This estimate helps you plan for the expected customs fees when your package arrives in Nigeria.",
+    
+    "The estimated customs charges are based on current Nigerian customs rates and your order value. The actual amount charged by customs authorities may vary slightly from our estimate.",
+    
+    "All customs fees must be duly paid before we can clear your order at customs and deliver it to you. If the actual customs charge differs from our estimate, we will notify you before proceeding.",
+    
+    "You are responsible for paying all applicable taxes and duties on your orders, as required by Nigerian customs laws and regulations.",
+      
+    "Please note that tax and duty costs are non-refundable, even if the order is returned or cancelled.",
+  ],
+},
   {
     id: "returns-and-refunds",
     title: "Returns & Refunds",

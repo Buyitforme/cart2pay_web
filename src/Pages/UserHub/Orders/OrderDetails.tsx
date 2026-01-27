@@ -23,7 +23,6 @@ const OrderDetails = () => {
 
   const dispatch: AppDispatch = useDispatch();
   const order = orderDetails?.data?.results;
-
   const parsedDetails = order?.details ? JSON.parse(order.details) : [];
 
   useEffect(() => {
@@ -70,7 +69,6 @@ const OrderDetails = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <InfoCard title="Store" value={order?.store} />
-            <InfoCard title="Email" value={order?.email} />
           </div>
         </div>
 
@@ -107,7 +105,7 @@ const OrderDetails = () => {
               value={order?.delivery_information?.phone}
               className="sm:col-span-2 lg:col-span-1"
             />
-                        <InfoCard title="Email" value={order?.email} />
+                        <InfoCard title="Email" value={order?.userEmail} />
 
           </div>
         </div>
