@@ -74,7 +74,7 @@ const Home = () => {
       {/* Greeting */}
       <div>
         <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
-          <Heading size="xl" weight="normal" className="text-primary">
+          <Heading size="xl" weight="normal" className="text-secondary_dark">
             {greeting},
           </Heading>
           <Heading size="xl">{userData?.fullName?.split(' ')[0] || userData?.fullName || 'User'}</Heading>
@@ -175,7 +175,7 @@ const Home = () => {
 
             {/* Bottom section */}
             <div
-              className="flex gap-1 justify-start items-center cursor-pointer text-primary hover:text-primary-dark transition-colors duration-200"
+              className="flex gap-1 justify-start items-center cursor-pointer text-secondary_dark hover:text-primary-dark transition-colors duration-200"
               onClick={(e) => {
                 e.stopPropagation();
                 navigate("/dashboard/orders", {

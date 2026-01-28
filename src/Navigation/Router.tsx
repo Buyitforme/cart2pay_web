@@ -30,6 +30,7 @@ import CookiePolicyPage from "../services/CookiesPolicy";
 import PaymentDeatails from "../Pages/UserHub/Quote/PaymentDeatails";
 import TermsAndConditions from "../Pages/T&C";
 import Privacy from "../Pages/Privacy";
+import Support from "../Pages/UserHub/Support";
 
 const routes: RouteObject[] = [
   {
@@ -63,6 +64,7 @@ const routes: RouteObject[] = [
         children: [
           { index: true, element: <DashboardHome /> },
           { path: "orders", element: <Orders /> },
+          { path: "support", element: <Support /> },
           { path: "new-order", element: <NewOrder /> },
           { path: "orders/quote/:orderId", element: <Quote /> },
           {
