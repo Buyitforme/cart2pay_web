@@ -151,24 +151,54 @@ const Quote = () => {
         </div>
       ) : order?.status === "pending" ? (
         // Pending approval state
-        <div className="text-center space-y-4 py-10  rounded-xl p-4 mt-6">
+        <div className="text-center space-y-6 py-10 rounded-xl p-4 mt-6">
           <Heading size="lg" weight="bold" className="text-yellow-700">
-            Order Under Review
+            Quote in Progress
           </Heading>
+
           <Text size="md" color="secondary" weight="normal">
-            Your order is currently being reviewed. We'll notify you once it's
-            been approved and your quote is ready.
+            We’re reviewing your order and preparing your quote. We’ll notify you once it’s ready.
           </Text>
 
+          {/* Progress Steps */}
+          <div className="flex items-center justify-center gap-3 text-sm text-gray-600 mt-4">
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500 animate-pulse" />
+              <span>Reviewing items</span>
+            </div>
+
+            <span className="text-gray-300">→</span>
+
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-gray-300" />
+              <span>Calculating costs</span>
+            </div>
+
+            <span className="text-gray-300">→</span>
+
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-gray-300" />
+              <span>Finalizing quote</span>
+            </div>
+          </div>
+
+
+          {/* CTAs */}
           <div className="flex flex-col sm:flex-row justify-center gap-3 pt-6">
+            <Button
+              variant="primary"
+              onClick={() =>
+                navigate(`/dashboard/orders/order-details/${order._id}`)
+              }
+            >
+              Track order status
+            </Button>
+
             <Button
               variant="outline"
               onClick={() => navigate("/dashboard/orders")}
             >
-              View My Orders
-            </Button>
-            <Button variant="ghost" onClick={() => navigate("/dashboard")}>
-              Explore Stores
+              See all orders
             </Button>
           </div>
         </div>

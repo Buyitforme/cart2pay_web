@@ -18,7 +18,6 @@ import MainLayout from "../Components/MainLayout";
 import NewOrder from "../Pages/UserHub/Orders/NewOrder";
 import Quote from "../Pages/UserHub/Quote/Quote";
 import Notifications from "../Pages/Notifications";
-import UserProfile from "../Pages/UserProfile";
 import Orders from "../Pages/UserHub/Orders/Orders";
 import VerificationService from "../Pages/VerificationService";
 import ForgotPassword from "../Pages/ForgotPassword";
@@ -31,6 +30,7 @@ import PaymentDeatails from "../Pages/UserHub/Quote/PaymentDeatails";
 import TermsAndConditions from "../Pages/T&C";
 import Privacy from "../Pages/Privacy";
 import Support from "../Pages/UserHub/Support";
+import UserProfile from "../Pages/UserHub/UserProfile";
 
 const routes: RouteObject[] = [
   {
