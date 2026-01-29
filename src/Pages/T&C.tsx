@@ -28,12 +28,7 @@ useEffect(() => {
       {/* Hero Section */}
       <div className="pt-20 pb-16 overflow-hidden">
         <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 text-center justify-center items-center">
-          <button
-            onClick={() => navigate(-1)}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2"
-          >
-            <ArrowLeft className="mr-2 h-5 w-5" />
-          </button>
+      
           <Heading
             as="h1"
             size={{ sm: "xl", base: "xl", md: "2xl", lg: "3xl" }}

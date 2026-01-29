@@ -24,10 +24,10 @@ import { ArrowUpRight } from "lucide-react";
 
 const Home = () => {
   const { getUserProfileData } = useSelector(
-    (state: RootState) => state.user_account_management
+    (state: RootState) => state.user_account_management,
   );
   const { orderHistory } = useSelector(
-    (state: RootState) => state.order_management
+    (state: RootState) => state.order_management,
   );
   const [showPaymentReminder, setShowPaymentReminder] = useState(true);
 
@@ -74,10 +74,12 @@ const Home = () => {
       {/* Greeting */}
       <div>
         <div className="flex flex-col md:flex-row md:items-center gap-0 md:gap-2">
-          <Heading size="xl" weight="normal" className="text-primary">
+          <Heading size="xl" weight="normal" className="text-secondary_dark">
             {greeting},
           </Heading>
-          <Heading size="xl">{userData?.fullName?.split(' ')[0] || userData?.fullName || 'User'}</Heading>
+          <Heading size="xl">
+            {userData?.fullName?.split(" ")[0] || userData?.fullName || "User"}
+          </Heading>
         </div>
 
         <Text size="lg" className="opacity-90 pt-3 md:pt-1 " weight="normal">
@@ -175,7 +177,7 @@ const Home = () => {
 
             {/* Bottom section */}
             <div
-              className="flex gap-1 justify-start items-center cursor-pointer text-primary hover:text-primary-dark transition-colors duration-200"
+              className="flex gap-1 justify-start items-center cursor-pointer text-secondary_dar hover:text-primary-dark transition-colors duration-200"
               onClick={(e) => {
                 e.stopPropagation();
                 navigate("/dashboard/orders", {
@@ -272,7 +274,7 @@ const Home = () => {
                               month: "short",
                               day: "numeric",
                               year: "numeric",
-                            }
+                            },
                           )}
                         </Text>
                         <span className="text-gray-300 hidden xs:inline">
@@ -283,12 +285,12 @@ const Home = () => {
                             order.status === "pending"
                               ? "bg-yellow-100 text-yellow-600"
                               : order.status === "approved"
-                              ? "bg-secondary_light text-secondary_dark"
-                              : order.status === "processed"
-                              ? "bg-primary_light text-primary_dark"
-                              : order.status === "received"
-                              ? "bg-green-100 text-green-600"
-                              : "bg-gray-100 text-gray-800"
+                                ? "bg-secondary_light text-secondary_dark"
+                                : order.status === "processed"
+                                  ? "bg-primary_light text-primary_dark"
+                                  : order.status === "received"
+                                    ? "bg-green-100 text-green-600"
+                                    : "bg-gray-100 text-gray-800"
                           }`}
                         >
                           {capitalizeFirstLetter(order.status)}
@@ -306,7 +308,7 @@ const Home = () => {
                       className="w-auto sm:w-auto px-4 sm:px-6 py-2 sm:py-3 text-sm"
                       variant="outline"
                     >
-                      View
+                      See order details
                     </Button>
                   </Link>
                 </div>
@@ -490,19 +492,20 @@ const Home = () => {
                 </Text>
 
                 {/* Action button */}
-            <Button
-  className="w-full sm:w-auto px-3 py-2 text-xs sm:text-sm"
-  variant="outline"
-  onClick={(e) => {
-    e.stopPropagation();
-    navigate("/dashboard/orders", {
-      state: { activeTab: "approved" },
-    });
-  }}
->
-  {groupedOrders["approved"] === 1 ? "View Order" : "View Orders"}
-</Button>
-
+                <Button
+                  className="w-full sm:w-auto px-3 py-2 text-xs sm:text-sm"
+                  variant="outline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate("/dashboard/orders", {
+                      state: { activeTab: "approved" },
+                    });
+                  }}
+                >
+                  {groupedOrders["approved"] === 1
+                    ? "View Order"
+                    : "View Orders"}
+                </Button>
               </div>
             </div>
           </div>

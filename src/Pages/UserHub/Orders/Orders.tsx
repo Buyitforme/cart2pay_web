@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { Heading, Text } from "../../../Components/Typography";
 import { Button } from "../../../Components/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,13 @@ import { triggerOrderHistory } from "../../../redux/features/orderManagement/ord
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PageLoader } from "../../../Components/PageLoader";
 import Tabs from "../../../Components/Tabs";
-import { Plus, ShoppingBag, User } from "lucide-react";
+import {
+  ArrowRight,
+  HelpCircle,
+  MessageCircle,
+  Plus,
+  ShoppingBag,
+} from "lucide-react";
 
 export interface Order {
   _id: string;
@@ -70,37 +76,35 @@ const Orders: FC = () => {
     );
   }
   return (
-    <div className="flex gap-6  bg-gray-50">
+  <div className="p-4 sm:p-6 max-w-4xl mx-auto  bg-white border border-gray-200 shadow-lg rounded-2xl">
       {/* Sidebar */}
-      <div className="hidden lg:block w-64 bg-white border-r border-gray-200   py-6 bg-white border border-gray-200 rounded-lg  shadow-lg transition-shadow">
-        <nav className="space-y-1">
-          <Link
-            to="/dashboard/orders"
-            className="flex items-start gap-3 px-3 py-2 text-sm font-medium rounded-lg bg-gray-100 text-gray-900"
-          >
-            <ShoppingBag className="w-5 h-5" />
-            Orders
-          </Link>
-          <Link
-            to="/dashboard/profile"
-            className="flex items-start gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
-          >
-            <User className="w-5 h-5" />
-            My Profile
-          </Link>
-          <Link
-            to="/dashboard/new-order"
-            className="flex items-start gap-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100"
-          >
-            <Plus className="w-5 h-5" />
-            New Order
-          </Link>
-          {/* Add more navigation items as needed */}
-        </nav>
-      </div>
+      {/* <div className="hidden lg:block w-64 bg-white border-r border-gray-200   py-6 bg-white border border-gray-200 rounded-lg  shadow-lg transition-shadow">
+        <div className="bg-white  p-4">
+          <div className="space-y-2">
+            <Link to="/dashboard/new-order">
+              <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left">
+                <Plus className="w-4 h-4 text-gray-500" />
+                Start new order
+              </button>
+            </Link>
+            <Link to="/dashboard/support">
+              <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left">
+                <MessageCircle className="w-4 h-4 text-gray-500" />
+                Contact support
+              </button>
+            </Link>
+            <Link to="/how-it-works">
+              <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left">
+                <HelpCircle className="w-4 h-4 text-gray-500" />
+                How it works
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div> */}
 
       {/* Main Content */}
-      <div className="flex-1 px-4 md:px-8 lg:px-12 py-6 bg-white border border-gray-200 rounded-lg p-4 shadow-lg transition-shadow">
+      <div className="flex-1  py-6 ">
         <div className="max-w-5xl">
           <Heading size="2xl" weight="bold">
             Orders
@@ -147,16 +151,29 @@ const Orders: FC = () => {
                       <div className="flex items-start justify-between gap-4 mb-2">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <Text size="sm" color="muted" className="text-xs">
-                              Order
-                            </Text>
-                            <Text
-                              size="sm"
-                              className="font-mono text-gray-700 text-xs"
-                            >
+                             <Heading
+                            size="md"
+                            weight="semibold"
+                            className="truncate"
+                          >
+                              Order no
+                            </Heading>
+                               <Heading
+                            size="md"
+                            weight="semibold"
+                            className="truncate"
+                          >
                               {order?._id?.slice(-8)}
-                            </Text>
+                            </Heading >
                           </div>
+                           <div className="flex items-center gap-2 mb-1">
+                            <Text
+                          size="sm"
+                          color="muted"
+                          className="text-xs sm:text-sm"
+                        >
+                          Store
+                        </Text>
                           <Heading
                             size="md"
                             weight="semibold"
@@ -164,6 +181,7 @@ const Orders: FC = () => {
                           >
                             {order.store}
                           </Heading>
+                          </div>
                         </div>
 
                         {/* Status Badge */}
@@ -210,22 +228,35 @@ const Orders: FC = () => {
 
                         <div className="flex gap-3 sm:gap-4">
                           <button
-                            className="text-primary_dark text-sm font-medium hover:underline"
+                            className="group flex items-center gap-1 text-primary_dark text-sm font-medium"
                             onClick={() =>
                               navigate(`/dashboard/orders/quote/${order._id}`)
                             }
                           >
-                            See Quote
+                            <span className="group-hover:underline">
+                              See Quote
+                            </span>
+                            <ArrowRight
+                              size={14}
+                              className="opacity-0 -translate-x-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
+                            />
                           </button>
+
                           <button
-                            className="text-gray-700 text-sm font-medium hover:underline"
+                            className="group flex items-center gap-1 text-gray-700 text-sm font-medium"
                             onClick={() =>
                               navigate(
                                 `/dashboard/orders/order-details/${order._id}`,
                               )
                             }
                           >
-                            See Details
+                            <span className="group-hover:underline">
+                              See Details
+                            </span>
+                            <ArrowRight
+                              size={14}
+                              className="opacity-0 -translate-x-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
+                            />
                           </button>
                         </div>
                       </div>

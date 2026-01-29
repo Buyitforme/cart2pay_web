@@ -18,12 +18,17 @@ export const StatusBadge = ({ status }: { status?: string }) => {
     }
   };
 
-  return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border ${getStatusStyle(status)}`}>
-      <span className="w-2 h-2 rounded-full bg-current mr-2"></span>
-      {status || <TextLoader />}
-    </span>
-  );
+return (
+  <span
+    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border ${getStatusStyle(status)}`}
+  >
+    Status:{" "}
+    {status
+      ? status.charAt(0).toUpperCase() + status.slice(1)
+      : <TextLoader />}
+  </span>
+);
+
 };
 
 export const InfoCard = ({ 

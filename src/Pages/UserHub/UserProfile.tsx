@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import { Button } from "../Components/Button";
-import { Input } from "../Components/Inputfield";
-import { Heading, Text } from "../Components/Typography";
+import { Button } from "../../Components/Button";
+import { Input } from "../../Components/Inputfield";
+import { Heading, Text } from "../../Components/Typography";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import Modal from "../Components/Modal";
-import { AppDispatch, RootState } from "../redux/state";
+import Modal from "../../Components/Modal";
+import { AppDispatch, RootState } from "../../redux/state";
 import { useDispatch, useSelector } from "react-redux";
 import {
   triggerEditUserProfile,
   triggerGetUserProfile,
-} from "../redux/features/UserAccountManagement/userAccountManagementThunk";
-import { PageLoader } from "../Components/PageLoader";
+} from "../../redux/features/UserAccountManagement/userAccountManagementThunk";
+import { PageLoader } from "../../Components/PageLoader";
 import {
   triggerDeleteAddress,
   triggerEditAddress,
   triggerGetAddreses,
-} from "../redux/features/orderManagement/orderManagementThunk";
+} from "../../redux/features/orderManagement/orderManagementThunk";
 import { MapPin, Pencil, Trash2 } from "lucide-react";
-import { EditAddressPayload } from "../redux/features/orderManagement/types";
-import { lgaOptions, stateOptions } from "./UserHub/Orders/ordersHelpers";
-import Select from "../Components/Select";
+import { EditAddressPayload } from "../../redux/features/orderManagement/types";
+import { lgaOptions, stateOptions } from "../UserHub/Orders/ordersHelpers";
+import Select from "../../Components/Select";
 
 export const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -48,7 +48,7 @@ export const validationSchema = Yup.object().shape({
 });
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState<"profile" | "addresses">(
-    "profile"
+    "profile",
   );
   const [editingAddress, setEditingAddress] = useState<any | null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -59,10 +59,10 @@ const UserProfile = () => {
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
   const { getUserProfileData, editUserProfileData } = useSelector(
-    (state: RootState) => state.user_account_management
+    (state: RootState) => state.user_account_management,
   );
   const { addresses, editAddress, deleteAddress } = useSelector(
-    (state: RootState) => state.order_management
+    (state: RootState) => state.order_management,
   );
   const userData = getUserProfileData.data?.results?.data;
   const handleEditToggle = () => setIsEditing(true);
@@ -184,8 +184,12 @@ const UserProfile = () => {
     );
   }
   return (
-    <div className="px-1 lg:px-4">
-      <div className="w-full  shadow-lg bg-white rounded-xl p-3 lg:p-8 space-y-6">
+    <div className="p-4 sm:p-6 max-w-4xl mx-auto  bg-white border border-gray-200 shadow-lg rounded-2xl">
+      <Heading size="2xl" weight="bold">
+        Account Overview
+      </Heading>
+
+      <div className="w-full   bg-white rounded-xl pt-3 space-y-6">
         <div className="flex space-x-6   pb-2">
           <button
             onClick={() => setActiveTab("profile")}
@@ -212,17 +216,19 @@ const UserProfile = () => {
         {activeTab === "profile" && (
           <>
             <section>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center mb-6">
                 <div>
-                  <Heading size="2xl" weight="bold">
-                    Profile
+                  <Heading size="xl" weight="bold">
+                    Manage your account details
                   </Heading>
-                  <Text size="sm" color="muted">
-                    Manage your account details.
-                  </Text>
+                  
                 </div>
                 {!isEditing && (
-                  <Button variant="primary" onClick={handleEditToggle} className="w-auto">
+                  <Button
+                    variant="primary"
+                    onClick={handleEditToggle}
+                    className="w-auto"
+                  >
                     Edit Profile
                   </Button>
                 )}
@@ -322,10 +328,10 @@ const UserProfile = () => {
         {activeTab === "addresses" && (
           <div>
             <Heading size="lg" weight="bold">
-              Address Book
+              Manage your shipping addresses
             </Heading>
-            <Text size="sm" color="muted">
-              Manage your saved delivery addresses.
+            <Text size="md"  color="muted" className="pt-2">
+              Add, edit, or remove your shipping addresses below.
             </Text>
 
             <div className="mt-4 space-y-4">
@@ -391,11 +397,8 @@ const UserProfile = () => {
                   </div>
 
                   {/* Call-to-action */}
-                  
-                  <Button
-                    onClick={() => setShowForm(true)}
-                    className=""
-                  >
+
+                  <Button onClick={() => setShowForm(true)} className="">
                     Add Address
                   </Button>
                 </div>
@@ -409,104 +412,104 @@ const UserProfile = () => {
           </div>
         )}
       </div>
-     <Modal
-  isOpen={showForm}
-  onClose={() => setShowForm(false)}
-  className="p-4 sm:p-6 w-full max-w-[95vw] sm:max-w-2xl"
->
-  <Heading size="lg" weight="bold" className="mb-4">
-    Edit address
-  </Heading>
-  <Formik
-    initialValues={
-      editingAddress
-        ? {
-            firstName: editingAddress.firstName || "",
-            lastName: editingAddress.lastName || "",
-            phone: editingAddress.phone || "",
-            state: editingAddress.state || "",
-            lga: editingAddress.lga || "",
-            street: editingAddress.street || "",
+      <Modal
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
+        className="p-4 sm:p-6 w-full max-w-[95vw] sm:max-w-2xl"
+      >
+        <Heading size="lg" weight="bold" className="mb-4">
+          Edit address
+        </Heading>
+        <Formik
+          initialValues={
+            editingAddress
+              ? {
+                  firstName: editingAddress.firstName || "",
+                  lastName: editingAddress.lastName || "",
+                  phone: editingAddress.phone || "",
+                  state: editingAddress.state || "",
+                  lga: editingAddress.lga || "",
+                  street: editingAddress.street || "",
+                }
+              : {
+                  firstName: "",
+                  lastName: "",
+                  phone: "",
+                  state: "",
+                  lga: "",
+                  street: "",
+                }
           }
-        : {
-            firstName: "",
-            lastName: "",
-            phone: "",
-            state: "",
-            lga: "",
-            street: "",
-          }
-    }
-    validationSchema={validationSchema}
-    onSubmit={handleEditAddress}
-  >
-    {({ values, setFieldValue, isValid, dirty }) => (
-      <Form className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="text-left">
-            <Input
-              name="firstName"
-              label="First name"
-              value={values.firstName}
-            />
-          </div>
-          <div className="text-left">
-            <Input
-              name="lastName"
-              label="Last name"
-              value={values.lastName}
-            />
-          </div>
-          <div className="text-left">
-            <Select
-              name="state"
-              label="State"
-              options={stateOptions}
-              value={values.state}
-              onChange={(e: any) => {
-                setFieldValue("state", e.target.value);
-                setFieldValue("lga", "");
-              }}
-            />
-          </div>
-          <div className="text-left">
-            <Select
-              name="lga"
-              label="LGA"
-              options={lgaOptions[values.state] || []}
-              value={values.lga}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                setFieldValue("lga", e.target.value)
-              }
-            />
-          </div>
-          <div className="text-left">
-            <Input name="street" label="Street" value={values.street} />
-          </div>
-          <div className="text-left">
-            <Input
-              name="phone"
-              label="Phone"
-              type="number"
-              value={values.phone}
-            />
-          </div>
-        </div>
+          validationSchema={validationSchema}
+          onSubmit={handleEditAddress}
+        >
+          {({ values, setFieldValue, isValid, dirty }) => (
+            <Form className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="text-left">
+                  <Input
+                    name="firstName"
+                    label="First name"
+                    value={values.firstName}
+                  />
+                </div>
+                <div className="text-left">
+                  <Input
+                    name="lastName"
+                    label="Last name"
+                    value={values.lastName}
+                  />
+                </div>
+                <div className="text-left">
+                  <Select
+                    name="state"
+                    label="State"
+                    options={stateOptions}
+                    value={values.state}
+                    onChange={(e: any) => {
+                      setFieldValue("state", e.target.value);
+                      setFieldValue("lga", "");
+                    }}
+                  />
+                </div>
+                <div className="text-left">
+                  <Select
+                    name="lga"
+                    label="LGA"
+                    options={lgaOptions[values.state] || []}
+                    value={values.lga}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                      setFieldValue("lga", e.target.value)
+                    }
+                  />
+                </div>
+                <div className="text-left">
+                  <Input name="street" label="Street" value={values.street} />
+                </div>
+                <div className="text-left">
+                  <Input
+                    name="phone"
+                    label="Phone"
+                    type="number"
+                    value={values.phone}
+                  />
+                </div>
+              </div>
 
-        <div className="flex gap-2 items-center">
-          <Button
-            loading={editAddress.loading}
-            disabled={!(isValid && dirty) || editAddress.loading}
-            className="mt-4 w-auto"
-            type="submit"
-          >
-            {editingAddress ? "Update Address" : "Save Address"}
-          </Button>
-        </div>
-      </Form>
-    )}
-  </Formik>
-</Modal>
+              <div className="flex gap-2 items-center">
+                <Button
+                  loading={editAddress.loading}
+                  disabled={!(isValid && dirty) || editAddress.loading}
+                  className="mt-4 w-auto"
+                  type="submit"
+                >
+                  {editingAddress ? "Update Address" : "Save Address"}
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </Modal>
       {isDeleteModalOpen && (
         <Modal
           isOpen={isDeleteModalOpen}

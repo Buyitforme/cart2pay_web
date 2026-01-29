@@ -196,8 +196,9 @@ const HowItWorksSection = () => {
               {/* Average Time Card */}
               <div className="bg-white rounded-lg p-6 shadow-sm border">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-green-600" />
+                  <div className="w-10 h-10 bg-[#E8F7F0] rounded-lg flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-[#054B2F]" />
+                    
                   </div>
                   <div>
                     <Heading
@@ -281,9 +282,10 @@ const HowItWorksSection = () => {
             <div className="space-y-8">
               {/* Step 1 */}
               <div className="flex gap-4">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Link className="w-5 h-5 text-green-600" />
+                <div className="w-10 h-10 bg-[#E8F7F0] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Link className="w-5 h-5 text-[#054B2F]" />
                 </div>
+                   
                 <div className="flex-1">
                   <Heading
                     size="xl"
@@ -307,7 +309,7 @@ const HowItWorksSection = () => {
                     Works with most retailers
                   </Heading> */}
                     <button
-                      className="text-green-600 text-sm font-medium hover:underline"
+                      className="text-[#054B2F] text-sm font-medium hover:underline"
                       onClick={() => setIsModalOpen(true)}
                     >
                       See supported sites
@@ -325,8 +327,8 @@ const HowItWorksSection = () => {
 
               {/* Step 2 */}
               <div className="flex gap-4">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <CreditCard className="w-5 h-5 text-green-600" />
+                <div className="w-10 h-10 bg-[#E8F7F0] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <CreditCard className="w-5 h-5 text-[#054B2F]" />
                 </div>
                 <div className="flex-1">
                   <Heading
@@ -346,8 +348,8 @@ const HowItWorksSection = () => {
 
               {/* Step 3 */}
               <div className="flex gap-4">
-                <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Package className="w-5 h-5 text-green-600" />
+                <div className="w-10 h-10 bg-[#E8F7F0] rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Package className="w-5 h-5 text-[#054B2F]" />
                 </div>
                 <div className="flex-1">
                   <Heading
