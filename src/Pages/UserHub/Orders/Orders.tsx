@@ -9,9 +9,6 @@ import { PageLoader } from "../../../Components/PageLoader";
 import Tabs from "../../../Components/Tabs";
 import {
   ArrowRight,
-  HelpCircle,
-  MessageCircle,
-  Plus,
   ShoppingBag,
 } from "lucide-react";
 

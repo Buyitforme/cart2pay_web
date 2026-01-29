@@ -1,11 +1,9 @@
 import { useEffect } from "react";
 import { Heading, Text } from "../Components/Typography";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { useLocation} from "react-router-dom";
 import { data } from "./data";
 
 const TermsAndConditions = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   
 useEffect(() => {
