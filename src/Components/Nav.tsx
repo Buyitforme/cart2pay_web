@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "./Button";
 import logo from "../Assets/svg_images/Logo2.svg";
 import logo_light from "../Assets/svg_images/logoWhite.svg";
-import Cookies from "js-cookie";
 
 const Nav = () => {
   const location = useLocation();

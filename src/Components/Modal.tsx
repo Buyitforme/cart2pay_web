@@ -1,7 +1,6 @@
 // Components/ConfirmModal.tsx
 import { X } from "lucide-react";
 import React from "react";
-import { AiOutlineClose } from 'react-icons/ai';
 
 interface ModalProps {
   isOpen: boolean;

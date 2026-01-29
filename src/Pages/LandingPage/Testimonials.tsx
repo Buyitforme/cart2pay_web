@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Heading, Text } from "../../Components/Typography";
-import SliderComponent from "../../Components/SliderComponent";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight} from "lucide-react";
 
 const testimonials = [
   {

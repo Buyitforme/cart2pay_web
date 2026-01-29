@@ -1,4 +1,3 @@
-import TextLoader from "../../../Components/TextLoader";
 
 export const stateOptions = [
   { label: "Lagos", value: "lagos" },

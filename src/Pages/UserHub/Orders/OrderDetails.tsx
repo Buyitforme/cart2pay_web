@@ -13,7 +13,6 @@ import {
   StatusBadge,
 } from "./ComponentHelpers";
 import { MapPin } from "lucide-react";
-import { Heading } from "../../../Components/Typography";
 
 const OrderDetails = () => {
   const { orderId } = useParams();

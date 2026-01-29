@@ -5,7 +5,6 @@ import sheinLogo from "../../Assets/svg_images/shein.svg";
 import primarkLogo from "../../Assets/primark-seeklogo.png";
 import fashionovaLogo from "../../Assets/fashionova.jpeg";
 
-import LogoSlider from "../../Components/SliderComponent";
 import ImageSlider from "../../Components/Slider";
 
 export const storeLogos = [
