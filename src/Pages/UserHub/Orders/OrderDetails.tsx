@@ -36,7 +36,7 @@ const shouldShowCost = order?.status !== "pending";
     }
   }, [orderDetails.error, orderDetails.message, orderDetails.statusCode]);
   return (
-  <div className="p-4 sm:p-6 max-w-4xl mx-auto min-h-screen bg-white border border-gray-200 shadow-lg rounded-2xl">
+    <div className="space-y-8 p-4 sm:p-6 max-w-5xl mx-auto  bg-white border border-gray-200 shadow-lg rounded-lg">
     <GoBack label="Order Details" />
 
     <div className="mt-6 space-y-6">

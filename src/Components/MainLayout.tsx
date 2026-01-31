@@ -1,9 +1,9 @@
 // src/layouts/MainLayout.tsx
 import { useEffect } from "react";
-import Nav from "../Components/Nav";
 import Footer from "../Components/Footer";
 import { Outlet, useLocation } from "react-router-dom";
 import CookieConsent from "../services/CookiesConscent";
+import Navbar from "../NavBar";
 
 const MainLayout = () => {
   const { pathname } = useLocation();
@@ -12,12 +12,14 @@ const MainLayout = () => {
   }, [pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col w-full ">
-      <Nav />
+    <div className="min-h-screen flex flex-col w-full">
+      <Navbar />
+
       <main className="flex-grow">
         <Outlet />
         <CookieConsent />
       </main>
+
       <Footer />
     </div>
   );

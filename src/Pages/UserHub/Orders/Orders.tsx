@@ -73,32 +73,8 @@ const Orders: FC = () => {
     );
   }
   return (
-  <div className="p-4 sm:p-6 max-w-4xl mx-auto  bg-white border border-gray-200 shadow-lg rounded-2xl">
-      {/* Sidebar */}
-      {/* <div className="hidden lg:block w-64 bg-white border-r border-gray-200   py-6 bg-white border border-gray-200 rounded-lg  shadow-lg transition-shadow">
-        <div className="bg-white  p-4">
-          <div className="space-y-2">
-            <Link to="/dashboard/new-order">
-              <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left">
-                <Plus className="w-4 h-4 text-gray-500" />
-                Start new order
-              </button>
-            </Link>
-            <Link to="/dashboard/support">
-              <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left">
-                <MessageCircle className="w-4 h-4 text-gray-500" />
-                Contact support
-              </button>
-            </Link>
-            <Link to="/how-it-works">
-              <button className="w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors text-left">
-                <HelpCircle className="w-4 h-4 text-gray-500" />
-                How it works
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div> */}
+    <div className="space-y-8 p-4 sm:p-6 max-w-5xl mx-auto  bg-white border border-gray-200 shadow-lg rounded-lg">
+
 
       {/* Main Content */}
       <div className="flex-1  py-6 ">
@@ -118,11 +94,13 @@ const Orders: FC = () => {
           {!filteredOrders.length ? (
             <div className="mt-12 text-center space-y-4">
               <div className="flex flex-col items-center justify-center py-10 text-center">
-                <ShoppingBag className="w-16 h-16 text-gray-400 mb-3" />
+                 <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 bg-highlight rounded-lg flex items-center justify-center">
+                      <ShoppingBag className="w-6 h-6 sm:w-8 sm:h-8 text-secondary" />
+                    </div>
                 <Text size="lg" weight="medium">
                   No {activeTab} orders yet.
                 </Text>
-                <Text size="sm" className="text-gray-500 mb-5">
+                <Text size="sm" className=" mb-5">
                   When you place an order, it will appear here.
                 </Text>
                 <Link to="/dashboard/new-order">
@@ -139,8 +117,8 @@ const Orders: FC = () => {
                 >
                   <div className="flex gap-4">
                     {/* Store Icon */}
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 bg-gray-100 rounded-lg flex items-center justify-center">
-                      <ShoppingBag className="w-6 h-6 sm:w-8 sm:h-8 text-gray-500" />
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0 bg-highlight rounded-lg flex items-center justify-center">
+                      <ShoppingBag className="w-6 h-6 sm:w-8 sm:h-8 text-secondary" />
                     </div>
 
                     {/* Order Info */}
