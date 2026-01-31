@@ -13,7 +13,7 @@ import Select from "../../../Components/Select";
 import { Button } from "../../../Components/Button";
 import { Text } from "../../../Components/Typography";
 import { Form, Formik } from "formik";
-import { lgaOptions, stateOptions } from "./ordersHelpers";
+// import { lgaOptions, stateOptions } from "./ordersHelpers";
 import toast from "react-hot-toast";
 import {useNavigate } from "react-router-dom";
 import {
@@ -22,7 +22,8 @@ import {
 } from "../../../redux/features/orderManagement/orderManagementSlice";
 import { CreateAddressPayload } from "../../../redux/features/orderManagement/types";
 import { PageLoader } from "../../../Components/PageLoader";
-
+import NaijaStates from 'naija-state-local-government';
+import { useMemo } from 'react';
 const initialValues: any = {
   firstName: "",
   lastName: "",
@@ -55,15 +56,47 @@ export const validationSchema = Yup.object().shape({
     .required("Delivery address is required")
     .min(5, "Delivery address must be at least 5 characters"),
 });
+
+interface SelectOption {
+  label: string;
+  value: string;
+}
 const Address = () => {
   const navigate = useNavigate();
-
   const { addresses, makeDefault, error, loading, message, statusCode } =
     useSelector((state: RootState) => state.order_management);
   const dispatch: AppDispatch = useDispatch();
-
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+const naijaStates = NaijaStates as any;
+
+// Get all states (it's an array, not a function)
+console.log('LGA data structure:', JSON.stringify(naijaStates.lgas('Lagos'),null,2));
+// Get all states
+const stateOptions = useMemo(() => 
+  naijaStates.states().map((state: string) => ({
+    label: state,
+    value: state
+  }))
+, []);
+
+// Get LGAs for each state
+const lgaOptions = useMemo(() => {
+  const lgasObject: Record<string, SelectOption[]> = {};
+  
+  naijaStates.states().forEach((state: string) => {
+    const lgaData = naijaStates.lgas(state);
+    
+    // Access the lgas array from the returned object
+    lgasObject[state] = lgaData.lgas.map((lga: string) => ({
+      label: lga,
+      value: lga
+    }));
+  });
+  
+  return lgasObject;
+}, []);
+
   useEffect(() => {
     dispatch(triggerGetAddreses({}));
   }, [dispatch]);

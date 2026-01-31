@@ -5,7 +5,7 @@ import { Button } from "./Button";
 import logo from "../Assets/svg_images/Logo2.svg";
 import logo_light from "../Assets/svg_images/logoWhite.svg";
 
-const Nav = () => {
+const PublicNav = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -278,4 +278,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default PublicNav;

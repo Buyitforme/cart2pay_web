@@ -76,8 +76,7 @@ const AboutUs: React.FC = () => {
                 </p>
 
                 <Button
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-secondary_dark transition-all duration-300 px-4 sm:px-5 py-2 sm:py-2.5 w-auto"
+                  variant="primary"
                   onClick={() => navigate("/dashboard/new-order")}
                 >
                   Get started
@@ -218,7 +217,7 @@ const AboutUs: React.FC = () => {
                     it’s for daily needs or special finds, we’ve got you
                     covered.{" "}
                     <span
-                      className="inline-flex items-center text-secondary_light font-semibold hover:underline cursor-pointer group"
+                      className="inline-flex items-center text-secondary font-semibold hover:underline cursor-pointer group"
                       onClick={() => navigate("/signup")}
                     >
                       TRY US TODAY{" "}

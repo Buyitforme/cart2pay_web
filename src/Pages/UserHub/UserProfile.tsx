@@ -9,10 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../../Components/Modal";
 import { AppDispatch, RootState } from "../../redux/state";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  triggerEditUserProfile,
-  triggerGetUserProfile,
-} from "../../redux/features/UserAccountManagement/userAccountManagementThunk";
+import { triggerEditUserProfile } from "../../redux/features/UserAccountManagement/userAccountManagementThunk";
 import { PageLoader } from "../../Components/PageLoader";
 import {
   triggerDeleteAddress,
@@ -23,6 +20,7 @@ import { MapPin, Pencil, Trash2 } from "lucide-react";
 import { EditAddressPayload } from "../../redux/features/orderManagement/types";
 import { lgaOptions, stateOptions } from "../UserHub/Orders/ordersHelpers";
 import Select from "../../Components/Select";
+import Cookies from "js-cookie";
 
 export const validationSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -110,17 +108,15 @@ const UserProfile = () => {
     dispatch,
     editUserProfileData.data,
   ]);
-
   const handleLogout = () => {
-    localStorage.clear();
+    // Remove the auth token cookie
+    Cookies.remove("cart2pay_user_token");
     setLoading(true);
     setTimeout(() => {
       navigate("/");
     }, 2000);
   };
-  useEffect(() => {
-    dispatch(triggerGetUserProfile({}));
-  }, [dispatch]);
+
   useEffect(() => {
     dispatch(triggerGetAddreses({}));
   }, [dispatch]);
@@ -184,7 +180,7 @@ const UserProfile = () => {
     );
   }
   return (
-    <div className="p-4 sm:p-6 max-w-4xl mx-auto  bg-white border border-gray-200 shadow-lg rounded-2xl">
+    <div className="p-4  sm:p-6 max-w-5xl mx-auto  bg-white border border-gray-200 shadow-lg rounded-2xl">
       <Heading size="2xl" weight="bold">
         Account Overview
       </Heading>
@@ -221,7 +217,6 @@ const UserProfile = () => {
                   <Heading size="xl" weight="bold">
                     Manage your account details
                   </Heading>
-                  
                 </div>
                 {!isEditing && (
                   <Button
@@ -253,7 +248,7 @@ const UserProfile = () => {
                       label="Email"
                       name="email"
                       type="email"
-                      disabled={!isEditing}
+                      disabled={true}
                     />
                     <Input
                       label="Phone"
@@ -330,7 +325,7 @@ const UserProfile = () => {
             <Heading size="lg" weight="bold">
               Manage your shipping addresses
             </Heading>
-            <Text size="md"  color="muted" className="pt-2">
+            <Text size="md" color="muted" className="pt-2">
               Add, edit, or remove your shipping addresses below.
             </Text>
 
@@ -384,15 +379,16 @@ const UserProfile = () => {
               ) : (
                 <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   {/* Icon */}
-                  <MapPin className="w-12 h-12 text-gray-400" />
-
+                  <div className="w-10 h-10 rounded-full bg-highlight flex items-center justify-center">
+                    <MapPin className="text-secondary font-bold" />
+                  </div>
                   {/* Message */}
                   <div className="flex flex-col  pt-4 mb-6">
                     <Text size="md" weight="medium" color="muted">
-                      No addresses added yet.
+                      No address saved yet
                     </Text>
                     <Text size="sm" color="muted">
-                      Your addresses will appear here here
+                      Your shipping address will appear here here
                     </Text>
                   </div>
 
@@ -405,9 +401,11 @@ const UserProfile = () => {
               )}
 
               {/* ✅ Always visible Add Address button */}
-              <Button variant="primary" onClick={() => navigate("address")}>
-                Add New Address
-              </Button>
+              {addresses?.data?.results?.length > 0 && (
+                <Button variant="primary" onClick={() => navigate("address")}>
+                  Add New Address
+                </Button>
+              )}
             </div>
           </div>
         )}
