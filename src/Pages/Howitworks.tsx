@@ -113,7 +113,7 @@ const SupportedStoresModal = ({ isOpen, onClose }: SupportedStoresProps) => {
                       <LazyImage
                         src={store.icon}
                         alt={store.name}
-                        className="w-20 h-auto object-contain"
+                        // className="w-20 h-auto object-contain"
                       />
                     </a>
                   ))}

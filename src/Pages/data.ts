@@ -3,7 +3,10 @@ import asosLogo from "../Assets/svg_images/asos.svg";
 import sheinLogo from "../Assets/svg_images/shein.svg";
 import primarkLogo from "../Assets/svg_images/primark.svg";
 import fashionovaLogo from "../Assets/fashionova.jpeg";
-
+import rareBauty from "../Assets/RB.jpeg"
+import fenty from "../Assets/fenty.jpeg"
+import rode from "../Assets/rode.jpeg"
+import huda from "../Assets/huda.jpeg"
 export const stores = [
   {
     name: "SHEIN",
@@ -39,6 +42,34 @@ export const stores = [
     icon: asosLogo,
     bgColor: "bg-green-100",
     url: "https://www.asos.com/men/",
+  },
+   {
+    name: "Rare Beauty",
+    category: "Beauty",
+    icon: rareBauty,
+    bgColor: "bg-green-100",
+    url: "https://www.rarebeauty.com",
+  },
+    {
+    name: "Fenty Beauty",
+    category: "Beauty",
+    icon: fenty,
+    bgColor: "bg-green-100",
+    url: "https://fentybeauty.com",
+  },
+      {
+    name: "Rhode",
+    category: "Beauty",
+    icon: rode,
+    bgColor: "bg-green-100",
+    url: "https://www.rhodeskin.com",
+  },
+      {
+    name: "Huda Beauty",
+    category: "Beauty",
+    icon: huda,
+    bgColor: "bg-green-100",
+    url: "https://hudabeauty.com",
   },
 ];
 
