@@ -78,7 +78,7 @@ const stateOptions = useMemo(() =>
     label: state,
     value: state
   }))
-, []);
+, [naijaStates]);
 
 // Get LGAs for each state
 const lgaOptions = useMemo(() => {
@@ -95,7 +95,7 @@ const lgaOptions = useMemo(() => {
   });
   
   return lgasObject;
-}, []);
+}, [naijaStates]);
 
   useEffect(() => {
     dispatch(triggerGetAddreses({}));

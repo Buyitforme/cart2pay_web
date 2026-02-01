@@ -73,10 +73,10 @@ const Home = () => {
   const [showPaymentReminder, setShowPaymentReminder] = useState(true);
 
   const user = getUserProfileData.data?.results?.data;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const orders = orderHistory.data?.results || [];
 
   useEffect(() => {
-    // dispatch(triggerGetUserProfile({}));
     dispatch(triggerOrderHistory({}));
   }, [dispatch]);
 
@@ -228,13 +228,13 @@ const Home = () => {
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4">
                 <ShoppingCart className="w-6 h-6 text-white" />
               </div>
-             <Heading size="lg" className="text-white mb-2">
-  Start a New Order
-</Heading>
-<Text size="lg" className="text-white/90">
-  Just share the product link—we'll handle{" "}
-  <span className="font-bold text-primary">everything</span> else.
-</Text>
+              <Heading size="lg" className="text-white mb-2">
+                Start a New Order
+              </Heading>
+              <Text size="lg" className="text-white/90">
+                Just share the product link—we'll handle{" "}
+                <span className="font-bold text-primary">everything</span> else.
+              </Text>
             </div>
 
             <Button

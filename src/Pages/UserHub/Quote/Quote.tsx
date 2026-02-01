@@ -157,7 +157,8 @@ const Quote = () => {
           </Heading>
 
           <Text size="md" color="secondary" weight="normal">
-            We’re reviewing your order and preparing your quote. We’ll notify you once it’s ready.
+            We’re reviewing your order and preparing your quote. We’ll notify
+            you once it’s ready.
           </Text>
 
           {/* Progress Steps */}
@@ -181,7 +182,6 @@ const Quote = () => {
               <span>Finalizing quote</span>
             </div>
           </div>
-
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row justify-center gap-3 pt-6">
@@ -331,15 +331,15 @@ const Quote = () => {
                 weight="normal"
                 color="secondary"
               >
-                ₦{order?.surcharge.toLocaleString()}
+                ₦ {order?.surcharge.toLocaleString()}
               </Text>
             </div>
             <div className="flex justify-between text-gray-700">
               <Text size="md" weight="normal" color="secondary">
-                Service fee
+                Service Fee (5% of items total)
               </Text>
               <Text className="font-medium">
-                ₦{order?.service_fee.toLocaleString()}
+                ₦ {order?.service_fee.toLocaleString()}
               </Text>
             </div>
             <div className="flex justify-between items-center pt-2 border-t">
@@ -347,7 +347,7 @@ const Quote = () => {
                 Total to Pay
               </Text>
               <Text size="lg" weight="bold" className="font-black">
-                ₦{order?.sum_total.toLocaleString()}
+                ₦ {order?.sum_total.toLocaleString()}
               </Text>
             </div>
             <div className=" p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800 space-y-2">
