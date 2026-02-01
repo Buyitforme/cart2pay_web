@@ -198,7 +198,7 @@ export const NewOrder = () => {
         </div>
       </div>
 
-      <div className="px-4 md:px-20 py-8">
+      <div className="px-1 md:px-20 py-8">
         <Formik
           key={formKey}
           initialValues={{
@@ -219,7 +219,7 @@ export const NewOrder = () => {
                 {/* Main Content - Left Side */}
                 <div className="lg:col-span-2 space-y-6">
                   {/* Step 1: Select Store */}
-                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
+                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 py-3 md:py-6 px-1 md:px-6 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 rounded-full bg-highlight flex items-center justify-center">
                         1
@@ -247,7 +247,7 @@ export const NewOrder = () => {
                   </div>
 
                   {/* Step 2: Add Products */}
-                  <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-md transition-shadow">
+                  <div className="bg-white rounded-2xl shadow-md border border-gray-100 py-3 md:py-6 px-1 md:px-6 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="w-10 h-10 rounded-full bg-highlight flex items-center justify-center">
                         <span className="text-secondary font-bold">2</span>
@@ -510,7 +510,7 @@ export const NewOrder = () => {
                   </div>
 
                   {/* Step 3: Delivery Address */}
-                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
+                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 py-3 md:py-6 px-1 md:px-6 hover:shadow-md transition-shadow">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="w-10 h-10 rounded-full bg-highlight flex items-center justify-center">
                         <span className="text-secondary font-bold">3</span>

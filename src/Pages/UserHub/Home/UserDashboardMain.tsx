@@ -103,14 +103,14 @@ const Home = () => {
   }
 
   return (
-    <div className="p-4 sm:p-6 bg-background">
+    <div className="px-2  bg-background">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* ================= MAIN CONTENT ================= */}
-        <main className="lg:col-span-3 space-y-8">
+        <main className="lg:col-span-3 space-y-4">
           {" "}
           {/* ===== Header ===== */}
           <header>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1">
               <Heading size="xl" weight="normal">
                 {greeting},
               </Heading>
@@ -118,12 +118,12 @@ const Home = () => {
                 {user?.fullName?.split(" ")[0] || "User"}
               </Heading>
             </div>
-            <Text size="lg" className="opacity-80 mt-2">
+            <Text size="lg" className="opacity-80">
               Track your orders or request a new purchase{" "}
             </Text>
           </header>
           {/* ===== Order Stats ===== */}
-          <section className="bg-white rounded-2xl p-6 shadow-sm border ">
+          <section className="bg-white rounded-2xl p-2 md:p-6 shadow-sm border ">
             {" "}
             <Heading size="lg" weight="semibold" className="mb-4">
               Orders
@@ -169,7 +169,7 @@ const Home = () => {
             </div>
           </section>
           {/* ===== Recent Orders ===== */}
-          <section className="bg-white rounded-2xl p-6 shadow">
+          <section className="bg-white rounded-2xl p-2 md:p-6 shadow">
             <div className="flex justify-between items-center mb-6">
               <Heading size="lg" weight="bold">
                 Recent Orders
@@ -223,7 +223,7 @@ const Home = () => {
         {/* ================= RIGHT RAIL ================= */}
         <aside className="space-y-6 lg:sticky lg:top-6 h-fit">
           {/* Quick Action Card */}
-          <div className="bg-gradient-to-br from-secondary to-secondary_dark rounded-2xl p-6 text-white shadow-lg">
+          <div className="bg-gradient-to-br from-secondary to-secondary_dark rounded-2xl p-2 md:p-6 text-white shadow-lg">
             <div className="mb-4">
               <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center mb-4">
                 <ShoppingCart className="w-6 h-6 text-white" />
@@ -247,7 +247,7 @@ const Home = () => {
             </Button>
           </div>
           {/* ===== Hot Deals ===== */}
-          <div className="bg-secondary text-white rounded-2xl p-5 shadow-lg">
+          <div className="bg-secondary text-white rounded-2xl p-2 md:p-6 shadow-lg">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-lg">🔥</span>
               <Heading size="sm" weight="bold">
